@@ -174,13 +174,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.salarySacrifice = 20000;
 
-    $scope.pensionStart  = 55;
+    $scope.pensionStart = 55;
 
     $scope.investmentReturn = 5.30;
 
     $scope.variableFee = 1.11;
 
-    $scope.fixedFee = 300; 
+    $scope.fixedFee = 300;
 
 
     var retirementAgeSlider = document.getElementById('retirementAgeSlider'),
@@ -345,9 +345,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             thousand: ','
         }),
         connect: 'lower'
-    }); 
+    });
 
-        noUiSlider.create(pensionStartSlider, {
+    noUiSlider.create(pensionStartSlider, {
         start: [$scope.pensionStart],
         range: {
             'min': [60],
@@ -372,7 +372,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             postfix: '%',
         }),
         connect: 'lower'
-    });       
+    });
 
     noUiSlider.create(variableFeeSlider, {
         start: [$scope.variableFee],
@@ -401,7 +401,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             thousand: ','
         }),
         connect: 'lower'
-    });     
+    });
 
 
     var ageInput = document.getElementById('ageInput'),
@@ -680,34 +680,34 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     //     PdfMaker.createChart($scope.dob, $scope.age, $scope.fy, $scope.cses, $scope.thp, $scope.resultWithoutSS, $scope.resultWithSS, $scope.needSS, $scope.optimisedSS, toggleNeeded);
     // });
 
-    function calculateMinPension(age){
-        if(age >= 56 && age <=64){
+    function calculateMinPension(age) {
+        if (age >= 56 && age <= 64) {
             return 4;
         }
-        if(age >= 65 && age <=74){
+        if (age >= 65 && age <= 74) {
             return 5;
         }
-        if(age >= 75 && age <=79){
+        if (age >= 75 && age <= 79) {
             return 6;
         }
-        if(age >= 80 && age <=84){
+        if (age >= 80 && age <= 84) {
             return 7;
         }
-        if(age >= 85 && age <=89){
+        if (age >= 85 && age <= 89) {
             return 9;
         }
-        if(age >= 90 && age <=94){
+        if (age >= 90 && age <= 94) {
             return 11;
         }
-        if(age >= 95){
+        if (age >= 95) {
             return 14;
         }
     }
 
-    function cLookUp(sal){
-        if(sal <= 249999){
+    function cLookUp(sal) {
+        if (sal <= 249999) {
             return 0.15;
-        }else{
+        } else {
             return 0.3;
         }
     }
@@ -716,87 +716,116 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.ownsHome = true;
 
-    var biArray = [];
-
-    var baArray = [];
-
-    var balanceIndexed = 0;
-
-    var year = 0;
-
-    var cpi;
-
-    var adjustedSalary,concessionalCo,earning,taxation,drawdown,fAndI,balance,balanceCpi,paymentFactor,ageL;
-
-    ageL = $scope.age;
-
     $scope.minPension = true;
 
     $scope.ddPercent = 4.00;
 
     $scope.ddBase = 40000;
 
+    function biCount(){
 
+        var salary =  Number($scope.annualSalary.replaceAll('$','').replaceAll(',',''));
 
-    while(balanceIndexed >= 0){
-        cpi = Math.pow(1+($scope.inflation/100),year);
-        adjustedSalary = ageL < $scope.retirementAge ? $scope.annualSalary * Math.pow(1 + ($scope.wageIncrease/100),year) : 0;
-        if(year === 0){
-            concessionalCo = 0;
-        }else{
-            if(ageL < $scope.retirementAge){
-                var temp = adjustedSalary * ($scope.employerContributionLevel/100) + $scope.salarySacrifice;
-                concessionalCo = temp <= 25000 ? temp : 25000;
-            }else{
+        var wageIncrease = Number($scope.wageIncrease.replaceAll('%',''));
+
+        var inflation = Number($scope.inflation.replaceAll('%',''));
+
+        var employerContributionLevel = Number($scope.employerContributionLevel.replaceAll('%',''));
+
+        var salarySacrifice = Number($scope.salarySacrifice.replaceAll('$','').replaceAll(',',''));
+
+        var biArray = [];
+
+        var baArray = [];
+
+        var balanceIndexed = 0;
+
+        var year = 0;
+
+        var cpi;
+
+        var adjustedSalary, concessionalCo, earning, taxation, drawdown, fAndI, balance, balanceCpi, paymentFactor, ageL;
+
+        var count = 0;
+
+        ageL = $scope.age;
+
+        while (balanceIndexed >= 0){
+            cpi = Math.pow(1 + (inflation / 100), year);
+            console.log("cpi",cpi);
+            adjustedSalary = ageL < $scope.retirementAge ? salary * Math.pow(1 + (wageIncrease/100), year) : 0;
+            console.log("adj",adjustedSalary);
+
+            if (year === 0) {
                 concessionalCo = 0;
-            }
-        }
-        balanceCpi = 1/cpi;
-        var temp1 = 0;
-        if(year === 0){
-            earnings = taxation = drawdown = fAndI =0;
-            balance = $scope.superBalance;
-
-        }else{
-            if($scope.minPension){
-                if(ageL < $scope.pensionStart){
-                    drawdown = 0;
-                }else{
-                   drawdown = baArray[year - 1] * (calculateMinPension(ageL)/100)
-                }
-            }else{
-                if(ageL < $scope.pensionStart){
-                    drawdown = 0;
-                }else{
-                    drawdown = $scope.ddBase * Math.pow(1 + ($scope.inflation/100), ageL - $scope.pensionStart);
+            } else {
+                if (ageL < $scope.retirementAge) {
+                    var temp = adjustedSalary * (employerContributionLevel / 100) + salarySacrifice;
+                    concessionalCo = temp <= 25000 ? temp : 25000;
+                } else {
+                    concessionalCo = 0;
                 }
             }
+            console.log("cc",concessionalCo);
+            balanceCpi = 1/cpi;
+            var temp1 = 0;
+            if (year === 0) {
+                earnings = taxation = drawdown = fAndI = 0;
+                balance = $scope.superBalance;
 
-            fAndI = baArray[year-1] * ($scope.variableFee/100) + $scope.fixedFee + $scope.insurancePremium;
+            } else {
+                if ($scope.minPension) {
+                    if (ageL < $scope.pensionStart) {
+                        drawdown = 0;
+                    } else {
+                        drawdown = baArray[year - 1] * (calculateMinPension(ageL) / 100)
+                    }
+                } else {
+                    if (ageL < $scope.pensionStart) {
+                        drawdown = 0;
+                    } else {
+                        drawdown = $scope.ddBase * Math.pow(1 + ($scope.inflation / 100), ageL - $scope.pensionStart);
+                    }
+                }
 
-            earnings = baArray[year -1] * (Math.pow(1+($scope.investmentReturn/100),0.5) - 1) + (baArray[year-1] * Math.pow(1+($scope.investmentReturn/100),0.5) +
-             concessionalCo - fAndI - drawdown ) * (Math.pow(1+($scope.investmentReturn/100),0.5) - 1);
+                fAndI = baArray[year - 1] * ($scope.variableFee / 100) + $scope.fixedFee + $scope.insurancePremium;
 
-            if(ageL >=60 && ageL >= $scope.pensionStart){
-                taxation = cLookUp($scope.annualSalary) * concessionalCo;
-            }else{
-                taxation = cLookUp($scope.annualSalary) * concessionalCo + earnings * 0.15; 
+                earnings = baArray[year - 1] * (Math.pow(1 + ($scope.investmentReturn / 100), 0.5) - 1) + (baArray[year - 1] * Math.pow(1 + ($scope.investmentReturn / 100), 0.5) +
+                    concessionalCo - fAndI - drawdown) * (Math.pow(1 + ($scope.investmentReturn / 100), 0.5) - 1);
+
+                if (ageL >= 60 && ageL >= $scope.pensionStart) {
+                    taxation = cLookUp($scope.annualSalary) * concessionalCo;
+                } else {
+                    taxation = cLookUp($scope.annualSalary) * concessionalCo + earnings * 0.15;
+                }
+
+                balance = baArray[year - 1] + concessionalCo + earnings - taxation - drawdown - fAndI;
             }
 
-            balance = baArray[year-1] + concessionalCo +earnings - taxation -drawdown -fAndI;
+            balanceIndexed = balance * balanceCpi;
+
+
+
+            console.log(balanceIndexed);
+
+            baArray.push(balance);
+
+            biArray.push(balanceIndexed);
+
+            year++;
+
+            ageL++;
+
+            count++;
+
         }
 
-        balanceIndexed = balance * balanceCpi;
+        console.log(biArray);
 
-        baArray.push(balance);
-
-        // biArray.push(balanceIndexed);
-
-        year++;
-
-        ageL++;
-
+        return count;
     }
+
+    console.log(biCount());
 
 
 }]);
