@@ -39,7 +39,7 @@
                             <div class="otrp-clear"></div>
                         </div>
                         <form name="ttrForm" class="ttr-form" novalidate ng-submit="submitForm(ttrForm.$valid)">
-                            <div class="row">
+                            <div class="row first-row-mobile">
                                 <div class="col-xs-8 col-sm-4 form-heading">
                                     Date Of Birth
                                     <div class="row">
@@ -211,7 +211,191 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>                            
+                            <div class="row second-row-mobile">
+                                <div class="col-xs-12 col-sm-12 form-heading">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            Do you have a spouse?
+                                            <button class="option-l-btn btn btn-primary " ng-click="spouseOptionChange(true)" ng-disabled="spouseOption">Yes</button>
+                                            <button class="option-r-btn btn btn-primary " ng-click="spouseOptionChange(false)" ng-disabled="!spouseOption">No</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
+                                <div class="col-xs-8 col-sm-4 form-heading">
+                                    Date Of Birth
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <!-- ng-class="{'err-border' : ttrForm.dob.$invalid }" -->
+                                                    <input type="text" name="dobSpouse" id="dobTextSpouse" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dobSpouse" is-open="popup2.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange2()" />
+                                                    <span class="input-group-addon" ng-click="open2()">
+                                 <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                <!-- <span ng-show="ttrForm.dob.$invalid">Invalid Date Entered</span> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4 col-sm-2 form-heading">
+                                    Age
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="number" onClick="this.select();" class="form-control dob-input" id="ageSpouseInput" name="ageSpouseInput" ng-model="ageSpouse" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Retirement Age
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="retirementAgeSpouseInput" name="retirementAgeSpouseInput" ng-model="retirementAgeSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="retirementAgeSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Annual Salary
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="annualSalarySpouseInput" name="annualSalarySpouseInput" ng-model="annualSalarySpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="annualSalarySpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Super Balance
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="superBalanceSpouseInput" name="superBalanceSpouseInput" ng-model="superBalanceSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="superBalanceSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Salary Sacrifice
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="salarySacrificeSpouseInput" name="salarySacrificeSpouseInput" ng-model="salarySacrificeSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="salarySacrificeSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Pension Start Age
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="pensionStartSpouseInput" name="pensionStartSpouseInput" ng-model="pensionStartSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="pensionStartSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Insurance Premium per year
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="insurancePremiumSpouseInput" name="insurancePremiumSpouseInput" ng-model="insurancePremiumSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="insurancePremiumSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Investment Return
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="investmentReturnSpouseInput" name="investmentReturnSpouseInput" ng-model="investmentReturnSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="investmentReturnSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Variable Fee
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="variableFeeSpouseInput" name="variableFeeSpouseInput" ng-model="variableFeeSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="variableFeeSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Fixed Fee
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="fixedFeeSpouseInput" name="fixedFeeSpouseInput" ng-model="fixedFeeSpouse">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="fixedFeeSpouseSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
                         </form>
                         <div class="row title-div">
                             <span class="number-wrapper">2</span>
