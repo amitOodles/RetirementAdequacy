@@ -9,7 +9,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.resultWithoutSS = [0, 0, 0];
 
     var initDate = new Date();
-    initDate.setYear(1998);
+    initDate.setYear(1961);
     initDate.setMonth(6);
     initDate.setDate(1);
     $scope.dob = initDate;
@@ -177,7 +177,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.retirementAge = 65;
 
-    $scope.annualSalary = 60000;
+    $scope.annualSalary = 260000;
 
     $scope.employerContributionLevel = 9.50;
 
@@ -187,15 +187,15 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.rateOfReturn = 5.58;
 
-    $scope.wageIncrease = 3.50;
+    $scope.wageIncrease = 4.00;
 
-    $scope.insurancePremium = 200;
+    $scope.insurancePremium = 0;
 
     $scope.superTaxRate = 15;
 
     $scope.salarySacrifice = 20000;
 
-    $scope.pensionStart = 55;
+    $scope.pensionStart = 57;
 
     $scope.investmentReturn = 5.30;
 
@@ -293,7 +293,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.superBalance],
         range: {
             'min': [0],
-            'max': [200000]
+            'max': [500000]
         },
         step: 500,
         format: wNumb({
@@ -380,7 +380,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     noUiSlider.create(pensionStartSlider, {
         start: [$scope.pensionStart],
         range: {
-            'min': [60],
+            'min': [55],
             'max': [75]
         },
         step: 1,
@@ -396,7 +396,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             'min': [0],
             'max': [10]
         },
-        step: 0.5,
+        step: 0.1,
         format: wNumb({
             decimals: 2,
             postfix: '%',
@@ -410,7 +410,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             'min': [0],
             'max': [10]
         },
-        step: 0.5,
+        step: 0.01,
         format: wNumb({
             decimals: 2,
             postfix: '%',
@@ -1068,8 +1068,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.ddBase = 40000;
 
-    function biCount(){
+    $scope.minPensionSpouse = true;
 
+    $scope.ddBaseSpouse = 30000;
+
+    function biCount(spouse){
+
+        if(!spouse){
         var annualSalary =  Number($scope.annualSalary.replaceAll('$','').replaceAll(',',''));
 
         var superBalance =  Number($scope.superBalance.replaceAll('$','').replaceAll(',',''));
@@ -1089,6 +1094,41 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var fixedFee = Number($scope.fixedFee.replaceAll('$','').replaceAll(',',''));
 
         var insurancePremium = Number($scope.insurancePremium.replaceAll('$','').replaceAll(',',''));
+        
+        var retirementAge = $scope.retirementAge;
+
+        var pensionStart = $scope.pensionStart;
+
+        var ddBase = $scope.ddBase;   
+        }else{
+        var annualSalary =  Number($scope.annualSalarySpouse.replaceAll('$','').replaceAll(',',''));
+
+        var superBalance =  Number($scope.superBalanceSpouse.replaceAll('$','').replaceAll(',',''));
+
+        var wageIncrease = Number($scope.wageIncrease.replaceAll('%',''));
+
+        var inflation = Number($scope.inflation.replaceAll('%',''));
+
+        var investmentReturn = Number($scope.investmentReturnSpouse.replaceAll('%',''));
+
+        var variableFee = Number($scope.variableFeeSpouse.replaceAll('%',''));
+
+        var employerContributionLevel = Number($scope.employerContributionLevel.replaceAll('%',''));
+
+        var salarySacrifice = Number($scope.salarySacrificeSpouse.replaceAll('$','').replaceAll(',',''));
+
+        var fixedFee = Number($scope.fixedFeeSpouse.replaceAll('$','').replaceAll(',',''));
+
+        var insurancePremium = Number($scope.insurancePremiumSpouse.replaceAll('$','').replaceAll(',',''));
+        
+        var retirementAge = $scope.retirementAgeSpouse;
+
+        var pensionStart = $scope.pensionStartSpouse;
+
+        var ddBase = $scope.ddBase;    
+        }
+
+
 
         var biArray = [];
 
@@ -1109,7 +1149,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         while (balanceIndexed >= 0){
             cpi = Math.pow(1 + (inflation / 100), year);
             // console.log("cpi",cpi);
-            adjustedSalary = ageL < $scope.retirementAge ? annualSalary * Math.pow(1 + (wageIncrease/100), year) : 0;
+            adjustedSalary = ageL < retirementAge ? annualSalary * Math.pow(1 + (wageIncrease/100), year) : 0;
             // console.log("adj",adjustedSalary);
             if (year === 0) {
                 concessionalCo = 0;
@@ -1121,8 +1161,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                     concessionalCo = 0;
                 }
             }
-            console.log("cc",concessionalCo);
+            // console.log("cc",concessionalCo);
             balanceCpi = 1/cpi;
+            // console.log("bC",balanceCpi);
             var temp1 = 0;
             if (year === 0) {
                 earnings = taxation = drawdown = fAndI = 0;
@@ -1130,25 +1171,31 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
             } else {
                 if ($scope.minPension) {
-                    if (ageL < $scope.pensionStart) {
+                    if (ageL < pensionStart) {
                         drawdown = 0;
                     } else {
                         drawdown = baArray[year - 1] * (calculateMinPension(ageL) / 100)
                     }
                 } else {
-                    if (ageL < $scope.pensionStart) {
+                    if (ageL < pensionStart) {
                         drawdown = 0;
                     } else {
-                        drawdown = $scope.ddBase * Math.pow(1 + (inflation / 100), ageL - $scope.pensionStart);
+                        drawdown = ddBase * Math.pow(1 + (inflation / 100), ageL - pensionStart);
                     }
                 }
 
-                fAndI = baArray[year - 1] * (variableFee / 100) + fixedFee + insurancePremium;
+                // console.log("dd",drawdown);
 
-                earnings = baArray[year - 1] * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1) + (baArray[year - 1] * Math.pow(1 + (investmentReturn / 100), 0.5) +
-                    concessionalCo - fAndI - drawdown) * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1);
 
-                if (ageL >= 60 && ageL >= $scope.pensionStart) {
+                fAndI = baArray[year - 1] * (variableFee / 100.00) + fixedFee + insurancePremium;
+
+                // console.log("fi",fAndI);
+
+                earnings = baArray[year - 1] * (Math.pow(1 + (investmentReturn/100),0.5) - 1) + (baArray[year - 1] * Math.pow(1 + (investmentReturn / 100), 0.5) + concessionalCo - fAndI - drawdown) * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1);
+
+                console.log("earn",earnings);
+
+                if (ageL >= 60 && ageL >= pensionStart) {
                     taxation = cLookUp(annualSalary) * concessionalCo;
                 } else {
                     taxation = cLookUp(annualSalary) * concessionalCo + earnings * 0.15;
@@ -1161,7 +1208,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
 
 
-            console.log(balanceIndexed);
+            // console.log("bi",balanceIndexed);
 
             baArray.push(balance);
 
@@ -1175,12 +1222,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         }
 
-        console.log(biArray);
+        // console.log(biArray);
 
-        return count;
+        return count-1;
     }
 
-    console.log(biCount());
+    console.log(biCount(false));
 
 
 }]);
