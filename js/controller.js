@@ -497,14 +497,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     noUiSlider.create(pensionStartSpouseSlider, {
         start: [$scope.pensionStartSpouse],
         range: {
-            'min': [0],
-            'max': [1000000]
+            'min': [50],
+            'max': [75]
         },
-        step: 500,
+        step: 1,
         format: wNumb({
             decimals: 0,
-            prefix: '$',
-            thousand: ','
         }),
         connect: 'lower'
     });
@@ -512,13 +510,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.investmentReturnSpouse],
         range: {
             'min': [0],
-            'max': [1000000]
+            'max': [10]
         },
-        step: 500,
+        step: 0.1,
         format: wNumb({
-            decimals: 0,
-            prefix: '$',
-            thousand: ','
+            decimals: 2,
+            postfix: '%',
         }),
         connect: 'lower'
     });
@@ -528,13 +525,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.variableFeeSpouse],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [10]
         },
-        step: 500,
+        step: 0.01,
         format: wNumb({
-            decimals: 0,
-            prefix: '$',
-            thousand: ','
+            decimals: 2,
+            postfix: '%',
         }),
         connect: 'lower'
     });
