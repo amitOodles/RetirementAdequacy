@@ -185,13 +185,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.superBalance = 500000;
 
-    $scope.rateOfReturn = 5.58;
+    // $scope.rateOfReturn = 5.58;
 
     $scope.wageIncrease = 4.00;
 
     $scope.insurancePremium = 0;
 
-    $scope.superTaxRate = 15;
+    // $scope.superTaxRate = 15;
 
     $scope.salarySacrifice = 20000;
 
@@ -208,11 +208,11 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         annualSalarySlider = document.getElementById('annualSalarySlider'),
         employerContributionLevelSlider = document.getElementById('employerContributionLevelSlider'),
         superBalanceSlider = document.getElementById('superBalanceSlider'),
-        rateOfReturnSlider = document.getElementById('rateOfReturnSlider'),
+        // rateOfReturnSlider = document.getElementById('rateOfReturnSlider'),
         inflationSlider = document.getElementById('inflationSlider'),
         wageIncreaseSlider = document.getElementById('wageIncreaseSlider'),
         insurancePremiumSlider = document.getElementById('insurancePremiumSlider'),
-        superTaxRateSlider = document.getElementById('superTaxRateSlider'),
+        // superTaxRateSlider = document.getElementById('superTaxRateSlider'),
         salarySacrificeSlider = document.getElementById('salarySacrificeSlider'),
         pensionStartSlider = document.getElementById('pensionStartSlider'),
         investmentReturnSlider = document.getElementById('investmentReturnSlider'),
@@ -266,7 +266,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             'min': [9],
             'max': [20]
         },
-        step: 0.5,
+        step: 0.1,
         format: wNumb({
             decimals: 2,
             postfix: '%',
@@ -281,7 +281,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             'min': [0],
             'max': [10]
         },
-        step: 0.5,
+        step: 0.1,
         format: wNumb({
             decimals: 2,
             postfix: '%',
@@ -304,19 +304,19 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         connect: 'lower'
     });
 
-    noUiSlider.create(rateOfReturnSlider, {
-        start: [$scope.rateOfReturn],
-        range: {
-            'min': [0],
-            'max': [50]
-        },
-        step: 0.5,
-        format: wNumb({
-            decimals: 2,
-            postfix: '%',
-        }),
-        connect: 'lower'
-    });
+    // noUiSlider.create(rateOfReturnSlider, {
+    //     start: [$scope.rateOfReturn],
+    //     range: {
+    //         'min': [0],
+    //         'max': [50]
+    //     },
+    //     step: 0.5,
+    //     format: wNumb({
+    //         decimals: 2,
+    //         postfix: '%',
+    //     }),
+    //     connect: 'lower'
+    // });
 
     noUiSlider.create(wageIncreaseSlider, {
         start: [$scope.wageIncrease],
@@ -324,7 +324,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             'min': [0],
             'max': [10]
         },
-        step: 0.5,
+        step: 0.1,
         format: wNumb({
             decimals: 2,
             postfix: '%',
@@ -348,19 +348,19 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         connect: 'lower'
     });
 
-    noUiSlider.create(superTaxRateSlider, {
-        start: [$scope.superTaxRate],
-        range: {
-            'min': [0],
-            'max': [10]
-        },
-        step: 0.5,
-        format: wNumb({
-            decimals: 2,
-            postfix: '%',
-        }),
-        connect: 'lower'
-    });
+    // noUiSlider.create(superTaxRateSlider, {
+    //     start: [$scope.superTaxRate],
+    //     range: {
+    //         'min': [0],
+    //         'max': [10]
+    //     },
+    //     step: 0.5,
+    //     format: wNumb({
+    //         decimals: 2,
+    //         postfix: '%',
+    //     }),
+    //     connect: 'lower'
+    // });
 
     noUiSlider.create(salarySacrificeSlider, {
         start: [$scope.salarySacrifice],
@@ -370,7 +370,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         },
         step: 500,
         format: wNumb({
-            decimals: 2,
+            decimals: 0,
             prefix: '$',
             thousand: ','
         }),
@@ -573,11 +573,11 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         annualSalaryInput = document.getElementById('annualSalaryInput'),
         employerContributionLevelInput = document.getElementById('employerContributionLevelInput'),
         superBalanceInput = document.getElementById('superBalanceInput'),
-        rateOfReturnInput = document.getElementById('rateOfReturnInput'),
+        // rateOfReturnInput = document.getElementById('rateOfReturnInput'),
         inflationInput = document.getElementById('inflationInput'),
         wageIncreaseInput = document.getElementById('wageIncreaseInput'),
         insurancePremiumInput = document.getElementById('insurancePremiumInput'),
-        superTaxRateInput = document.getElementById('superTaxRateInput'),
+        // superTaxRateInput = document.getElementById('superTaxRateInput'),
         salarySacrificeInput = document.getElementById('salarySacrificeInput'),
         pensionStartInput = document.getElementById('pensionStartInput'),
         investmentReturnInput = document.getElementById('investmentReturnInput'),
@@ -614,10 +614,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $scope.superBalance = (values[handle]);
     });
 
-    rateOfReturnSlider.noUiSlider.on('update', function(values, handle) {
-        rateOfReturnInput.value = values[handle];
-        $scope.rateOfReturn = (values[handle]);
-    });
+    // rateOfReturnSlider.noUiSlider.on('update', function(values, handle) {
+    //     rateOfReturnInput.value = values[handle];
+    //     $scope.rateOfReturn = (values[handle]);
+    // });
 
     inflationSlider.noUiSlider.on('update', function(values, handle) {
         inflationInput.value = values[handle];
@@ -634,10 +634,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $scope.insurancePremium = (values[handle]);
     });
 
-    superTaxRateSlider.noUiSlider.on('update', function(values, handle) {
-        superTaxRateInput.value = values[handle];
-        $scope.superTaxRate = (values[handle]);
-    });
+    // superTaxRateSlider.noUiSlider.on('update', function(values, handle) {
+    //     superTaxRateInput.value = values[handle];
+    //     $scope.superTaxRate = (values[handle]);
+    // });
 
     salarySacrificeSlider.noUiSlider.on('update', function(values, handle) {
         salarySacrificeInput.value = values[handle];
@@ -767,9 +767,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         superBalanceSlider.noUiSlider.set($scope.superBalance);
     });
 
-    rateOfReturnInput.addEventListener("change", function() {
-        rateOfReturnSlider.noUiSlider.set($scope.rateOfReturn);
-    });
+    // rateOfReturnInput.addEventListener("change", function() {
+    //     rateOfReturnSlider.noUiSlider.set($scope.rateOfReturn);
+    // });
 
     inflationInput.addEventListener("change", function() {
         inflationSlider.noUiSlider.set($scope.inflation);
@@ -783,16 +783,16 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         insurancePremiumSlider.noUiSlider.set($scope.insurancePremium);
     });
 
-    superTaxRateInput.addEventListener("change", function() {
-        superTaxRateSlider.noUiSlider.set($scope.superTaxRate);
-    });
+    // superTaxRateInput.addEventListener("change", function() {
+    //     superTaxRateSlider.noUiSlider.set($scope.superTaxRate);
+    // });
 
     salarySacrificeInput.addEventListener("change", function() {
-        salarySacrificeSlider.noUiSlider.set($scope.superTaxRate);
+        salarySacrificeSlider.noUiSlider.set($scope.salarySacrifice);
     });
 
     pensionStartInput.addEventListener("change", function() {
-        pensionStartSlider.noUiSlider.set($scope.superTaxRate);
+        pensionStartSlider.noUiSlider.set($scope.pensionStart);
     });
 
     investmentReturnInput.addEventListener("change", function() {
@@ -872,12 +872,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $timeout(0);
     });
 
-    rateOfReturnSlider.noUiSlider.on('set', function(values, handle) {
-        rateOfReturnInput.value = values[handle];
-        $scope.rateOfReturn = (values[handle]);
-        // calculateFinal();
-        $timeout(0);
-    });
+    // rateOfReturnSlider.noUiSlider.on('set', function(values, handle) {
+    //     rateOfReturnInput.value = values[handle];
+    //     $scope.rateOfReturn = (values[handle]);
+    //     // calculateFinal();
+    //     $timeout(0);
+    // });
 
     inflationSlider.noUiSlider.on('set', function(values, handle) {
         inflationInput.value = values[handle];
@@ -900,12 +900,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $timeout(0);
     });
 
-    superTaxRateSlider.noUiSlider.on('set', function(values, handle) {
-        superTaxRateInput.value = values[handle];
-        $scope.superTaxRate = (values[handle]);
-        // calculateFinal();
-        $timeout(0);
-    });
+    // superTaxRateSlider.noUiSlider.on('set', function(values, handle) {
+    //     superTaxRateInput.value = values[handle];
+    //     $scope.superTaxRate = (values[handle]);
+    //     // calculateFinal();
+    //     $timeout(0);
+    // });
 
     salarySacrificeSlider.noUiSlider.on('set', function(values, handle) {
         salarySacrificeInput.value = values[handle];
