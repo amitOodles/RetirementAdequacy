@@ -949,63 +949,63 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     annualSalarySpouseSlider.noUiSlider.on('set', function(values, handle) {
         annualSalarySpouseInput.value = values[handle];
         $scope.annualSalarySpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     superBalanceSpouseSlider.noUiSlider.on('set', function(values, handle) {
         superBalanceSpouseInput.value = values[handle];
         $scope.superBalanceSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     salarySacrificeSpouseSlider.noUiSlider.on('set', function(values, handle) {
         salarySacrificeSpouseInput.value = values[handle];
         $scope.salarySacrificeSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     pensionStartSpouseSlider.noUiSlider.on('set', function(values, handle) {
         pensionStartSpouseInput.value = values[handle];
         $scope.pensionStartSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     insurancePremiumSpouseSlider.noUiSlider.on('set', function(values, handle) {
         insurancePremiumSpouseInput.value = values[handle];
         $scope.insurancePremiumSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     investmentReturnSpouseSlider.noUiSlider.on('set', function(values, handle) {
         investmentReturnSpouseInput.value = values[handle];
         $scope.investmentReturnSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     variableFeeSpouseSlider.noUiSlider.on('set', function(values, handle) {
         variableFeeSpouseInput.value = values[handle];
         $scope.variableFeeSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     fixedFeeSpouseSlider.noUiSlider.on('set', function(values, handle) {
         fixedFeeSpouseInput.value = values[handle];
         $scope.fixedFeeSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
     retirementAgeSpouseSlider.noUiSlider.on('set', function(values, handle) {
         retirementAgeSpouseInput.value = values[handle];
         $scope.retirementAgeSpouse = (values[handle]);
-        calculateFinal();
+        // calculateFinal();
         $timeout(0);
     });
 
@@ -1013,7 +1013,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.spouseOptionChange = function(spouse){
         $scope.spouseOption = spouse;
         $scope.buyOption = false;
-        calculateFinal();
+        // calculateFinal();
     }
 
 
@@ -1070,15 +1070,25 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     function biCount(){
 
-        var salary =  Number($scope.annualSalary.replaceAll('$','').replaceAll(',',''));
+        var annualSalary =  Number($scope.annualSalary.replaceAll('$','').replaceAll(',',''));
+
+        var superBalance =  Number($scope.superBalance.replaceAll('$','').replaceAll(',',''));
 
         var wageIncrease = Number($scope.wageIncrease.replaceAll('%',''));
 
         var inflation = Number($scope.inflation.replaceAll('%',''));
 
+        var investmentReturn = Number($scope.investmentReturn.replaceAll('%',''));
+
+        var variableFee = Number($scope.variableFee.replaceAll('%',''));
+
         var employerContributionLevel = Number($scope.employerContributionLevel.replaceAll('%',''));
 
         var salarySacrifice = Number($scope.salarySacrifice.replaceAll('$','').replaceAll(',',''));
+
+        var fixedFee = Number($scope.fixedFee.replaceAll('$','').replaceAll(',',''));
+
+        var insurancePremium = Number($scope.insurancePremium.replaceAll('$','').replaceAll(',',''));
 
         var biArray = [];
 
@@ -1098,10 +1108,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         while (balanceIndexed >= 0){
             cpi = Math.pow(1 + (inflation / 100), year);
-            console.log("cpi",cpi);
-            adjustedSalary = ageL < $scope.retirementAge ? salary * Math.pow(1 + (wageIncrease/100), year) : 0;
-            console.log("adj",adjustedSalary);
-
+            // console.log("cpi",cpi);
+            adjustedSalary = ageL < $scope.retirementAge ? annualSalary * Math.pow(1 + (wageIncrease/100), year) : 0;
+            // console.log("adj",adjustedSalary);
             if (year === 0) {
                 concessionalCo = 0;
             } else {
@@ -1117,7 +1126,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             var temp1 = 0;
             if (year === 0) {
                 earnings = taxation = drawdown = fAndI = 0;
-                balance = $scope.superBalance;
+                balance = superBalance;
 
             } else {
                 if ($scope.minPension) {
@@ -1130,19 +1139,19 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                     if (ageL < $scope.pensionStart) {
                         drawdown = 0;
                     } else {
-                        drawdown = $scope.ddBase * Math.pow(1 + ($scope.inflation / 100), ageL - $scope.pensionStart);
+                        drawdown = $scope.ddBase * Math.pow(1 + (inflation / 100), ageL - $scope.pensionStart);
                     }
                 }
 
-                fAndI = baArray[year - 1] * ($scope.variableFee / 100) + $scope.fixedFee + $scope.insurancePremium;
+                fAndI = baArray[year - 1] * (variableFee / 100) + fixedFee + insurancePremium;
 
-                earnings = baArray[year - 1] * (Math.pow(1 + ($scope.investmentReturn / 100), 0.5) - 1) + (baArray[year - 1] * Math.pow(1 + ($scope.investmentReturn / 100), 0.5) +
-                    concessionalCo - fAndI - drawdown) * (Math.pow(1 + ($scope.investmentReturn / 100), 0.5) - 1);
+                earnings = baArray[year - 1] * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1) + (baArray[year - 1] * Math.pow(1 + (investmentReturn / 100), 0.5) +
+                    concessionalCo - fAndI - drawdown) * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1);
 
                 if (ageL >= 60 && ageL >= $scope.pensionStart) {
-                    taxation = cLookUp($scope.annualSalary) * concessionalCo;
+                    taxation = cLookUp(annualSalary) * concessionalCo;
                 } else {
-                    taxation = cLookUp($scope.annualSalary) * concessionalCo + earnings * 0.15;
+                    taxation = cLookUp(annualSalary) * concessionalCo + earnings * 0.15;
                 }
 
                 balance = baArray[year - 1] + concessionalCo + earnings - taxation - drawdown - fAndI;
