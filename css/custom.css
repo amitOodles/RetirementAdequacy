@@ -473,7 +473,7 @@ input[type=number] {
     padding: 5px 5px 5px 0;
 }
 .divider{
-    border-top: 1px solid #444;
+    border-top: 1px solid #ccc;
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -919,4 +919,90 @@ float:right;
   background-color: #6F7070 !important;
   cursor: -webkit-grab;
   color:white;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+#datebox button {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#e9e9e9));
+    width: 256px;
+    height: 26px;
+    border-radius: 2px;
+    padding: 0 25px 0 10px;
+    font-size: 13px;
+}
+.btn-group>.btn:first-child {
+    margin-left: 0;
+   margin-top: 10px!important;
+   color: black;
+    border-color: #ccc;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#e9e9e9));
+    width: 256px;
+    height: 26px;
+    border-radius: 2px;
+    padding: 0 25px 0 10px;
+    font-size: 13px;
+}
+.bootstrap-select.btn-group .dropdown-menu li a {
+    white-space: normal;
+    color: black;
+}
+.dropdown-menu {
+    width: 256px;
+}
+.bootstrap-select.btn-group .dropdown-menu {
+    min-width: 0;
+    padding: 0;
+    max-height: 232px !important;
+}
+li:hover {
+    background-color: #4389c8!important;
+    background: none;
+    color: #fff!important;
+    border-right: none;
+    cursor: pointer;
+}
+li {
+    border-bottom: 1px solid #dbdbdb;
+    padding: 0;
+    font-size: 13px;
+    color: black;
+}
+ul.dropdown-menu {
+    padding: 0 !important;
+}
+.scrollable-menu {
+    width: 256px;
+    padding: 0!important;
+    margin: 0;
+}
+.dropdown-menu>li>a:hover {
+    background-color: #4389c8!important;
+    background: none;
+    color: #fff!important;
+    border-right: none;
+    cursor: pointer;
+}
+.dropdown-menu>li>a:focus {
+    background-color: white;
+}
+a:focus {
+    outline: none;
+    background-color: white;
+}
+.btn-group bootstrap-select{
+  margin-top: 10px!important;
+}
+.open>.dropdown-toggle.btn-info:hover{
+  color:black!important;
+}
+.spouse-head{
+      font-size: 16px;
+      padding-top: 0!important;
 }
