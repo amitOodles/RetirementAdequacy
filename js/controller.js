@@ -256,7 +256,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.employmentIncomePartner = 250000;
     $scope.netRentalIncome = 0;
     $scope.otherIncome = 0;
-    $scope.otherIncome = 0;
+    $scope.pensionIncome = 0;
 
 
     var retirementAgeSlider = document.getElementById('retirementAgeSlider'),
