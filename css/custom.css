@@ -407,40 +407,8 @@ input[type=number] {
 .comp-logo{
     float:right;
 }
-@media only screen
-  /*and (min-device-width: 320px)*/
-  and (max-device-width: 321px){
-		ul.uib-datepicker-popup{
-			left:-140px !important;
-		}
-	}
 
-@media only screen
-	  and (min-device-width: 322px)
-		and (max-device-width: 360px)
-		{
-			ul.uib-datepicker-popup{
-				left:-120px !important;
-			}
-	}
 
-	@media only screen
-		  and (min-device-width: 361px)
-			and (max-device-width: 399px)
-			{
-				ul.uib-datepicker-popup{
-					left:-110px !important;
-				}
-		}
-
-		@media only screen
-				and (min-device-width: 400px)
-				and (max-device-width: 450px)
-				{
-					ul.uib-datepicker-popup{
-						left:-80px !important;
-					}
-			}
 
 
 .res-1{
