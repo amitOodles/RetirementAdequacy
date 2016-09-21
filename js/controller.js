@@ -6,11 +6,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     };
     //$scope.listOb = ["Minimum Pension Only", "Choose you own pension"];
 
-    $scope.listOb = [{ id: 0, name: "Minimum Pension Only"},
-        { id: 1, name: "Choose you own pension" }];
+    $scope.listOb = [{ id: 0, name: "Minimum Pension Only" },
+        { id: 1, name: "Choose you own pension" }
+    ];
 
     $timeout(function() {
-        $('.selectpicker').selectpicker({
+        $('.selectpickerSingle').selectpicker({
             style: 'btn-info',
             size: 2
         });
@@ -20,25 +21,26 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             size: 2
         });
     });
-    $scope.showPensionOption=false;
-    $scope.showPensionOptionSpouse=false;
-    $('.selectpicker').on('change', function() {
+
+    $scope.showPensionOption = false;
+    $scope.showPensionOptionSpouse = false;
+
+    $('.selectpickerSingle').on('change', function() {
         var selected = $('.selectpicker option:selected').val();
-        $scope.showPensionOption= selected==1;
+        $scope.showPensionOption = selected == 1;
+        calculateFinal();
         $timeout(0);
-       // alert($scope.showPensionOption);
     });
 
     $('.selectpickerSpouse').on('change', function() {
         var selected = $('.selectpickerSpouse option:selected').val();
-        $scope.showPensionOptionSpouse= selected==1;
+        $scope.showPensionOptionSpouse = selected == 1;
         $timeout(0);
-       // alert($scope.showPensionOption);
     });
 
-    $('#demolist li').on('click', function() {
-        $('#datebox').val($(this).text());
-    });
+    // $('#demolist li').on('click', function() {
+    //     $('#datebox').val($(this).text());
+    // });
 
     $scope.resultWithSS = [0, 0, 0];
     $scope.resultWithoutSS = [0, 0, 0];
@@ -163,7 +165,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         return '';
     }
 
-    $scope.spouseOption = true;
+    $scope.spouseOption = false;
     $scope.retirementAgeSpouse = 20000;
     $scope.annualSalarySpouse = 500000;
     $scope.superBalanceSpouse = 0;
@@ -176,38 +178,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.pensionDrawdownBase = 40000;
     $scope.pensionDrawdownBaseSpouse = 40000;
 
-
-
-
-
-
-
-
-
-
-    $scope.unattainableTHP = false;
-
-    $scope.attainableTHP = false;
-
-    $scope.unattainableTHPS = false;
-
-    $scope.optimisedSS;
-
-    $scope.needSS = true;
-
-
     $scope.overlay = false;
 
-
-    // $scope.age = 42;
-
-    $scope.fy = 2017;
-
-    $scope.cses = 80000;
-
-    $scope.thp = 45000;
-
-    $scope.maxTHP2 = 0;
+    $scope.fy = 2016;
 
     $scope.age = AgeCalculator.getAge($scope.dob, $scope.fy);
     $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
@@ -224,14 +197,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.superBalance = 500000;
 
-    // $scope.rateOfReturn = 5.58;
-
     $scope.wageIncrease = 4.00;
     $scope.wageIncreaseSpouse = 4.00;
 
     $scope.insurancePremium = 0;
-
-    // $scope.superTaxRate = 15;
 
     $scope.salarySacrifice = 20000;
 
@@ -287,7 +256,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         retirementAgeSpouseSlider = document.getElementById('retirementAgeSpouseSlider'),
         pensionDrawdownBaseSlider = document.getElementById('pensionDrawdownBaseSlider'),
         pensionDrawdownBaseSpouseSlider = document.getElementById('pensionDrawdownBaseSpouseSlider'),
-        
+
         homeContentsSlider = document.getElementById('homeContentsSlider'),
         vehicleCostSlider = document.getElementById('vehicleCostSlider'),
         investmentPropertySlider = document.getElementById('investmentPropertySlider'),
@@ -909,19 +878,19 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         connect: 'lower'
     });
     noUiSlider.create(pensionIncomeSlider, {
-            start: [$scope.pensionIncome],
-            range: {
-                'min': [0],
-                'max': [200000]
-            },
-            step: 500,
-            format: wNumb({
-                decimals: 0,
-                prefix: '$',
-                thousand: ','
-            }),
-            connect: 'lower'
-        });
+        start: [$scope.pensionIncome],
+        range: {
+            'min': [0],
+            'max': [200000]
+        },
+        step: 500,
+        format: wNumb({
+            decimals: 0,
+            prefix: '$',
+            thousand: ','
+        }),
+        connect: 'lower'
+    });
 
 
 
@@ -1182,8 +1151,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     });
 
 
-    $scope.ageChange = function() {
-        var dobText = document.getElementById("dobText");
+    $scope.ageChange = function(idString) {
+        var dobText = document.getElementById(idString);
         var dateString = dobText.value;
         var dateArr = dateString.split("/");
 
@@ -1191,37 +1160,37 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var correct = date_regex.test(dobText.value);
         var fd = new Date(dateArr[2], dateArr[1] - 1, dateArr[0]);
         // console.log("fd",fd);
-        console.log("correct", correct);
-        console.log("c1", (fd.getMonth() + 1), Number(dateArr[1]));
-        console.log("c2", fd.getDate(), Number(dateArr[0]));
+        // console.log("correct", correct);
+        // console.log("c1", (fd.getMonth() + 1), Number(dateArr[1]));
+        // console.log("c2", fd.getDate(), Number(dateArr[0]));
         if (((fd.getMonth() + 1) === Number(dateArr[1]) && fd.getDate() === Number(dateArr[0])) && correct) {
             $scope.dob = fd;
         } else {
             $scope.dob = initDate;
         }
         $scope.age = AgeCalculator.getAge($scope.dob, $scope.fy);
-        $scope.submitForm2(true);
+        // $scope.submitForm2(true);
     }
 
-    $scope.ageChange2 = function() {
-        var dobText = document.getElementById("dobTextSpouse");
-        var dateString = dobText.value;
-        var dateArr = dateString.split("/");
+    // $scope.ageChange2 = function() {
+    //     var dobText = document.getElementById("dobTextSpouse");
+    //     var dateString = dobText.value;
+    //     var dateArr = dateString.split("/");
 
-        var date_regex = /^([1-9]|0[1-9]|1\d|2\d|3[01])\/(0[1-9]|[1-9]|1[0-2])\/(19[5-9][0-8])$/;
-        var correct = date_regex.test(dobText.value);
-        var fd = new Date(dateArr[2], dateArr[1] - 1, dateArr[0]);
-        // console.log("fd",fd);
-        console.log("correct", correct);
-        console.log("c1", (fd.getMonth() + 1), Number(dateArr[1]));
-        console.log("c2", fd.getDate(), Number(dateArr[0]));
-        if (((fd.getMonth() + 1) === Number(dateArr[1]) && fd.getDate() === Number(dateArr[0])) && correct) {
-            $scope.dobSpouse = fd;
-        } else {
-            $scope.dobSpouse = initDate;
-        }
-        $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
-    }
+    //     var date_regex = /^([1-9]|0[1-9]|1\d|2\d|3[01])\/(0[1-9]|[1-9]|1[0-2])\/(19[5-9][0-8])$/;
+    //     var correct = date_regex.test(dobText.value);
+    //     var fd = new Date(dateArr[2], dateArr[1] - 1, dateArr[0]);
+    //     // console.log("fd",fd);
+    //     console.log("correct", correct);
+    //     console.log("c1", (fd.getMonth() + 1), Number(dateArr[1]));
+    //     console.log("c2", fd.getDate(), Number(dateArr[0]));
+    //     if (((fd.getMonth() + 1) === Number(dateArr[1]) && fd.getDate() === Number(dateArr[0])) && correct) {
+    //         $scope.dobSpouse = fd;
+    //     } else {
+    //         $scope.dobSpouse = initDate;
+    //     }
+    //     $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
+    // }
 
     retirementAgeInput.addEventListener("change", function() {
         retirementAgeSlider.noUiSlider.set($scope.retirementAge);
@@ -1387,7 +1356,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         otherIncomeSlider.noUiSlider.set($scope.otherIncome);
     });
     pensionIncomeInput.addEventListener("change", function() {
-            pensionIncomeSlider.noUiSlider.set($scope.pensionIncome);
+        pensionIncomeSlider.noUiSlider.set($scope.pensionIncome);
     });
 
 
@@ -1678,10 +1647,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $timeout(0);
     });
     pensionIncomeSlider.noUiSlider.on('set', function(values, handle) {
-            pensionIncomeInput.value = values[handle];
-            $scope.pensionIncome = (values[handle]);
-            // calculateFinal();
-            $timeout(0);
+        pensionIncomeInput.value = values[handle];
+        $scope.pensionIncome = (values[handle]);
+        // calculateFinal();
+        $timeout(0);
     });
 
 
@@ -1755,7 +1724,6 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             var superBalance = Number($scope.superBalance.replaceAll('$', '').replaceAll(',', ''));
 
             var wageIncrease = Number($scope.wageIncrease.replaceAll('%', ''));
-            var wageIncreaseSpouse = Number($scope.wageIncreaseSpouse.replaceAll('%', ''));
 
             var inflation = Number($scope.inflation.replaceAll('%', ''));
             var inflationSpouse = Number($scope.inflationSpouse.replaceAll('%', ''));
@@ -1765,7 +1733,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             var variableFee = Number($scope.variableFee.replaceAll('%', ''));
 
             var employerContributionLevel = Number($scope.employerContributionLevel.replaceAll('%', ''));
-            var employerContributionLevelSpouse = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
+            // var employerContributionLevelSpouse = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
 
             var salarySacrifice = Number($scope.salarySacrifice.replaceAll('$', '').replaceAll(',', ''));
 
@@ -1777,27 +1745,26 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
             var pensionStart = $scope.pensionStart;
 
-            var pensionDrawdownBase1 = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
-            var pensionDrawdownBaseSpouse = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
+            var minPension = !$scope.showPensionOption;
 
-            var ddBase = $scope.ddBase;
+            // var pensionDrawdownBase1 = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
+            // var pensionDrawdownBaseSpouse = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
+
+            var ddBase = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
         } else {
             var annualSalary = Number($scope.annualSalarySpouse.replaceAll('$', '').replaceAll(',', ''));
 
             var superBalance = Number($scope.superBalanceSpouse.replaceAll('$', '').replaceAll(',', ''));
 
-            var wageIncrease = Number($scope.wageIncrease.replaceAll('%', ''));
-            var wageIncreaseSpouse = Number($scope.wageIncreaseSpouse.replaceAll('%', ''));
+            var wageIncrease = Number($scope.wageIncreaseSpouse.replaceAll('%', ''));
 
-            var inflation = Number($scope.inflation.replaceAll('%', ''));
-            var inflationSpouse = Number($scope.inflationSpouse.replaceAll('%', ''));
+            var inflation = Number($scope.inflationSpouse.replaceAll('%', ''));
 
             var investmentReturn = Number($scope.investmentReturnSpouse.replaceAll('%', ''));
 
             var variableFee = Number($scope.variableFeeSpouse.replaceAll('%', ''));
 
-            var employerContributionLevel = Number($scope.employerContributionLevel.replaceAll('%', ''));
-            var employerContributionLevelSpouse = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
+            var employerContributionLevel = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
 
             var salarySacrifice = Number($scope.salarySacrificeSpouse.replaceAll('$', '').replaceAll(',', ''));
 
@@ -1807,12 +1774,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
             var retirementAge = $scope.retirementAgeSpouse;
 
-            var pensionDrawdownBase1 = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
-            var pensionDrawdownBaseSpouse = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
+            // var pensionDrawdownBase1 = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
+            // var pensionDrawdownBaseSpouse = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
 
             var pensionStart = $scope.pensionStartSpouse;
 
-            var ddBase = $scope.ddBase;
+            var minPension = !$scope.showPensionOptionSpouse;
+
+            var ddBase = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
         }
 
 
@@ -1857,7 +1826,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 balance = superBalance;
 
             } else {
-                if ($scope.minPension) {
+                if (minPension) {
                     if (ageL < pensionStart) {
                         drawdown = 0;
                     } else {
@@ -1880,7 +1849,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
                 earnings = baArray[year - 1] * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1) + (baArray[year - 1] * Math.pow(1 + (investmentReturn / 100), 0.5) + concessionalCo - fAndI - drawdown) * (Math.pow(1 + (investmentReturn / 100), 0.5) - 1);
 
-                console.log("earn", earnings);
+                // console.log("earn", earnings);
 
                 if (ageL >= 60 && ageL >= pensionStart) {
                     taxation = cLookUp(annualSalary) * concessionalCo;
@@ -1908,13 +1877,26 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             count++;
 
         }
-
         // console.log(biArray);
+        console.log(biArray.length);
+
+        console.log(count-1);
 
         return count - 1;
     }
 
-    console.log(biCount(false));
+    // console.log(biCount(false));
+
+    function calculateFinal(){
+        var isCouple = $scope.spouseOption;
+        var ctm;
+        if(isCouple){
+            ctm = Math.abs(biCount(false) - biCount(true));
+        }else{
+            ctm = Math.abs(biCount(false));
+        }
+        console.log(ctm);
+    }
 
 
 }]);
