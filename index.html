@@ -150,12 +150,21 @@
                                 </div>
                             </div>                            
                             <div class="row second-row-mobile">
-                                <div class="col-xs-12 col-sm-12 form-heading">
+                                <div class="col-xs-12 col-sm-6 form-heading">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             Do you have a spouse?
                                             <button class="option-l-btn btn btn-primary " ng-click="spouseOptionChange(true)" ng-disabled="spouseOption">Yes</button>
                                             <button class="option-r-btn btn btn-primary " ng-click="spouseOptionChange(false)" ng-disabled="!spouseOption">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            Do you own a house?
+                                            <button class="option-l-btn btn btn-primary " ng-click="houseOptionChange(true)" ng-disabled="houseOption">Yes</button>
+                                            <button class="option-r-btn btn btn-primary " ng-click="houseOptionChange(false)" ng-disabled="!houseOption">No</button>
                                         </div>
                                     </div>
                                 </div>
@@ -559,7 +568,7 @@
                         </form>
                         <div class="row title-div">
                             <span class="number-wrapper">3</span>
-                            <span class="title-wrapper">House Questions</span>
+                            <span class="title-wrapper">Other Assets</span>
                             <div class="otrp-clear"></div>
                         </div>
                         <form name="ttrForm" class="ttr-form" novalidate ng-submit="submitForm(ttrForm.$valid)">
@@ -661,38 +670,6 @@
                             </div>
                             <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
-                                    Allocated Pension
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
-                                            <div class="form-group">
-                                                <!-- <label for="ageInput">Your Age</label> -->
-                                                <input type="text" onClick="this.select();" class="form-control" id="allocatedPensionInput" name="allocatedPensionInput" ng-model="allocatedPension">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
-                                            <!-- <label></label> -->
-                                            <div id="allocatedPensionSlider" style="margin-top:8px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 form-heading">
-                                    Super Funds
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
-                                            <div class="form-group">
-                                                <!-- <label for="ageInput">Your Age</label> -->
-                                                <input type="text" onClick="this.select();" class="form-control" id="superFundsInput" name="superFundsInput" ng-model="superFunds">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
-                                            <!-- <label></label> -->
-                                            <div id="superFundsSlider" style="margin-top:8px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row second-row-mobile">
-                                <div class="col-xs-12 col-sm-6 form-heading">
                                     Other Investment
                                     <div class="row">
                                         <div class="col-xs-4 col-sm-4">
@@ -704,38 +681,6 @@
                                         <div class="col-xs-8 col-sm-8 form-group slider-common">
                                             <!-- <label></label> -->
                                             <div id="otherInvestmentSlider" style="margin-top:8px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-6 form-heading">
-                                    Employment Income
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
-                                            <div class="form-group">
-                                                <!-- <label for="ageInput">Your Age</label> -->
-                                                <input type="text" onClick="this.select();" class="form-control" id="employmentIncomeInput" name="employmentIncomeInput" ng-model="employmentIncome">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
-                                            <!-- <label></label> -->
-                                            <div id="employmentIncomeSlider" style="margin-top:8px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row second-row-mobile">
-                                <div class="col-xs-12 col-sm-6 form-heading">
-                                    Employment Income Partner
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
-                                            <div class="form-group">
-                                                <!-- <label for="ageInput">Your Age</label> -->
-                                                <input type="text" onClick="this.select();" class="form-control" id="employmentIncomePartnerInput" name="employmentIncomePartnerInput" ng-model="employmentIncomePartner">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
-                                            <!-- <label></label> -->
-                                            <div id="employmentIncomePartnerSlider" style="margin-top:8px;"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -783,6 +728,23 @@
                                         <div class="col-xs-8 col-sm-8 form-group slider-common">
                                             <!-- <label></label> -->
                                             <div id="pensionIncomeSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row second-row-mobile">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Allocated Pension
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="allocatedPensionInput" name="allocatedPensionInput" ng-model="allocatedPension">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="allocatedPensionSlider" style="margin-top:8px;"></div>
                                         </div>
                                     </div>
                                 </div>
