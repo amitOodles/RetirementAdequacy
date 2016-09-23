@@ -426,8 +426,7 @@
                             <div class="row first-row-mobile spouse-head" ng-class="{optionDrop: (!spouseOption)}">
                                 <div class="col-xs-12">
                                     <strong>Spouse Related Assumptions</strong>
-                                </div>
-                            
+                                </div>                            
                             </div>
                             <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
                                 <div class="col-xs-12 col-sm-6 form-heading">
@@ -572,7 +571,12 @@
                             <div class="otrp-clear"></div>
                         </div>
                         <form name="ttrForm" class="ttr-form" novalidate ng-submit="submitForm(ttrForm.$valid)">
-                            <div class="row first-row-mobile">
+                            <div class="row first-row-mobile asset-head" >
+                                <div class="col-xs-12">
+                                    <strong>Assets (Not Deemed)</strong>
+                                </div>                            
+                            </div>
+                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Home Contents
                                     <div class="row">
@@ -619,7 +623,14 @@
                                             <div id="investmentPropertySlider" style="margin-top:8px;"></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="row second-row-mobile asset-membr" >
+                                <div class="col-xs-12">
+                                    <strong>Investments (Deemed)</strong>
+                                </div>                            
+                            </div>
+                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Bank Assets
                                     <div class="row">
@@ -635,8 +646,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Listed Investment
                                     <div class="row">
@@ -651,7 +660,9 @@
                                             <div id="listedInvestmentSlider" style="margin-top:8px;"></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Margin Loans
                                     <div class="row">
@@ -667,6 +678,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Allocated Pension
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="allocatedPensionInput" name="allocatedPensionInput" ng-model="allocatedPension">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="allocatedPensionSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>                               
                             </div>
                             <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
@@ -684,6 +710,13 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row second-row-mobile asset-membr" >
+                                <div class="col-xs-12">
+                                    <strong>Income</strong>
+                                </div>                            
+                            </div>
+                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Net Rental Income
                                     <div class="row">
@@ -699,8 +732,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Other Income
                                     <div class="row">
@@ -715,7 +746,9 @@
                                             <div id="otherIncomeSlider" style="margin-top:8px;"></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
+                            </div>
+                            <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Pension Income
                                     <div class="row">
@@ -728,23 +761,6 @@
                                         <div class="col-xs-8 col-sm-8 form-group slider-common">
                                             <!-- <label></label> -->
                                             <div id="pensionIncomeSlider" style="margin-top:8px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row second-row-mobile">
-                                <div class="col-xs-12 col-sm-6 form-heading">
-                                    Allocated Pension
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4">
-                                            <div class="form-group">
-                                                <!-- <label for="ageInput">Your Age</label> -->
-                                                <input type="text" onClick="this.select();" class="form-control" id="allocatedPensionInput" name="allocatedPensionInput" ng-model="allocatedPension">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
-                                            <!-- <label></label> -->
-                                            <div id="allocatedPensionSlider" style="margin-top:8px;"></div>
                                         </div>
                                     </div>
                                 </div>
