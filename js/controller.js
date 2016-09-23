@@ -1876,10 +1876,6 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
             balanceIndexed = balance * balanceCpi;
 
-
-
-            // console.log("bi",balanceIndexed);
-
             baArray.push(balance);
 
             penArray.push(drawdown);
@@ -1895,7 +1891,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             count++;
 
         }
-        // console.log(biArray);
+        console.log(biArray);
         // console.log(biArray.length);
 
         // console.log(penArray);
@@ -1921,7 +1917,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         // var superFunds = Number($scope.superFunds.replaceAll('$', '').replaceAll(',', ''));
         var otherInvestment = Number($scope.otherInvestment.replaceAll('$', '').replaceAll(',', ''));
         var employmentIncome = Number($scope.annualSalary.replaceAll('$', '').replaceAll(',', ''));
-        var employmentIncomePartner = Number($scope.annualSalarySpouse.replaceAll('$', '').replaceAll(',', ''));
+        var employmentIncomePartner = $scope.spouseOption ? Number($scope.annualSalarySpouse.replaceAll('$', '').replaceAll(',', '')) : 0;
         var netRentalIncome = Number($scope.netRentalIncome.replaceAll('$', '').replaceAll(',', ''));
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
@@ -1936,28 +1932,43 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             deemingRate = 48600;
         }
 
+        console.log("dm",deemingRate);
+
         var totalAsset = homeContents + vehicleCost + investmentProperty;
         var totalInvestment = bankAssets + listedInvestment + marginLoans + allocatedPension + superFunds + otherInvestment;
         var totalIncome = employmentIncome + employmentIncomePartner + netRentalIncome + otherIncome + pensionIncome;
+
+        // console.log('totalAsset',totalAsset);
+
+        // console.log("inv",totalInvestment);
+
+        // console.log("ti",totalIncome);
 
         if (totalInvestment <= deemingRate) {
             temp = totalInvestment * (1.75 / 100);
         } else {
             temp = deemingRate * (1.75 / 100) + (totalInvestment - deemingRate) * (3.25 / 100);
         }
+
+        // console.log("temp",temp);
+
         var totalCalcIncome = totalIncome + temp;
+
+        // console.log("tci",totalCalcIncome);
 
         // console.log(totalCalcIncome);
 
         var fortnightIncome = totalCalcIncome / 26;
 
-        console.log(fortnightIncome);
+        // console.log(fortnightIncome);
 
         if (fortnightIncome <= assetCalculationObj.itCheck) {
             temp2 = assetCalculationObj.default;
         } else {
             temp2 = assetCalculationObj.default-assetCalculationObj.percent * (fortnightIncome - assetCalculationObj.itCheck);
         }
+
+        // console.log("temp2",temp2);
 
         var maxAgedPensionIncome = temp2;
 
@@ -1972,6 +1983,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 temp3 = assetCalculationObj.default-(assetCalculationObj.default / (assetCalculationObj.high - assetCalculationObj.low)) * (totalCalcAsset - assetCalculationObj.low)
             }
         }
+
+        // console.log("totalCalcAsset",totalCalcAsset);
+
+        // console.log('temp3',temp3);
 
         var maxAgedPensionAsset = temp3;
 
@@ -1992,11 +2007,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             var object2 = biCount(true);
             ctm = Math.max(object1.count, object2.count);
             fillArray();
+            console.log("spouse",object2);
         } else {
             ctm = object1.count;
         }
+        console.log("you",object1);
 
-        // console.log(ctm);
+        console.log("ctm",ctm);
 
 
         function fillArray() {
@@ -2006,14 +2023,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                     object1.biArray.push(0);
                     object1.ageArray.push(object1.ageArray[object1.count + i] + 1);
                 }
-                // console.log(object1);
             } else {
                 for (var i = 0; i < object1.count - object2.count; i++) {
                     object2.penArray.push(0);
                     object2.biArray.push(0);
                     object2.ageArray.push(object2.ageArray[object2.count + i] + 1);
                 }
-                // console.log(object2);
             }
         }
 
@@ -2051,21 +2066,29 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             assetCalculationObj.percent = 0.5;
         }
 
-        // entitledAgedPension(fund,assetCalculationObj);
-
-        // for(var i = 0;i<=ctm;i++){
-        //     var superFund = 
-        // }
-
-        // fillArray();
-
-        // console.log(ctm);
+        console.log("assetCalcObject",assetCalculationObj);
 
         var superFund;
+
+        var cArray = object1.biArray;
+
+        var eArray = object2.biArray;
+
+        var hArray = object1.penArray;
+
+        var iArray = object2.penArray;
 
         var fArray = [];
 
         var gArray = [];
+
+        var jArray = [];
+
+        var kArray = [];
+
+        var lArray = [];
+
+        var mArray = [];
 
         for (i = 0; i <= ctm; i++) {
             if ($scope.spouseOption) {
@@ -2075,6 +2098,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 } else {
                     gArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
+                
                 if (object1.ageArray[i] < 65){
                     fArray.push(0);
                 }else{
@@ -2082,16 +2106,26 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 }
             }else{
                 superFund = object1.biArray[i];
+                // console.log(object1.ageArray[i]);
                 if (object1.ageArray[i] < 65){
                     fArray.push(0);
                 }else{
                     fArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
+                gArray.push(0);
             }
 
+            kArray.push(gArray[i] * 26);
+            jArray.push(fArray[i] * 26);
+            lArray.push(cArray[i] + eArray[i]);
+            mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
 
         }
-        console.log(fArray);
+
+        console.log("j",jArray);
+        console.log("k",kArray);
+        console.log("l",lArray);
+        console.log("m",mArray);
     }
 
 
