@@ -47,8 +47,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <!-- ng-class="{'err-border' : ttrForm.dob.$invalid }" -->
-                                                    <input type="text" name="dob" id="dobText" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dob" is-open="popup1.opened" datepicker-options="dateOptions" required close-text="Close" 
-                                                    ng-blur="ageChange('dobText')" />
+                                                    <input type="text" name="dob" id="dobText" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dob" is-open="popup1.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange()" />
                                                     <span class="input-group-addon" ng-click="open1()">
                                  <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -148,7 +147,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="row second-row-mobile">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     <div class="row">
@@ -178,7 +177,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <!-- ng-class="{'err-border' : ttrForm.dob.$invalid }" -->
-                                                    <input type="text" name="dobSpouse" id="dobTextSpouse" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dobSpouse" is-open="popup2.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange('dobTextSpouse')" />
+                                                    <input type="text" name="dobSpouse" id="dobTextSpouse" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dobSpouse" is-open="popup2.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange2()" />
                                                     <span class="input-group-addon" ng-click="open2()">
                                  <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -278,7 +277,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </form>
                         <div class="row title-div">
                             <span class="number-wrapper">2</span>
@@ -382,7 +381,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row second-row-mobile" id="datebox">    
+                            <div class="row second-row-mobile" id="datebox">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Wage Increase
                                     <div class="row">
@@ -398,14 +397,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
                                     Pension Drawdown
                                     <select class="selectpickerSingle">
                                         <option ng-repeat="x in listOb" value="{{x.id}}">{{x.name}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row second-row-mobile" ng-class="{optionDrop: (!showPensionOption)}">    
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!showPensionOption)}">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Pension Drawdown Base
                                     <div class="row">
@@ -427,7 +426,6 @@
                                 <div class="col-xs-12">
                                     <strong>Spouse Related Assumptions</strong>
                                 </div>
-                            
                             </div>
                             <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
                                 <div class="col-xs-12 col-sm-6 form-heading">
@@ -525,7 +523,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}" id="datebox">    
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}" id="datebox">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Wage Increase
                                     <div class="row">
@@ -541,14 +539,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
                                     Pension Drawdown
                                     <select class="selectpickerSpouse">
                                         <option ng-repeat="x in listOb" value="{{x.id}}">{{x.name}}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row second-row-mobile" ng-class="{optionDrop: (!showPensionOptionSpouse || !spouseOption)}">    
+                            <div class="row second-row-mobile" ng-class="{optionDrop: (!showPensionOptionSpouse || !spouseOption)}">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     Pension Drawdown Base
                                     <div class="row">
@@ -755,7 +753,7 @@
                 <div class="row result-head">
                     <h3 class="results-title">Your Results</h3>
                 </div>
-                <div class="row result-div">
+                <!-- <div class="row result-div" style="display:none;">
                     <div class="col-xs-12 col-sm-7 col-md-7">
                         <div class="row chart-buttons-row" print-remove>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -774,13 +772,6 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-5">
-                        <!-- <div class="row chart-buttons-row print-btn" print-remove x>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                <button class="btn btn-primary hidden-xs" onclick="window.print()">
-                  Print Result
-                </button>
-                </div>
-                </div> -->
                         <div class="row res-2">
                             <div class="col-xs-12">
                                 <div class="row res-head"><strong>Your take home money</strong></div>
@@ -833,12 +824,17 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+                <div class="row">
+                <div class="col-xs-12">
+                <div id="container"></div>
                 </div>
-                <div class="row cta" print-remove>
+                </div>
+               <!--  <div class="row cta" print-remove>
                     <div class="col-xs-12">
                         <p>Need to know more <a class="btn btn-default get-in-touch">Get in touch</a></p>
                     </div>
-                </div>
+                </div> -->
                 <div class="row disclaimer">
                     <span class="calculator-disclaimer">Information provided by Financial Choice Pty Ltd is general financial advice only. General advice is defined under the new regulations to include information about financial products and financial markets and our current views and outlook for those products and markets. The general advice we provide includes the information you have requested from us directly or via our web site.</span>
                 </div>
