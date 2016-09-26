@@ -47,7 +47,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <!-- ng-class="{'err-border' : ttrForm.dob.$invalid }" -->
-                                                    <input type="text" name="dob" id="dobText" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dob" is-open="popup1.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange('dobText')" />
+                                                    <input type="text" name="dob" id="dobText" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dob" is-open="popup1.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange()" />
                                                     <span class="input-group-addon" ng-click="open1()">
                                  <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -177,7 +177,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <!-- ng-class="{'err-border' : ttrForm.dob.$invalid }" -->
-                                                    <input type="text" name="dobSpouse" id="dobTextSpouse" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dobSpouse" is-open="popup2.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange('dobTextSpouse')" />
+                                                    <input type="text" name="dobSpouse" id="dobTextSpouse" onClick="this.select();" class="standard-input form-control dob-input" show-button-bar="false" uib-datepicker-popup="{{format}}" ng-model="dobSpouse" is-open="popup2.opened" datepicker-options="dateOptions" required close-text="Close" ng-blur="ageChange2()" />
                                                     <span class="input-group-addon" ng-click="open2()">
                                  <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
