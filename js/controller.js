@@ -1,4 +1,4 @@
-app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', 'DonutChartServiceHc', 'PdfMaker', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc, DonutChartServiceHc, PdfMaker) {
+app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', 'DonutChartServiceHc', 'PdfMaker','AreaChartService', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc, DonutChartServiceHc, PdfMaker,AreaChartService) {
 
     String.prototype.replaceAll = function(search, replacement) {
         var target = this;
@@ -1862,7 +1862,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         var entitledAgedPension = maxAgedPensionIncome > maxAgedPensionAsset ? maxAgedPensionAsset : maxAgedPensionIncome;
 
-        return entitledAgedPension;
+        // return entitledAgedPension;
+
+        return entitledAgedPension > 0 ? entitledAgedPension : 0;
     }
 
 
@@ -1989,8 +1991,15 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         }
 
+        console.log('j',jArray);
+        console.log('k',kArray);
+        console.log('l',lArray);
+        console.log('m',mArray);
+
 
         ChartServiceHc.createChart(lArray);
+
+        AreaChartService.createChart(jArray,kArray,hArray,iArray,27,30.2);
 
     }
 
