@@ -22,8 +22,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         });
     });
 
-    $scope.showPensionOption = false;
-    $scope.showPensionOptionSpouse = false;
+    $scope.showPensionOption = true;
+    $scope.showPensionOptionSpouse = true;
 
     $('.selectpickerSingle').on('change', function() {
         var selected = $('.selectpickerSingle option:selected').val();
@@ -42,8 +42,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     //     $('#datebox').val($(this).text());
     // });
 
-    $scope.resultWithSS = [0, 0, 0];
-    $scope.resultWithoutSS = [0, 0, 0];
+    // $scope.resultWithSS = [0, 0, 0];
+    // $scope.resultWithoutSS = [0, 0, 0];
 
     var initDate = new Date();
     initDate.setYear(1961);
@@ -167,14 +167,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.spouseOption = false;
     $scope.houseOption = false;
-    $scope.retirementAgeSpouse = 20000;
-    $scope.annualSalarySpouse = 500000;
+    $scope.retirementAgeSpouse = 60;
+    $scope.annualSalarySpouse = 200000;
     $scope.superBalanceSpouse = 0;
     $scope.salarySacrificeSpouse = 2000;
     $scope.pensionStartSpouse = 20000;
     $scope.insurancePremiumSpouse = 0;
     $scope.investmentReturnSpouse = 0;
-    $scope.variableFeeSpouse = 800000;
+    $scope.variableFeeSpouse = 10000;
     $scope.fixedFeeSpouse = 20000;
     $scope.pensionDrawdownBase = 40000;
     $scope.pensionDrawdownBaseSpouse = 40000;
@@ -188,7 +188,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.retirementAge = 65;
 
-    $scope.annualSalary = 260000;
+    $scope.annualSalary = 300000;
 
     $scope.employerContributionLevel = 9.50;
     $scope.employerContributionLevelSpouse = 9.50;
@@ -213,13 +213,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.fixedFee = 300;
 
-    $scope.homeContents = 500000;
+    $scope.homeContents = 50000;
     $scope.vehicleCost = 0;
     $scope.investmentProperty = 2000;
     $scope.bankAssets = 20000;
     $scope.listedInvestment = 0;
     $scope.marginLoans = 0;
-    $scope.allocatedPension = 800000;
+    $scope.allocatedPension = 60000;
     // $scope.superFunds = 20000;
     $scope.otherInvestment = 20000;
     // $scope.employmentIncome = 100000;
@@ -293,7 +293,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.annualSalary],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [600000]
         },
         step: 500,
         format: wNumb({
@@ -367,7 +367,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.superBalance],
         range: {
             'min': [0],
-            'max': [500000]
+            'max': [3000000]
         },
         step: 500,
         format: wNumb({
@@ -425,7 +425,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.insurancePremium],
         range: {
             'min': [0],
-            'max': [200000]
+            'max': [20000]
         },
         step: 100,
         format: wNumb({
@@ -453,7 +453,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     noUiSlider.create(salarySacrificeSlider, {
         start: [$scope.salarySacrifice],
         range: {
-            'min': [10000],
+            'min': [0],
             'max': [35000]
         },
         step: 500,
@@ -525,7 +525,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.annualSalarySpouse],
         range: {
             'min': [0],
-            'max': [5000000]
+            'max': [600000]
         },
         step: 500,
         format: wNumb({
@@ -541,7 +541,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.superBalanceSpouse],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [3000000]
         },
         step: 500,
         format: wNumb({
@@ -556,7 +556,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.insurancePremiumSpouse],
         range: {
             'min': [0],
-            'max': [1000000]
+            'max': [20000]
         },
         step: 500,
         format: wNumb({
@@ -571,7 +571,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.salarySacrificeSpouse],
         range: {
             'min': [0],
-            'max': [200000]
+            'max': [35000]
         },
         step: 500,
         format: wNumb({
@@ -627,7 +627,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.fixedFeeSpouse],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [20000]
         },
         step: 500,
         format: wNumb({
@@ -641,14 +641,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     noUiSlider.create(retirementAgeSpouseSlider, {
         start: [$scope.retirementAgeSpouse],
         range: {
-            'min': [0],
-            'max': [10000000]
+            'min': [55],
+            'max': [70]
         },
-        step: 500,
+        step: 1,
         format: wNumb({
             decimals: 0,
-            prefix: '$',
-            thousand: ','
+            // prefix: '$',
+            // thousand: ','
         }),
         connect: 'lower'
     });
@@ -656,7 +656,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.pensionDrawdownBase],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [60000]
         },
         step: 500,
         format: wNumb({
@@ -671,7 +671,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.pensionDrawdownBaseSpouse],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [60000]
         },
         step: 500,
         format: wNumb({
@@ -686,7 +686,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.homeContents],
         range: {
             'min': [0],
-            'max': [5000000]
+            'max': [500000]
         },
         step: 500,
         format: wNumb({
@@ -702,7 +702,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.vehicleCost],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [500000]
         },
         step: 500,
         format: wNumb({
@@ -732,7 +732,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.investmentProperty],
         range: {
             'min': [0],
-            'max': [200000]
+            'max': [2000000]
         },
         step: 500,
         format: wNumb({
@@ -778,7 +778,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.allocatedPension],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [100000]
         },
         step: 500,
         format: wNumb({
@@ -808,7 +808,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.otherInvestment],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [200000]
         },
         step: 500,
         format: wNumb({
@@ -853,7 +853,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         start: [$scope.netRentalIncome],
         range: {
             'min': [0],
-            'max': [10000000]
+            'max': [20000]
         },
         step: 500,
         format: wNumb({
@@ -1434,7 +1434,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     insurancePremiumSlider.noUiSlider.on('set', function(values, handle) {
         insurancePremiumInput.value = values[handle];
         $scope.insurancePremium = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
@@ -1560,49 +1560,49 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     homeContentsSlider.noUiSlider.on('set', function(values, handle) {
         homeContentsInput.value = values[handle];
         $scope.homeContents = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     vehicleCostSlider.noUiSlider.on('set', function(values, handle) {
         vehicleCostInput.value = values[handle];
         $scope.vehicleCost = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     investmentPropertySlider.noUiSlider.on('set', function(values, handle) {
         investmentPropertyInput.value = values[handle];
         $scope.investmentProperty = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     bankAssetsSlider.noUiSlider.on('set', function(values, handle) {
         bankAssetsInput.value = values[handle];
         $scope.bankAssets = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     listedInvestmentSlider.noUiSlider.on('set', function(values, handle) {
         listedInvestmentInput.value = values[handle];
         $scope.listedInvestment = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     marginLoansSlider.noUiSlider.on('set', function(values, handle) {
         marginLoansInput.value = values[handle];
         $scope.marginLoans = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     allocatedPensionSlider.noUiSlider.on('set', function(values, handle) {
         allocatedPensionInput.value = values[handle];
         $scope.allocatedPension = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
@@ -1616,7 +1616,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     otherInvestmentSlider.noUiSlider.on('set', function(values, handle) {
         otherInvestmentInput.value = values[handle];
         $scope.otherInvestment = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
@@ -1637,20 +1637,20 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     netRentalIncomeSlider.noUiSlider.on('set', function(values, handle) {
         netRentalIncomeInput.value = values[handle];
         $scope.netRentalIncome = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
     otherIncomeSlider.noUiSlider.on('set', function(values, handle) {
         otherIncomeInput.value = values[handle];
         $scope.otherIncome = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
     pensionIncomeSlider.noUiSlider.on('set', function(values, handle) {
         pensionIncomeInput.value = values[handle];
         $scope.pensionIncome = (values[handle]);
-        // calculateFinal();
+        calculateFinal();
         $timeout(0);
     });
 
@@ -2072,11 +2072,11 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         var cArray = object1.biArray;
 
-        var eArray = object2.biArray;
+        var eArray = $scope.spouseOption ? object2.biArray : [];
 
         var hArray = object1.penArray;
 
-        var iArray = object2.penArray;
+        var iArray = $scope.spouseOption ? object2.penArray : [];
 
         var fArray = [];
 
@@ -2104,6 +2104,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 }else{
                     fArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
+            kArray.push(gArray[i] * 26);
+            jArray.push(fArray[i] * 26);
+            lArray.push(cArray[i] + eArray[i]);
+            mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
             }else{
                 superFund = object1.biArray[i];
                 // console.log(object1.ageArray[i]);
@@ -2113,12 +2117,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                     fArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
                 gArray.push(0);
-            }
-
             kArray.push(gArray[i] * 26);
             jArray.push(fArray[i] * 26);
-            lArray.push(cArray[i] + eArray[i]);
-            mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
+            lArray.push(cArray[i]);
+            mArray.push(jArray[i] + kArray[i] + hArray[i]);    
+            }
+
+
 
         }
 
@@ -2126,7 +2131,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         console.log("k",kArray);
         console.log("l",lArray);
         console.log("m",mArray);
+
+        ChartServiceHc.createChart(lArray);
+
     }
+
+    calculateFinal();
 
 
 }]);
