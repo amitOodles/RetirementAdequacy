@@ -40,6 +40,17 @@
                         </div>
                         <form name="ttrForm" class="ttr-form" novalidate ng-submit="submitForm(ttrForm.$valid)">
                             <div class="row first-row-mobile">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            Gender
+                                            <button class="option-l-btn btn btn-primary " ng-click="genderOption = true" ng-disabled="genderOption">Male</button>
+                                            <button class="option-r-btn btn btn-primary " ng-click="genderOption = false" ng-disabled="!genderOption">Female</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row second-row-mobile">
                                 <div class="col-xs-8 col-sm-4 form-heading">
                                     Date Of Birth
                                     <div class="row">
@@ -169,6 +180,17 @@
                                 </div>
                             </div>
                             <div class="row divider" ng-class="{optionDrop: (!spouseOption)}"></div>
+                            <div class="row first-row-mobile"  ng-class="{optionDrop: (!spouseOption)}">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            Gender
+                                            <button class="option-l-btn btn btn-primary " ng-click="genderSpouseOption = true" ng-disabled="genderSpouseOption">Male</button>
+                                            <button class="option-r-btn btn btn-primary " ng-click="genderSpouseOption = false" ng-disabled="!genderSpouseOption">Female</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row second-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
                                 <div class="col-xs-8 col-sm-4 form-heading">
                                     Date Of Birth
