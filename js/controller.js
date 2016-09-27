@@ -153,7 +153,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         return '';
     }
-
+    $scope.genderOption = true;
+    $scope.genderSpouseOption = false;
     $scope.spouseOption = false;
     $scope.houseOption = false;
     $scope.retirementAgeSpouse = 70;
@@ -1867,7 +1868,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             if (totalCalcAsset > assetCalculationObj.high) {
                 temp3 = 0;
             } else {
-                temp3 = assetCalculationObj.default-(assetCalculationObj.default / (assetCalculationObj.high - assetCalculationObj.low)) * (totalCalcAsset - assetCalculationObj.low)
+                temp3 = assetCalculationObj.default-(assetCalculationObj.default / (assetCalculationObj.high - assetCalculationObj.low)) * (totalCalcAsset - assetCalculationObj.low);
             }
         }
 
