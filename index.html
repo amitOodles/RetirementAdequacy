@@ -179,6 +179,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row second-row-mobile">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Target Income
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="targetInput" name="targetInput" ng-model="target">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="targetSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row divider" ng-class="{optionDrop: (!spouseOption)}"></div>
                             <div class="row first-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
                                 <div class="col-xs-12 col-sm-6 form-heading">

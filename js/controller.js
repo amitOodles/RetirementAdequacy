@@ -235,6 +235,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.otherIncome = 0;
     $scope.pensionIncome = 0;
 
+    $scope.target = 40000;
+
 
     var retirementAgeSlider = document.getElementById('retirementAgeSlider'),
         annualSalarySlider = document.getElementById('annualSalarySlider'),
@@ -262,7 +264,6 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         retirementAgeSpouseSlider = document.getElementById('retirementAgeSpouseSlider'),
         pensionDrawdownBaseSlider = document.getElementById('pensionDrawdownBaseSlider'),
         pensionDrawdownBaseSpouseSlider = document.getElementById('pensionDrawdownBaseSpouseSlider'),
-
         homeContentsSlider = document.getElementById('homeContentsSlider'),
         vehicleCostSlider = document.getElementById('vehicleCostSlider'),
         investmentPropertySlider = document.getElementById('investmentPropertySlider'),
@@ -273,9 +274,25 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         otherInvestmentSlider = document.getElementById('otherInvestmentSlider'),
         netRentalIncomeSlider = document.getElementById('netRentalIncomeSlider'),
         otherIncomeSlider = document.getElementById('otherIncomeSlider'),
-        pensionIncomeSlider = document.getElementById('pensionIncomeSlider');
+        pensionIncomeSlider = document.getElementById('pensionIncomeSlider'),
+        targetSlider = document.getElementById('targetSlider');
 
 
+    noUiSlider.create(targetSlider, {
+        start: [$scope.target],
+        range: {
+            'min': [10000],
+            'max': [100000]
+        },
+        step: 500,
+        format: wNumb({
+            decimals: 0,
+            prefix: '$',
+            thousand: ','
+
+        }),
+        connect: 'lower'
+    });    
 
 
     noUiSlider.create(retirementAgeSlider, {
@@ -913,9 +930,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         // employmentIncomePartnerInput = document.getElementById('employmentIncomePartnerInput'),
         netRentalIncomeInput = document.getElementById('netRentalIncomeInput'),
         otherIncomeInput = document.getElementById('otherIncomeInput'),
-        pensionIncomeInput = document.getElementById('pensionIncomeInput');
+        pensionIncomeInput = document.getElementById('pensionIncomeInput')
+        targetInput = document.getElementById('targetInput');
 
-
+    targetSlider.noUiSlider.on('update', function(values, handle) {
+        targetInput.value = values[handle];
+        $scope.target = (values[handle]);
+    });    
 
     retirementAgeSlider.noUiSlider.on('update', function(values, handle) {
         retirementAgeInput.value = values[handle];
@@ -1339,6 +1360,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         pensionIncomeSlider.noUiSlider.set($scope.pensionIncome);
     });
 
+    targetInput.addEventListener("change", function() {
+        targetSlider.noUiSlider.set($scope.target);
+    });
+
 
     retirementAgeSlider.noUiSlider.on('set', function(values, handle) {
         retirementAgeInput.value = values[handle];
@@ -1600,6 +1625,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $timeout(0);
     });
 
+    targetSlider.noUiSlider.on('set', function(values, handle) {
+        targetInput.value = values[handle];
+        $scope.target = (values[handle]);
+        calculateFinal();
+        $timeout(0);
+    });
+
 
     $scope.spouseOptionChange = function(spouse) {
         $scope.spouseOption = spouse;
@@ -1844,6 +1876,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var netRentalIncome = Number($scope.netRentalIncome.replaceAll('$', '').replaceAll(',', ''));
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
+        
 
 
         var temp, temp2, temp3, deemingRate;
@@ -1904,7 +1937,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
 
     function calculateFinal() {
-        console.log('chaling');
+        // console.log('chaling');
+        var targetIncome = Number($scope.target.replaceAll('$', '').replaceAll(',', ''));
+        console.log(targetIncome);
         var isCouple = $scope.spouseOption;
         var ctm;
         var object1 = biCount(false);
@@ -2035,9 +2070,27 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         ChartServiceHc.createChart(lArray);
 
         if (!$scope.spouseOption) {
-            AreaChartService.createChart(jArray, [], hArray, [], leMember1, leMember2, false);
+            while(jArray.length <= Math.ceil(leMember1)){
+                jArray.push(0);
+            }
+            while(hArray.length <= Math.ceil(leMember1)){
+                hArray.push(0);
+            }
+            AreaChartService.createChart(jArray, [], hArray, [], leMember1, leMember2, false,targetIncome);
         } else {
-            AreaChartService.createChart(jArray, kArray, hArray, iArray, leMember1, leMember2, true);
+            while(jArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                jArray.push(0);
+            }
+            while(hArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                hArray.push(0);
+            }
+            while(iArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                iArray.push(0);
+            }
+            while(kArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                kArray.push(0);
+            }
+            AreaChartService.createChart(jArray, kArray, hArray, iArray, leMember1, leMember2, true , targetIncome);
         }
 
 
