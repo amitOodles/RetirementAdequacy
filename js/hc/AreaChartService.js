@@ -1,6 +1,25 @@
 app.service('AreaChartService',function(){
     
     this.createChart = function(benefitArr1,benefitArr2,penArr1,penArr2,le1,le2){
+
+        plotLineId = 'myPlotLine'; // To identify for removal
+        plotLineId1 = 'myPlotLine1'; // To identify for removal
+    
+    // Plot line options for adding
+    plotLineOptions = {
+        color: '#FF0000',
+        id: plotLineId, 
+        width: 2,
+        value: le1,
+        dashStyle: 'shortdash'
+    };
+    plotLineOptions1 = {
+        color: 'orange',
+        id: plotLineId1, 
+        width: 2,
+        value: le2,
+        dashStyle: 'shortdash'
+    };
     $('#containerA').highcharts({
         chart: {
             type: 'area'
@@ -20,7 +39,11 @@ app.service('AreaChartService',function(){
             title: {
                 // enabled: true,
                 // text : 'years'
-            }
+            },
+
+            plotLines: [
+                plotLineOptions,plotLineOptions1
+            ]
         },
         yAxis: {
             title: {
@@ -63,11 +86,43 @@ app.service('AreaChartService',function(){
         }, {
             name: 'Pension Member 2',
             data: penArr2
-        },
-        // {
-        //     name: 'Oceania',
-        //     data: [2, 2, 2, 6, 13, 30, 46]
-        // }
+        }, {
+            // Series that mimics the plot line
+            color: '#FF0000',
+            name: 'My plotline',
+            dashStyle: 'shortdash',
+            marker: {
+                enabled: false
+            },
+            events: {
+                legendItemClick: function(e) {
+                    if(this.visible) {
+                        this.chart.xAxis[0].removePlotLine(plotLineId);
+                    }
+                    else {
+                        this.chart.xAxis[0].addPlotLine(plotLineOptions);
+                    }
+                }
+            }
+        },{
+            // Series that mimics the plot line
+            color: 'orange',
+            name: 'My plotline',
+            dashStyle: 'shortdash',
+            marker: {
+                enabled: false
+            },
+            events: {
+                legendItemClick: function(e) {
+                    if(this.visible) {
+                        this.chart.xAxis[0].removePlotLine(plotLineId1);
+                    }
+                    else {
+                        this.chart.xAxis[0].addPlotLine(plotLineOptions1);
+                    }
+                }
+            }
+        }
         ]
     });
     };

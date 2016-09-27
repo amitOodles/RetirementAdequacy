@@ -18,7 +18,7 @@ app.service('ChartServiceHc',function(){
         for(var i=0;i<balanceArray.length;i++){
 
         infoData.push({
-            name:i+1,
+            name:i,
             y:balanceArray[i]
         });
         }
