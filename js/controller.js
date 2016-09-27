@@ -12,13 +12,17 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $timeout(function() {
         $('.selectpickerSingle').selectpicker({
             style: 'btn-info',
-            size: 2
+            size: 2,
         });
 
         $('.selectpickerSpouse').selectpicker({
             style: 'btn-info',
             size: 2
         });
+        $('.selectpickerSingle option[value="1"]').attr("selected",true);
+        $('.selectpickerSpouse option[value="1"]').attr("selected",true);
+        $('.selectpickerSingle').selectpicker('refresh');
+        $('.selectpickerSpouse').selectpicker('refresh');
     });
 
     $scope.showPensionOption = true;
@@ -41,8 +45,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     initDate.setYear(1961);
     initDate.setMonth(6);
     initDate.setDate(1);
+
+    var initDate2 = new Date();
+    initDate2.setYear(1965);
+    initDate2.setMonth(6);
+    initDate2.setDate(4);
+
     $scope.dob = initDate;
-    $scope.dobSpouse = initDate;
+    $scope.dobSpouse = initDate2;
 
 
     $scope.chartOneOpen = true;
@@ -146,17 +156,17 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.spouseOption = false;
     $scope.houseOption = false;
-    $scope.retirementAgeSpouse = 60;
-    $scope.annualSalarySpouse = 200000;
-    $scope.superBalanceSpouse = 0;
-    $scope.salarySacrificeSpouse = 2000;
-    $scope.pensionStartSpouse = 20000;
+    $scope.retirementAgeSpouse = 70;
+    $scope.annualSalarySpouse = 90000;
+    $scope.superBalanceSpouse = 200000;
+    $scope.salarySacrificeSpouse = 5000;
+    $scope.pensionStartSpouse = 65;
     $scope.insurancePremiumSpouse = 0;
-    $scope.investmentReturnSpouse = 0;
-    $scope.variableFeeSpouse = 10000;
-    $scope.fixedFeeSpouse = 20000;
+    $scope.investmentReturnSpouse = 5.30;
+    $scope.variableFeeSpouse = 1.11;
+    $scope.fixedFeeSpouse = 300;
     $scope.pensionDrawdownBase = 40000;
-    $scope.pensionDrawdownBaseSpouse = 40000;
+    $scope.pensionDrawdownBaseSpouse = 30000;
 
     $scope.overlay = false;
 
@@ -573,7 +583,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             'min': [0],
             'max': [20000]
         },
-        step: 500,
+        step: 100,
         format: wNumb({
             decimals: 0,
             prefix: '$',
@@ -1723,7 +1733,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             if (year === 0) {
                 concessionalCo = 0;
             } else {
-                if (ageL < $scope.retirementAge) {
+                if (ageL < retirementAge) {
                     var temp = adjustedSalary * (employerContributionLevel / 100) + salarySacrifice;
                     concessionalCo = temp <= 25000 ? temp : 25000;
                 } else {
@@ -1784,7 +1794,11 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
             count++;
 
+            // console.log([balance,balanceCpi,balanceIndexed]);
+
         }
+
+        console.log(biArray);
 
         return {
             count: count - 2,
@@ -1814,7 +1828,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var temp, temp2, temp3, deemingRate;
 
         if ($scope.spouseOption) {
-            deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 80600 : 40300;
+            deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40300 : 80600;
         } else {
             deemingRate = 48600;
         }
