@@ -184,6 +184,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     var leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
 
+
     $scope.genderChange = function(bool){
             $scope.genderOption = bool;
             leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
@@ -1162,6 +1163,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             $scope.dob = initDate;
         }
         $scope.age = AgeCalculator.getAge($scope.dob, $scope.fy);
+        leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
         if ($scope.age > 59) {
             retirementAgeSlider.noUiSlider.updateOptions({
                 range: {
@@ -1193,6 +1195,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             $scope.dobSpouse = initDate;
         }
         $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
+        leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
         if ($scope.ageSpouse > 59) {
             retirementAgeSpouseSlider.noUiSlider.updateOptions({
                 range: {
