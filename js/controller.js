@@ -2079,7 +2079,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             while(hArray.length <= Math.ceil(leMember1)){
                 hArray.push(0);
             }
-            AreaChartService.createChart(jArray, [], hArray, [], leMember1, leMember2, false,targetIncome);
+            AreaChartService.createChart(jArray.slice(0,5+Math.ceil(leMember1)), [], hArray.slice(0,5+Math.ceil(leMember1)), [], leMember1, leMember2, false,targetIncome);
         } else {
             while(jArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
                 jArray.push(0);
@@ -2093,7 +2093,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             while(kArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
                 kArray.push(0);
             }
-            AreaChartService.createChart(jArray, kArray, hArray, iArray, leMember1, leMember2, true , targetIncome);
+            AreaChartService.createChart(jArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), kArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), hArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), iArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), leMember1, leMember2, true , targetIncome);
         }
 
 
