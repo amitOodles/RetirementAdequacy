@@ -9,9 +9,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         { id: 1, name: "Choose you own pension" }
     ];
 
-    var maleExpectancy = [80.3,79.6,78.6,77.6,76.6,75.6,74.6,73.6,72.7,71.7,70.7,69.7,68.7,67.7,66.7,65.7,64.7,63.7,62.8,61.8,60.8,59.9,58.9,57.9,57,56,55,54.1,53.1,52.2,51.2,50.2,49.3,48.3,47.3,46.4,45.4,44.5,43.5,42.6,41.6,40.7,39.8,38.8,37.9,37,36,35.1,34.2,33.3,32.4,31.4,30.5,29.6,28.8,27.9,27,26.1,25.3,24.4,23.5,22.7,21.9,21,20.2,19.4,18.6,17.8,17,16.3,15.5,14.8,14,13.3,12.6,11.9,11.2,10.6,9.9,9.3,8.7,8.2,7.6,7.1,6.6,6.1,5.7,5.3,4.9,4.5,4.2,3.9,3.6,3.4,3.2,3,2.8,2.6,2.5,2.4,2.3];
+    var maleExpectancy = [80.3, 79.6, 78.6, 77.6, 76.6, 75.6, 74.6, 73.6, 72.7, 71.7, 70.7, 69.7, 68.7, 67.7, 66.7, 65.7, 64.7, 63.7, 62.8, 61.8, 60.8, 59.9, 58.9, 57.9, 57, 56, 55, 54.1, 53.1, 52.2, 51.2, 50.2, 49.3, 48.3, 47.3, 46.4, 45.4, 44.5, 43.5, 42.6, 41.6, 40.7, 39.8, 38.8, 37.9, 37, 36, 35.1, 34.2, 33.3, 32.4, 31.4, 30.5, 29.6, 28.8, 27.9, 27, 26.1, 25.3, 24.4, 23.5, 22.7, 21.9, 21, 20.2, 19.4, 18.6, 17.8, 17, 16.3, 15.5, 14.8, 14, 13.3, 12.6, 11.9, 11.2, 10.6, 9.9, 9.3, 8.7, 8.2, 7.6, 7.1, 6.6, 6.1, 5.7, 5.3, 4.9, 4.5, 4.2, 3.9, 3.6, 3.4, 3.2, 3, 2.8, 2.6, 2.5, 2.4, 2.3];
 
-    var femaleExpectancy = [84.4,83.7,82.7,81.7,80.7,79.7,78.7,77.7,76.8,75.8,74.8,73.8,72.8,71.8,70.8,69.8,68.8,67.8,66.8,65.9,64.9,63.9,62.9,61.9,60.9,60,59,58,57,56,55,54.1,53.1,52.1,51.1,50.1,49.2,48.2,47.2,46.3,45.3,44.3,43.4,42.4,41.4,40.5,39.5,38.6,37.6,36.7,35.8,34.8,33.9,33,32,31.1,30.2,29.3,28.4,27.5,26.6,25.7,24.8,23.9,23,22.2,21.3,20.4,19.6,18.8,17.9,17.1,16.3,15.5,14.7,13.9,13.2,12.4,11.7,11,10.3,9.6,9,8.3,7.7,7.2,6.6,6.1,5.7,5.2,4.8,4.4,4.1,3.8,3.5,3.3,3,2.9,2.7,2.5,2.4];
+    var femaleExpectancy = [84.4, 83.7, 82.7, 81.7, 80.7, 79.7, 78.7, 77.7, 76.8, 75.8, 74.8, 73.8, 72.8, 71.8, 70.8, 69.8, 68.8, 67.8, 66.8, 65.9, 64.9, 63.9, 62.9, 61.9, 60.9, 60, 59, 58, 57, 56, 55, 54.1, 53.1, 52.1, 51.1, 50.1, 49.2, 48.2, 47.2, 46.3, 45.3, 44.3, 43.4, 42.4, 41.4, 40.5, 39.5, 38.6, 37.6, 36.7, 35.8, 34.8, 33.9, 33, 32, 31.1, 30.2, 29.3, 28.4, 27.5, 26.6, 25.7, 24.8, 23.9, 23, 22.2, 21.3, 20.4, 19.6, 18.8, 17.9, 17.1, 16.3, 15.5, 14.7, 13.9, 13.2, 12.4, 11.7, 11, 10.3, 9.6, 9, 8.3, 7.7, 7.2, 6.6, 6.1, 5.7, 5.2, 4.8, 4.4, 4.1, 3.8, 3.5, 3.3, 3, 2.9, 2.7, 2.5, 2.4];
 
     $timeout(function() {
         $('.selectpickerSingle').selectpicker({
@@ -185,17 +185,17 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     var leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
 
 
-    $scope.genderChange = function(bool){
-            $scope.genderOption = bool;
-            leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
-            calculateFinal();
+    $scope.genderChange = function(bool) {
+        $scope.genderOption = bool;
+        leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
+        calculateFinal();
     };
 
-    $scope.genderChangeSpouse = function(bool){
-            $scope.genderOptionSpouse = bool;
-            leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
-            calculateFinal();
-    };     
+    $scope.genderChangeSpouse = function(bool) {
+        $scope.genderOptionSpouse = bool;
+        leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
+        calculateFinal();
+    };
 
     $scope.retirementAge = 65;
 
@@ -293,7 +293,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         }),
         connect: 'lower'
-    });    
+    });
 
 
     noUiSlider.create(retirementAgeSlider, {
@@ -932,12 +932,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         netRentalIncomeInput = document.getElementById('netRentalIncomeInput'),
         otherIncomeInput = document.getElementById('otherIncomeInput'),
         pensionIncomeInput = document.getElementById('pensionIncomeInput')
-        targetInput = document.getElementById('targetInput');
+    targetInput = document.getElementById('targetInput');
 
     targetSlider.noUiSlider.on('update', function(values, handle) {
         targetInput.value = values[handle];
         $scope.target = (values[handle]);
-    });    
+    });
 
     retirementAgeSlider.noUiSlider.on('update', function(values, handle) {
         retirementAgeInput.value = values[handle];
@@ -1879,7 +1879,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var netRentalIncome = Number($scope.netRentalIncome.replaceAll('$', '').replaceAll(',', ''));
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
-        
+
 
 
         var temp, temp2, temp3, deemingRate;
@@ -2070,30 +2070,133 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         console.log('m', mArray);
 
 
-        ChartServiceHc.createChart(lArray);
+
 
         if (!$scope.spouseOption) {
-            while(jArray.length <= Math.ceil(leMember1)){
+            while (jArray.length <= Math.ceil(leMember1)) {
                 jArray.push(0);
             }
-            while(hArray.length <= Math.ceil(leMember1)){
+            while (hArray.length <= Math.ceil(leMember1)) {
                 hArray.push(0);
             }
-            AreaChartService.createChart(jArray.slice(0,5+Math.ceil(leMember1)), [], hArray.slice(0,5+Math.ceil(leMember1)), [], leMember1, leMember2, false,targetIncome);
+            ChartServiceHc.createChart(lArray.slice(0, 5 + Math.ceil(leMember1)));
+            AreaChartService.createChart(jArray.slice(0, 5 + Math.ceil(leMember1)), [], hArray.slice(0, 5 + Math.ceil(leMember1)), [], leMember1, leMember2, false, targetIncome);
         } else {
-            while(jArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+            while (jArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
                 jArray.push(0);
             }
-            while(hArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+            while (hArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
                 hArray.push(0);
             }
-            while(iArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+            while (iArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
                 iArray.push(0);
             }
-            while(kArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+            while (kArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
                 kArray.push(0);
             }
-            AreaChartService.createChart(jArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), kArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), hArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), iArray.slice(0,5+Math.max(Math.ceil(leMember1),Math.ceil(leMember2))), leMember1, leMember2, true , targetIncome);
+            ChartServiceHc.createChart(lArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))));
+            AreaChartService.createChart(jArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), kArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), hArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), iArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), leMember1, leMember2, true, targetIncome);
+
+            
+            var annualSalary1 = Number($scope.annualSalary.replaceAll('$', '').replaceAll(',', ''));
+            var superBalance1 = Number($scope.superBalance.replaceAll('$', '').replaceAll(',', ''));
+            var wageIncrease1 = Number($scope.wageIncrease.replaceAll('%', ''));
+            var inflation1 = Number($scope.inflation.replaceAll('%', ''));
+            var investmentReturn1 = Number($scope.investmentReturn.replaceAll('%', ''));
+            var variableFee1 = Number($scope.variableFee.replaceAll('%', ''));
+            var employerContributionLevel1 = Number($scope.employerContributionLevel.replaceAll('%', ''));
+            var salarySacrifice1 = Number($scope.salarySacrifice.replaceAll('$', '').replaceAll(',', ''));
+            var fixedFee1 = Number($scope.fixedFee.replaceAll('$', '').replaceAll(',', ''));
+            var insurancePremium1 = Number($scope.insurancePremium.replaceAll('$', '').replaceAll(',', ''));
+            var retirementAge1 = $scope.retirementAge;
+            var pensionStart1 = $scope.pensionStart;
+            var minPension1 = !$scope.showPensionOption;
+            var ddBase1 = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
+            var ageL1 = $scope.age;
+
+            var annualSalary1Spouse = Number($scope.annualSalary.replaceAll('$', '').replaceAll(',', ''));
+            var superBalance1Spouse = Number($scope.superBalance.replaceAll('$', '').replaceAll(',', ''));
+            var wageIncrease1Spouse = Number($scope.wageIncrease.replaceAll('%', ''));
+            var inflation1Spouse = Number($scope.inflation.replaceAll('%', ''));
+            var investmentReturn1Spouse = Number($scope.investmentReturn.replaceAll('%', ''));
+            var variableFee1Spouse = Number($scope.variableFee.replaceAll('%', ''));
+            var employerContributionLevel1Spouse = Number($scope.employerContributionLevel.replaceAll('%', ''));
+            var salarySacrifice1Spouse = Number($scope.salarySacrifice.replaceAll('$', '').replaceAll(',', ''));
+            var fixedFee1Spouse = Number($scope.fixedFee.replaceAll('$', '').replaceAll(',', ''));
+            var insurancePremium1Spouse = Number($scope.insurancePremium.replaceAll('$', '').replaceAll(',', ''));
+            var retirementAge1Spouse = $scope.retirementAge;
+            var pensionStart1Spouse = $scope.pensionStart;
+            var minPension1Spouse = !$scope.showPensionOption;
+            var ddBase1Spouse = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
+            var ageL1Spouse = $scope.age;
+
+            var personalDetails = {
+                dob: $scope.dob,
+                age: $scope.age,
+                annualSalary: annualSalary1,
+                superBalance: superBalance1,
+                retirementAge: retirementAge1,
+                gender: $scope.genderOption,
+                salarySacrifice: salarySacrifice1,
+                pensionAge: pensionStart1,
+                spouseOption: $scope.isCouple,
+                houseOption: $scope.ownsHome,
+                targetIncome: targetIncome,
+            }
+
+            var personalDetailsSpouse = {
+                dob: $scope.dobSpouse,
+                age: $scope.ageSpouse,
+                annualSalary: annualSalary1Spouse,
+                superBalance: superBalance1Spouse,
+                retirementAge: retirementAge1Spouse,
+                gender: $scope.genderOptionSpouse,
+                salarySacrifice: salarySacrifice1Spouse,
+                pensionAge: pensionStart1Spouse,
+
+            }
+
+            var assumptions = {
+                insurancePremium: insurancePremium1,
+                investmentReturn: investmentReturn1,
+                variableFee: variableFee1,
+                fixedFee: fixedFee1,
+                employerContributionLevel: employerContributionLevel1,
+                inflation: inflation1,
+                wageIncrease: wageIncrease1,
+                pensionDrawdown: pensionDrawdown1,
+                pensionDrawdownBase: pensionDrawdownBase1
+            }
+
+             var assumptionsSpouse = {
+                insurancePremium: insurancePremium1Spouse,
+                investmentReturn: investmentReturn1Spouse,
+                variableFee: variableFee1Spouse,
+                fixedFee: fixedFee1Spouse,
+                employerContributionLevel: employerContributionLevel1Spouse,
+                inflation: inflation1Spouse,
+                wageIncrease: wageIncrease1Spouse,
+                pensionDrawdown: pensionDrawdown1Spouse,
+                pensionDrawdownBase: pensionDrawdownBase1Spouse
+            }
+
+            var otherAssets = {
+                homeContents: homeContents,
+                vehicleCost: vehicleCost,
+                investmentProperty: investmentProperty,
+                bankAssets: bankAssets,
+                listedInvestment: listedInvestment,
+                marginLoans: marginLoans,
+                otherInvestment: otherInvestment,
+                netRentalIncome: netRentalIncome,
+                otherIncome: otherIncome,
+                pensionIncome: pensionIncome,
+                allocatedPension: allocatedPension
+            }
+
+
+            PdfMaker.createChart(personalDetails,personalDetailsSpouse, assumptions,assumptionsSpouse,otherAssets);
+
         }
 
 

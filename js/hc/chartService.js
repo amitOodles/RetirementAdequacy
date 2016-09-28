@@ -10,11 +10,10 @@ app.service('ChartServiceHc',function(){
     var infoData = [];
     if(balanceArray.length>30){
         for(var i=0;i<balanceArray.length;i++){
-
-        infoData.push({
-            name:"",
-            y:balanceArray[i]
-        });
+            infoData.push({
+                name:"",
+                y:balanceArray[i]
+            });                
         }
     }else{
         for(var i=0;i<balanceArray.length;i++){
@@ -49,6 +48,7 @@ app.service('ChartServiceHc',function(){
             tickLength: 0,
             title: {
                 text: 'Years',
+                margin:10,
                 style:{
                     fontSize : 14,
                     fontWeight : "bold",
@@ -75,7 +75,9 @@ app.service('ChartServiceHc',function(){
             pointFormatter: function(){
                 return '<b>'+'Amount : $' + Highcharts.numberFormat((((this.y)).toFixed(2)),2,'.')+'</b>';
 
-            }
+            },
+            headerFormat: '<span style="font-weight:700;font-size:14px;"> Income distribution year {point.key}</span><br>'
+
         },
         credits: {
             enabled: false
