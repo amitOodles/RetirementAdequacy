@@ -1,4 +1,4 @@
-app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', 'DonutChartServiceHc', 'PdfMaker','AreaChartService', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc, DonutChartServiceHc, PdfMaker,AreaChartService) {
+app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', 'DonutChartServiceHc', 'PdfMaker', 'AreaChartService', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc, DonutChartServiceHc, PdfMaker, AreaChartService) {
 
     String.prototype.replaceAll = function(search, replacement) {
         var target = this;
@@ -8,6 +8,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.listOb = [{ id: 0, name: "Minimum Pension Only" },
         { id: 1, name: "Choose you own pension" }
     ];
+
+    var maleExpectancy = [80.3,79.6,78.6,77.6,76.6,75.6,74.6,73.6,72.7,71.7,70.7,69.7,68.7,67.7,66.7,65.7,64.7,63.7,62.8,61.8,60.8,59.9,58.9,57.9,57,56,55,54.1,53.1,52.2,51.2,50.2,49.3,48.3,47.3,46.4,45.4,44.5,43.5,42.6,41.6,40.7,39.8,38.8,37.9,37,36,35.1,34.2,33.3,32.4,31.4,30.5,29.6,28.8,27.9,27,26.1,25.3,24.4,23.5,22.7,21.9,21,20.2,19.4,18.6,17.8,17,16.3,15.5,14.8,14,13.3,12.6,11.9,11.2,10.6,9.9,9.3,8.7,8.2,7.6,7.1,6.6,6.1,5.7,5.3,4.9,4.5,4.2,3.9,3.6,3.4,3.2,3,2.8,2.6,2.5,2.4,2.3];
+
+    var femaleExpectancy = [84.4,83.7,82.7,81.7,80.7,79.7,78.7,77.7,76.8,75.8,74.8,73.8,72.8,71.8,70.8,69.8,68.8,67.8,66.8,65.9,64.9,63.9,62.9,61.9,60.9,60,59,58,57,56,55,54.1,53.1,52.1,51.1,50.1,49.2,48.2,47.2,46.3,45.3,44.3,43.4,42.4,41.4,40.5,39.5,38.6,37.6,36.7,35.8,34.8,33.9,33,32,31.1,30.2,29.3,28.4,27.5,26.6,25.7,24.8,23.9,23,22.2,21.3,20.4,19.6,18.8,17.9,17.1,16.3,15.5,14.7,13.9,13.2,12.4,11.7,11,10.3,9.6,9,8.3,7.7,7.2,6.6,6.1,5.7,5.2,4.8,4.4,4.1,3.8,3.5,3.3,3,2.9,2.7,2.5,2.4];
 
     $timeout(function() {
         $('.selectpickerSingle').selectpicker({
@@ -19,8 +23,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             style: 'btn-info',
             size: 2
         });
-        $('.selectpickerSingle option[value="1"]').attr("selected",true);
-        $('.selectpickerSpouse option[value="1"]').attr("selected",true);
+        $('.selectpickerSingle option[value="1"]').attr("selected", true);
+        $('.selectpickerSpouse option[value="1"]').attr("selected", true);
         $('.selectpickerSingle').selectpicker('refresh');
         $('.selectpickerSpouse').selectpicker('refresh');
     });
@@ -58,15 +62,15 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.chartOneOpen = true;
 
     $scope.infoShow = function(value) {
-            if (value) {
-                document.getElementsByClassName("information-overlay")[0].style.visibility = "visible";
-                document.getElementsByClassName("information-overlay")[0].style.zIndex = "9999";
-                document.getElementsByClassName("information-overlay")[0].style.position = "inline-block";
-                document.getElementsByClassName("information-overlay")[0].style.height = "" + (document.getElementsByClassName("otrp-calculator")[0].clientHeight - 10) + "px";
-            } else {
-                document.getElementsByClassName("information-overlay")[0].style.visibility = "hidden";
-            }
+        if (value) {
+            document.getElementsByClassName("information-overlay")[0].style.visibility = "visible";
+            document.getElementsByClassName("information-overlay")[0].style.zIndex = "9999";
+            document.getElementsByClassName("information-overlay")[0].style.position = "inline-block";
+            document.getElementsByClassName("information-overlay")[0].style.height = "" + (document.getElementsByClassName("otrp-calculator")[0].clientHeight - 10) + "px";
+        } else {
+            document.getElementsByClassName("information-overlay")[0].style.visibility = "hidden";
         }
+    }
 
     $scope.firstDP = function() {
         $scope.dateOptions.maxDate = new Date(1998, 11, 31);
@@ -154,7 +158,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         return '';
     }
     $scope.genderOption = true;
-    $scope.genderSpouseOption = false;
+    $scope.genderOptionSpouse = false;
     $scope.spouseOption = false;
     $scope.houseOption = false;
     $scope.retirementAgeSpouse = 70;
@@ -175,6 +179,23 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
     $scope.age = AgeCalculator.getAge($scope.dob, $scope.fy);
     $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
+
+    var leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
+
+    var leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
+
+
+    $scope.genderChange = function(bool){
+            $scope.genderOption = bool;
+            leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
+            calculateFinal();
+    };
+
+    $scope.genderChangeSpouse = function(bool){
+            $scope.genderOptionSpouse = bool;
+            leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
+            calculateFinal();
+    };     
 
     $scope.retirementAge = 65;
 
@@ -215,6 +236,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.otherIncome = 0;
     $scope.pensionIncome = 0;
 
+    $scope.target = 40000;
+
 
     var retirementAgeSlider = document.getElementById('retirementAgeSlider'),
         annualSalarySlider = document.getElementById('annualSalarySlider'),
@@ -242,7 +265,6 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         retirementAgeSpouseSlider = document.getElementById('retirementAgeSpouseSlider'),
         pensionDrawdownBaseSlider = document.getElementById('pensionDrawdownBaseSlider'),
         pensionDrawdownBaseSpouseSlider = document.getElementById('pensionDrawdownBaseSpouseSlider'),
-
         homeContentsSlider = document.getElementById('homeContentsSlider'),
         vehicleCostSlider = document.getElementById('vehicleCostSlider'),
         investmentPropertySlider = document.getElementById('investmentPropertySlider'),
@@ -253,9 +275,25 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         otherInvestmentSlider = document.getElementById('otherInvestmentSlider'),
         netRentalIncomeSlider = document.getElementById('netRentalIncomeSlider'),
         otherIncomeSlider = document.getElementById('otherIncomeSlider'),
-        pensionIncomeSlider = document.getElementById('pensionIncomeSlider');
+        pensionIncomeSlider = document.getElementById('pensionIncomeSlider'),
+        targetSlider = document.getElementById('targetSlider');
 
 
+    noUiSlider.create(targetSlider, {
+        start: [$scope.target],
+        range: {
+            'min': [10000],
+            'max': [100000]
+        },
+        step: 500,
+        format: wNumb({
+            decimals: 0,
+            prefix: '$',
+            thousand: ','
+
+        }),
+        connect: 'lower'
+    });    
 
 
     noUiSlider.create(retirementAgeSlider, {
@@ -540,7 +578,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     noUiSlider.create(pensionStartSpouseSlider, {
         start: [$scope.pensionStartSpouse],
         range: {
-            'min': [50],
+            'min': [55],
             'max': [75]
         },
         step: 1,
@@ -893,9 +931,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         // employmentIncomePartnerInput = document.getElementById('employmentIncomePartnerInput'),
         netRentalIncomeInput = document.getElementById('netRentalIncomeInput'),
         otherIncomeInput = document.getElementById('otherIncomeInput'),
-        pensionIncomeInput = document.getElementById('pensionIncomeInput');
+        pensionIncomeInput = document.getElementById('pensionIncomeInput')
+        targetInput = document.getElementById('targetInput');
 
-
+    targetSlider.noUiSlider.on('update', function(values, handle) {
+        targetInput.value = values[handle];
+        $scope.target = (values[handle]);
+    });    
 
     retirementAgeSlider.noUiSlider.on('update', function(values, handle) {
         retirementAgeInput.value = values[handle];
@@ -1121,15 +1163,16 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             $scope.dob = initDate;
         }
         $scope.age = AgeCalculator.getAge($scope.dob, $scope.fy);
-        if($scope.age>59){
-            retirementAgeSlider.noUiSlider.updateOptions({  
+        leMember1 = $scope.genderOption ? maleExpectancy[$scope.age] : femaleExpectancy[$scope.age];
+        if ($scope.age > 59) {
+            retirementAgeSlider.noUiSlider.updateOptions({
                 range: {
-                    'min': ($scope.age+1),
+                    'min': ($scope.age + 1),
                     'max': 75
                 }
             });
-        }else{
-            retirementAgeSlider.noUiSlider.updateOptions({  
+        } else {
+            retirementAgeSlider.noUiSlider.updateOptions({
                 range: {
                     'min': 60,
                     'max': 75
@@ -1152,15 +1195,16 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             $scope.dobSpouse = initDate;
         }
         $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
-        if($scope.ageSpouse>59){
-            retirementAgeSpouseSlider.noUiSlider.updateOptions({  
+        leMember2 = $scope.genderOptionSpouse ? maleExpectancy[$scope.ageSpouse] : femaleExpectancy[$scope.ageSpouse];
+        if ($scope.ageSpouse > 59) {
+            retirementAgeSpouseSlider.noUiSlider.updateOptions({
                 range: {
-                    'min': ($scope.ageSpouse+1),
+                    'min': ($scope.ageSpouse + 1),
                     'max': 75
                 }
             });
-        }else{
-            retirementAgeSpouseSlider.noUiSlider.updateOptions({  
+        } else {
+            retirementAgeSpouseSlider.noUiSlider.updateOptions({
                 range: {
                     'min': 60,
                     'max': 75
@@ -1317,6 +1361,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     });
     pensionIncomeInput.addEventListener("change", function() {
         pensionIncomeSlider.noUiSlider.set($scope.pensionIncome);
+    });
+
+    targetInput.addEventListener("change", function() {
+        targetSlider.noUiSlider.set($scope.target);
     });
 
 
@@ -1580,6 +1628,13 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         $timeout(0);
     });
 
+    targetSlider.noUiSlider.on('set', function(values, handle) {
+        targetInput.value = values[handle];
+        $scope.target = (values[handle]);
+        calculateFinal();
+        $timeout(0);
+    });
+
 
     $scope.spouseOptionChange = function(spouse) {
         $scope.spouseOption = spouse;
@@ -1824,6 +1879,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var netRentalIncome = Number($scope.netRentalIncome.replaceAll('$', '').replaceAll(',', ''));
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
+        
 
 
         var temp, temp2, temp3, deemingRate;
@@ -1884,7 +1940,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
 
     function calculateFinal() {
-        console.log('chaling');
+        // console.log('chaling');
+        var targetIncome = Number($scope.target.replaceAll('$', '').replaceAll(',', ''));
+        console.log(targetIncome);
         var isCouple = $scope.spouseOption;
         var ctm;
         var object1 = biCount(false);
@@ -1973,48 +2031,71 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         for (i = 0; i <= ctm; i++) {
             if ($scope.spouseOption) {
                 superFund = object1.biArray[i] + object2.biArray[i];
-                if (object2.ageArray[i] < 65){
+                if (object2.ageArray[i] < 65) {
                     gArray.push(0);
                 } else {
                     gArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
-                
-                if (object1.ageArray[i] < 65){
+
+                if (object1.ageArray[i] < 65) {
                     fArray.push(0);
-                }else{
+                } else {
                     fArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
-            kArray.push(gArray[i] * 26);
-            jArray.push(fArray[i] * 26);
-            lArray.push(cArray[i] + eArray[i]);
-            mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
-            }else{
+                kArray.push(gArray[i] * 26);
+                jArray.push(fArray[i] * 26);
+                lArray.push(cArray[i] + eArray[i]);
+                mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
+            } else {
                 superFund = object1.biArray[i];
-                if (object1.ageArray[i] < 65){
+                if (object1.ageArray[i] < 65) {
                     fArray.push(0);
-                }else{
+                } else {
                     fArray.push(entitledAgedPension(superFund, assetCalculationObj));
                 }
                 gArray.push(0);
-            kArray.push(gArray[i] * 26);
-            jArray.push(fArray[i] * 26);
-            lArray.push(cArray[i]);
-            mArray.push(jArray[i] + kArray[i] + hArray[i]);    
+                kArray.push(gArray[i] * 26);
+                jArray.push(fArray[i] * 26);
+                lArray.push(cArray[i]);
+                mArray.push(jArray[i] + kArray[i] + hArray[i]);
             }
 
 
 
         }
 
-        console.log('j',jArray);
-        console.log('k',kArray);
-        console.log('l',lArray);
-        console.log('m',mArray);
+        console.log('j', jArray);
+        console.log('k', kArray);
+        console.log('l', lArray);
+        console.log('m', mArray);
 
 
         ChartServiceHc.createChart(lArray);
 
-        AreaChartService.createChart(jArray,kArray,hArray,iArray,27,30.2);
+        if (!$scope.spouseOption) {
+            while(jArray.length <= Math.ceil(leMember1)){
+                jArray.push(0);
+            }
+            while(hArray.length <= Math.ceil(leMember1)){
+                hArray.push(0);
+            }
+            AreaChartService.createChart(jArray, [], hArray, [], leMember1, leMember2, false,targetIncome);
+        } else {
+            while(jArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                jArray.push(0);
+            }
+            while(hArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                hArray.push(0);
+            }
+            while(iArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                iArray.push(0);
+            }
+            while(kArray.length <= Math.max(Math.ceil(leMember1),Math.ceil(leMember2))){
+                kArray.push(0);
+            }
+            AreaChartService.createChart(jArray, kArray, hArray, iArray, leMember1, leMember2, true , targetIncome);
+        }
+
 
     }
 

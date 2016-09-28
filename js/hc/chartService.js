@@ -5,8 +5,10 @@ app.service('ChartServiceHc',function(){
             thousandsSep: ','
         }});
 
+    console.log(balanceArray.length);
+
     var infoData = [];
-    if(balanceArray.length>20){
+    if(balanceArray.length>30){
         for(var i=0;i<balanceArray.length;i++){
 
         infoData.push({
@@ -33,7 +35,7 @@ app.service('ChartServiceHc',function(){
             type: 'column'
         },
         title: {
-            text: 'Discounted Super Balance'
+            text: 'Super Balance Projection'
         },
         exporting:{
             enabled:false
@@ -44,7 +46,15 @@ app.service('ChartServiceHc',function(){
             labels:{
                 autoRotation : false,
             },
-            tickLength: 0
+            tickLength: 0,
+            title: {
+                text: 'Years',
+                style:{
+                    fontSize : 14,
+                    fontWeight : "bold",
+                    color:"#000"
+                }
+            }
         },
         yAxis: {
             title: {

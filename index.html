@@ -44,8 +44,8 @@
                                     <div class="row">
                                         <div class="col-xs-12">
                                             Gender
-                                            <button class="option-l-btn btn btn-primary " ng-click="genderOption = true" ng-disabled="genderOption">Male</button>
-                                            <button class="option-r-btn btn btn-primary " ng-click="genderOption = false" ng-disabled="!genderOption">Female</button>
+                                            <button class="option-l-btn btn btn-primary " ng-click="genderChange(true)" ng-disabled="genderOption">Male</button>
+                                            <button class="option-r-btn btn btn-primary " ng-click="genderChange(false)" ng-disabled="!genderOption">Female</button>
                                         </div>
                                     </div>
                                 </div>
@@ -179,14 +179,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row second-row-mobile">
+                                <div class="col-xs-12 col-sm-6 form-heading">
+                                    Target Income
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-4">
+                                            <div class="form-group">
+                                                <!-- <label for="ageInput">Your Age</label> -->
+                                                <input type="text" onClick="this.select();" class="form-control" id="targetInput" name="targetInput" ng-model="target">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-8 col-sm-8 form-group slider-common">
+                                            <!-- <label></label> -->
+                                            <div id="targetSlider" style="margin-top:8px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row divider" ng-class="{optionDrop: (!spouseOption)}"></div>
-                            <div class="row first-row-mobile"  ng-class="{optionDrop: (!spouseOption)}">
+                            <div class="row first-row-mobile" ng-class="{optionDrop: (!spouseOption)}">
                                 <div class="col-xs-12 col-sm-6 form-heading">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             Gender
-                                            <button class="option-l-btn btn btn-primary " ng-click="genderSpouseOption = true" ng-disabled="genderSpouseOption">Male</button>
-                                            <button class="option-r-btn btn btn-primary " ng-click="genderSpouseOption = false" ng-disabled="!genderSpouseOption">Female</button>
+                                            <button class="option-l-btn btn btn-primary " ng-click="genderChangeSpouse(true)" ng-disabled="genderOptionSpouse">Male</button>
+                                            <button class="option-r-btn btn btn-primary " ng-click="genderChangeSpouse(false)" ng-disabled="!genderOptionSpouse">Female</button>
                                         </div>
                                     </div>
                                 </div>
@@ -848,12 +865,21 @@
                     </div>
                 </div> -->
                 <div class="row">
-                <div class="col-xs-12">
-                <div id="container"></div>
-                <div id="containerA"></div>
+                    <div class="col-xs-12">
+                        <div class="row chart-buttons-row" print-remove>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <button class="btn btn-primary" ng-click="chartOneOpen = true" title="bar chart description" ng-disabled="chartOneOpen">Super Balance Projection</button>
+                                <button class="btn btn-primary" ng-click="chartOneOpen = false" title="pie chart description" ng-disabled="!chartOneOpen">Income Stream Analysis</button>
+                                <button class="btn btn-primary print-dup" print-remove onclick="window.print()" style="float:right">
+                                    Print Result
+                                </button>
+                            </div>
+                        </div>
+                        <div id="container" style="margin-top:15px; margin-left:-10px" ng-show="chartOneOpen"></div>
+                        <div id="containerA" style="margin-top:15px; margin-left:-10px" ng-hide="chartOneOpen"></div>
+                    </div>
                 </div>
-                </div>
-               <!--  <div class="row cta" print-remove>
+                <!--  <div class="row cta" print-remove>
                     <div class="col-xs-12">
                         <p>Need to know more <a class="btn btn-default get-in-touch">Get in touch</a></p>
                     </div>
