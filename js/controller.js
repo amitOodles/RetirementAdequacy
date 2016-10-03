@@ -1,4 +1,4 @@
-app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', 'DonutChartServiceHc', 'PdfMaker', 'AreaChartService', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc, DonutChartServiceHc, PdfMaker, AreaChartService) {
+app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator','ChartServiceHc', 'DonutChartServiceHc', 'PdfMaker', 'AreaChartService', function($scope, $timeout, AgeCalculator, ChartServiceHc, DonutChartServiceHc, PdfMaker, AreaChartService) {
 
     String.prototype.replaceAll = function(search, replacement) {
         var target = this;
@@ -12,6 +12,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     var maleExpectancy = [80.3, 79.6, 78.6, 77.6, 76.6, 75.6, 74.6, 73.6, 72.7, 71.7, 70.7, 69.7, 68.7, 67.7, 66.7, 65.7, 64.7, 63.7, 62.8, 61.8, 60.8, 59.9, 58.9, 57.9, 57, 56, 55, 54.1, 53.1, 52.2, 51.2, 50.2, 49.3, 48.3, 47.3, 46.4, 45.4, 44.5, 43.5, 42.6, 41.6, 40.7, 39.8, 38.8, 37.9, 37, 36, 35.1, 34.2, 33.3, 32.4, 31.4, 30.5, 29.6, 28.8, 27.9, 27, 26.1, 25.3, 24.4, 23.5, 22.7, 21.9, 21, 20.2, 19.4, 18.6, 17.8, 17, 16.3, 15.5, 14.8, 14, 13.3, 12.6, 11.9, 11.2, 10.6, 9.9, 9.3, 8.7, 8.2, 7.6, 7.1, 6.6, 6.1, 5.7, 5.3, 4.9, 4.5, 4.2, 3.9, 3.6, 3.4, 3.2, 3, 2.8, 2.6, 2.5, 2.4, 2.3];
 
     var femaleExpectancy = [84.4, 83.7, 82.7, 81.7, 80.7, 79.7, 78.7, 77.7, 76.8, 75.8, 74.8, 73.8, 72.8, 71.8, 70.8, 69.8, 68.8, 67.8, 66.8, 65.9, 64.9, 63.9, 62.9, 61.9, 60.9, 60, 59, 58, 57, 56, 55, 54.1, 53.1, 52.1, 51.1, 50.1, 49.2, 48.2, 47.2, 46.3, 45.3, 44.3, 43.4, 42.4, 41.4, 40.5, 39.5, 38.6, 37.6, 36.7, 35.8, 34.8, 33.9, 33, 32, 31.1, 30.2, 29.3, 28.4, 27.5, 26.6, 25.7, 24.8, 23.9, 23, 22.2, 21.3, 20.4, 19.6, 18.8, 17.9, 17.1, 16.3, 15.5, 14.7, 13.9, 13.2, 12.4, 11.7, 11, 10.3, 9.6, 9, 8.3, 7.7, 7.2, 6.6, 6.1, 5.7, 5.2, 4.8, 4.4, 4.1, 3.8, 3.5, 3.3, 3, 2.9, 2.7, 2.5, 2.4];
+
+    var dt = new Date();
+
+    $scope.fy = dt.getMonth() > 5 ? dt.getFullYear() : dt.getFullYear()-1;
 
     $timeout(function() {
         $('.selectpickerSingle').selectpicker({
@@ -73,7 +77,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     }
 
     $scope.firstDP = function() {
-        $scope.dateOptions.maxDate = new Date(1998, 11, 31);
+        $scope.dateOptions.maxDate = new Date($scope.fy-18,5,30);
         $scope.dateOptions.minDate = new Date(1950, 0, 1);
     }
 
@@ -174,8 +178,6 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.pensionDrawdownBaseSpouse = 30000;
 
     $scope.overlay = false;
-
-    $scope.fy = 2016;
 
     $scope.age = AgeCalculator.getAge($scope.dob, $scope.fy);
     $scope.ageSpouse = AgeCalculator.getAge($scope.dobSpouse, $scope.fy);
@@ -1154,7 +1156,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var dateString = dobText.value;
         var dateArr = dateString.split("/");
 
-        var date_regex = /^([1-9]|0[1-9]|1\d|2\d|3[01])\/(0[1-9]|[1-9]|1[0-2])\/(19[5-9][0-8])$/;
+        var date_regex = /^([1-9]|0[1-9]|1\d|2\d|3[01])\/(0[1-9]|[1-9]|1[0-2])\/(19[5-9][0-9])$/;
         var correct = date_regex.test(dobText.value);
         var fd = new Date(dateArr[2], dateArr[1] - 1, dateArr[0]);
         if (((fd.getMonth() + 1) === Number(dateArr[1]) && fd.getDate() === Number(dateArr[0])) && correct) {
@@ -1179,6 +1181,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 }
             });
         }
+        changeCCLimit();
     }
 
     $scope.ageChange2 = function() {
@@ -1186,7 +1189,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
         var dateString = dobText.value;
         var dateArr = dateString.split("/");
 
-        var date_regex = /^([1-9]|0[1-9]|1\d|2\d|3[01])\/(0[1-9]|[1-9]|1[0-2])\/(19[5-9][0-8])$/;
+        var date_regex = /^([1-9]|0[1-9]|1\d|2\d|3[01])\/(0[1-9]|[1-9]|1[0-2])\/(19[5-9][0-9])$/;
         var correct = date_regex.test(dobText.value);
         var fd = new Date(dateArr[2], dateArr[1] - 1, dateArr[0]);
         if (((fd.getMonth() + 1) === Number(dateArr[1]) && fd.getDate() === Number(dateArr[0])) && correct) {
@@ -1211,6 +1214,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 }
             });
         }
+        changeCCLimitSpouse();
     }
 
     retirementAgeInput.addEventListener("change", function() {
@@ -1378,6 +1382,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     annualSalarySlider.noUiSlider.on('set', function(values, handle) {
         annualSalaryInput.value = values[handle];
         $scope.annualSalary = (values[handle]);
+        changeCCLimit();
         calculateFinal();
         $timeout(0);
     });
@@ -1385,6 +1390,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     employerContributionLevelSlider.noUiSlider.on('set', function(values, handle) {
         employerContributionLevelInput.value = values[handle];
         $scope.employerContributionLevel = (values[handle]);
+        changeCCLimit();
         calculateFinal();
         $timeout(0);
     });
@@ -1392,6 +1398,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     employerContributionLevelSpouseSlider.noUiSlider.on('set', function(values, handle) {
         employerContributionLevelSpouseInput.value = values[handle];
         $scope.employerContributionLevelSpouse = (values[handle]);
+        changeCCLimitSpouse();
         calculateFinal();
         $timeout(0);
     });
@@ -1477,6 +1484,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     annualSalarySpouseSlider.noUiSlider.on('set', function(values, handle) {
         annualSalarySpouseInput.value = values[handle];
         $scope.annualSalarySpouse = (values[handle]);
+        changeCCLimitSpouse();
         calculateFinal();
         $timeout(0);
     });
@@ -1680,6 +1688,44 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
             return 0.3;
         }
     }
+
+    function changeCCLimit() {
+        var salary = Number($scope.annualSalary.replaceAll('$', '').replaceAll(',', ''));
+        var empContributionPerc = Number($scope.employerContributionLevel.replaceAll('%', ''));
+        var empContribution = salary * (empContributionPerc / 100) > 19615.60 ? 19615.60 : salary * (empContributionPerc / 100) ;
+        var ccLimit = $scope.age >= 49 ? 35000 - empContribution : 30000 - empContribution;
+        if (ccLimit < 0) {
+            ccLimit = 0.4;
+        }
+        salarySacrificeSlider.noUiSlider.updateOptions({
+            range: {
+                'min': 0,
+                'max': ccLimit
+            }
+        });
+        
+    }
+
+    function changeCCLimitSpouse() {
+        var salary = Number($scope.annualSalarySpouse.replaceAll('$', '').replaceAll(',', ''));
+        var empContributionPerc = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
+        var empContribution = salary * (empContributionPerc / 100) > 19615.60 ? 19615.60 : salary * (empContributionPerc / 100) ;
+        var ccLimit = $scope.ageSpouse >= 49 ? 35000 - empContribution : 30000 - empContribution;
+        if (ccLimit < 0) {
+            ccLimit = 0.4;
+        }
+        salarySacrificeSpouseSlider.noUiSlider.updateOptions({
+            range: {
+                'min': 0,
+                'max': ccLimit
+            }
+        });
+        
+    }
+
+    changeCCLimit();
+
+    changeCCLimitSpouse();
 
     $scope.isCouple = true;
 
@@ -2064,10 +2110,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
         }
 
-        console.log('j', jArray);
-        console.log('k', kArray);
-        console.log('l', lArray);
-        console.log('m', mArray);
+        // console.log('j', jArray);
+        // console.log('k', kArray);
+        // console.log('l', lArray);
+        // console.log('m', mArray);
 
 
 
