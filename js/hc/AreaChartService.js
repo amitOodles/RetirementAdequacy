@@ -118,7 +118,8 @@ app.service('AreaChartService', function() {
                             this.chart.yAxis[0].addPlotLine(plotLineOptions2);
                         }
                     }
-                }
+                },
+                data: [target+10000]
             }];
             plOptions = [plotLineOptions, plotLineOptions1];
             plOptions1 = [plotLineOptions2];
@@ -162,7 +163,8 @@ app.service('AreaChartService', function() {
                             this.chart.yAxis[0].addPlotLine(plotLineOptions2);
                         }
                     }
-                }
+                },
+                data: [target+10000]
             }];
             plOptions = [plotLineOptions];
             plOptions1 = [plotLineOptions2];
@@ -187,6 +189,7 @@ app.service('AreaChartService', function() {
                 plotLines: plOptions
             },
             yAxis: {
+                
                 title: {
                     text: 'Amount($)'
                 },
