@@ -4,7 +4,7 @@ app.service('AreaChartService', function() {
 
         // console.log(le1,le2);
 
-        console.log(target);
+        //console.log(target);
 
         var plotLineId = 'Life Expectancy Member 1'; // To identify for removal
         var plotLineId1 = 'Life Expectancy Member 2'; // To identify for removal
@@ -189,7 +189,7 @@ app.service('AreaChartService', function() {
                 plotLines: plOptions
             },
             yAxis: {
-                
+
                 title: {
                     text: 'Amount($)'
                 },

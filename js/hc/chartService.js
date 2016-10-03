@@ -5,7 +5,7 @@ app.service('ChartServiceHc',function(){
             thousandsSep: ','
         }});
 
-    console.log(balanceArray.length);
+    //console.log(balanceArray.length);
 
     var infoData = [];
     if(balanceArray.length>30){
