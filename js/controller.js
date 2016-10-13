@@ -50,14 +50,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     });
 
     var initDate = new Date();
-    initDate.setYear(1961);
+    initDate.setYear(1959);
     initDate.setMonth(6);
-    initDate.setDate(1);
+    initDate.setDate(3);
 
     var initDate2 = new Date();
-    initDate2.setYear(1961);
+    initDate2.setYear(1965);
     initDate2.setMonth(6);
-    initDate2.setDate(1);
+    initDate2.setDate(4);
 
     $scope.dob = initDate;
     $scope.dobSpouse = initDate2;
@@ -165,11 +165,11 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     $scope.genderOptionSpouse = false;
     $scope.spouseOption = false;
     $scope.houseOption = false;
-    $scope.retirementAgeSpouse = 65;
+    $scope.retirementAgeSpouse = 70;
     $scope.annualSalarySpouse = 90000;
     $scope.superBalanceSpouse = 200000;
     $scope.salarySacrificeSpouse = 5000;
-    $scope.pensionStartSpouse = 60;
+    $scope.pensionStartSpouse = 65;
     $scope.insurancePremiumSpouse = 0;
     $scope.investmentReturnSpouse = 5.30;
     $scope.variableFeeSpouse = 1.11;
@@ -206,7 +206,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     $scope.preservationAge = 55;
     $scope.preservationAgeSpouse = 55;
 
-    $scope.annualSalary = 300000;
+    $scope.annualSalary = 260000;
 
     $scope.employerContributionLevel = 9.50;
     $scope.employerContributionLevelSpouse = 9.50;
@@ -223,7 +223,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
     $scope.salarySacrifice = 20000;
 
-    $scope.pensionStart = 60;
+    $scope.pensionStart = 57;
 
     $scope.investmentReturn = 5.30;
 
@@ -1857,7 +1857,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
             var employerContributionLevel = Number($scope.employerContributionLevel.replaceAll('%', ''));
 
-            var salarySacrifice = Number($scope.salarySacrifice.replaceAll('$', '').replaceAll(',', ''));
+            // var salarySacrifice = Number($scope.salarySacrifice.replaceAll('$', '').replaceAll(',', ''));
+
+            var salarySacrifice = 20000;
 
             var fixedFee = Number($scope.fixedFee.replaceAll('$', '').replaceAll(',', ''));
 
@@ -1889,7 +1891,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
             var employerContributionLevel = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
 
-            var salarySacrifice = Number($scope.salarySacrificeSpouse.replaceAll('$', '').replaceAll(',', ''));
+            // var salarySacrifice = Number($scope.salarySacrificeSpouse.replaceAll('$', '').replaceAll(',', ''));
+            var salarySacrifice = 5000;
 
             var fixedFee = Number($scope.fixedFeeSpouse.replaceAll('$', '').replaceAll(',', ''));
 
@@ -1941,7 +1944,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 }
             }
             balanceCpi = 1 / cpi;
-            var temp1 = 0;
+            // var temp1 = 0;
             if (year === 0) {
                 earnings = taxation = drawdown = fAndI = 0;
                 balance = superBalance;
@@ -1998,7 +2001,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         }
 
-        // console.log(biArray);
+        console.log(biArray);
+
+        console.log({
+            count: count - 2,
+            biArray: biArray.slice(0, count - 1),
+            penArray: penArray.slice(0, count - 1),
+            ageArray: ageArray.slice(0, count - 1)
+        });
 
         return {
             count: count - 2,
@@ -2009,7 +2019,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
     }
 
-    function entitledAgedPension(superFunds, assetCalculationObj) {
+    function entitledAgedPension(superFunds, assetCalculationObj,ageMember1,ageMember2) {
         var homeContents = Number($scope.homeContents.replaceAll('$', '').replaceAll(',', ''));
         var vehicleCost = Number($scope.vehicleCost.replaceAll('$', '').replaceAll(',', ''));
         var investmentProperty = Number($scope.investmentProperty.replaceAll('$', '').replaceAll(',', ''));
@@ -2023,6 +2033,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var netRentalIncome = Number($scope.netRentalIncome.replaceAll('$', '').replaceAll(',', ''));
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
+
+        if(ageMember1 >= Number($scope.retirementAge)){
+            employmentIncome = 0;
+        }
+
+        if(ageMember2 >= Number($scope.retirementAgeSpouse)){
+            employmentIncomePartner = 0;
+        }
 
 
 
@@ -2039,6 +2057,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var totalInvestment = bankAssets + listedInvestment + marginLoans + allocatedPension + superFunds + otherInvestment;
         var totalIncome = employmentIncome + employmentIncomePartner + netRentalIncome + otherIncome + pensionIncome;
 
+        // console.log("tip", totalIncome , memberN);
 
         if (totalInvestment <= deemingRate) {
             temp = totalInvestment * (1.75 / 100);
@@ -2090,8 +2109,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var isCouple = $scope.spouseOption;
         var ctm;
         var object1 = biCount(false);
+        var object2;
         if (isCouple) {
-            var object2 = biCount(true);
+            object2 = biCount(true);
             ctm = Math.max(object1.count, object2.count);
             fillArray();
         } else {
@@ -2115,6 +2135,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 }
             }
         }
+
+        console.log("obj1",object1);
+        console.log("obj2",object2);
+
 
         var assetCalculationObj = {};
 
@@ -2152,94 +2176,100 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         var superFund;
 
-        var cArray = object1.biArray;
+        var member1BalanceArray = object1.biArray;
 
-        var eArray = $scope.spouseOption ? object2.biArray : [];
+        // console.log(cArray);
 
-        var hArray = object1.penArray;
+        var member2BalanceArray = $scope.spouseOption ? object2.biArray : [];
 
-        var iArray = $scope.spouseOption ? object2.penArray : [];
+        // console.log(eArray);
 
-        var fArray = [];
+        var member1PensionArray = object1.penArray;
 
-        var gArray = [];
+        var member2PensionArray = $scope.spouseOption ? object2.penArray : [];
 
-        var jArray = [];
+        var member1EPArray = [];
 
-        var kArray = [];
+        var member2EPArray = [];
 
-        var lArray = [];
+        var member1APArray = [];
 
-        var mArray = [];
+        var member2APArray = [];
+
+        var totalSuperBalanceArray = [];
+
+        var totalAnnualIncomeArray = [];
 
         for (i = 0; i <= ctm; i++) {
             if ($scope.spouseOption) {
                 superFund = object1.biArray[i] + object2.biArray[i];
                 if (object2.ageArray[i] < 65) {
-                    gArray.push(0);
+                    member2EPArray.push(0);
                 } else {
-                    gArray.push(entitledAgedPension(superFund, assetCalculationObj));
+                    member2EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object2.ageArray[i]));
                 }
 
                 if (object1.ageArray[i] < 65) {
-                    fArray.push(0);
+                    member1EPArray.push(0);
                 } else {
-                    fArray.push(entitledAgedPension(superFund, assetCalculationObj));
+                    member1EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object2.ageArray[i]));
                 }
-                kArray.push(gArray[i] * 26);
-                jArray.push(fArray[i] * 26);
-                lArray.push(cArray[i] + eArray[i]);
-                mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
+                member2APArray.push(member2EPArray[i] * 26);
+                member1APArray.push(member1EPArray[i] * 26);
+                totalSuperBalanceArray.push(member1BalanceArray[i] + member2BalanceArray[i]);
+                totalAnnualIncomeArray.push(member1APArray[i] + member2APArray[i] + member1PensionArray[i] + member2PensionArray[i]);
             } else {
                 superFund = object1.biArray[i];
                 if (object1.ageArray[i] < 65) {
-                    fArray.push(0);
+                    member1EPArray.push(0);
                 } else {
-                    fArray.push(entitledAgedPension(superFund, assetCalculationObj));
+                    member1EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object1.ageArray[i]));
                 }
-                gArray.push(0);
-                kArray.push(gArray[i] * 26);
-                jArray.push(fArray[i] * 26);
-                lArray.push(cArray[i]);
-                mArray.push(jArray[i] + kArray[i] + hArray[i]);
+                member2EPArray.push(0);
+                member2APArray.push(member2EPArray[i] * 26);
+                member1APArray.push(member1EPArray[i] * 26);
+                totalSuperBalanceArray.push(member1BalanceArray[i]);
+                totalAnnualIncomeArray.push(member1APArray[i] + member1PensionArray[i]);
             }
 
 
 
         }
 
-        // console.log('j', jArray);
-        // console.log('k', kArray);
-        // console.log('l', lArray);
-        // console.log('m', mArray);
+        console.log('j', member1APArray);
+        console.log('k', member2APArray);
+        console.log('l',totalSuperBalanceArray);
+        console.log('m', totalAnnualIncomeArray);
+
+        console.log(assetCalculationObj);
 
 
 
 
         if (!$scope.spouseOption) {
-            while (jArray.length <= Math.ceil(leMember1)) {
-                jArray.push(0);
+            while (member1APArray.length <= Math.ceil(leMember1)) {
+                member1APArray.push(0);
             }
-            while (hArray.length <= Math.ceil(leMember1)) {
-                hArray.push(0);
+            while (member1PensionArray.length <= Math.ceil(leMember1)) {
+                member1PensionArray.push(0);
             }
-            ChartServiceHc.createChart(lArray.slice(0, 5 + Math.ceil(leMember1)));
-            AreaChartService.createChart(jArray.slice(0, 5 + Math.ceil(leMember1)), [], hArray.slice(0, 5 + Math.ceil(leMember1)), [], leMember1, leMember2, false, targetIncome);
+            ChartServiceHc.createChart(totalSuperBalanceArray.slice(0, 5 + Math.ceil(leMember1)));
+            AreaChartService.createChart(member1APArray.slice(0, 5 + Math.ceil(leMember1)), [], member1PensionArray.slice(0, 5 + Math.ceil(leMember1)), [], leMember1, leMember2, false, targetIncome);
         } else {
-            while (jArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                jArray.push(0);
+            while (member1APArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member1APArray.push(0);
             }
-            while (hArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                hArray.push(0);
+            while (member1PensionArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member1PensionArray.push(0);
             }
-            while (iArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                iArray.push(0);
+            while (member2PensionArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member2PensionArray.push(0);
             }
-            while (kArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                kArray.push(0);
+            while (member2APArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member2APArray.push(0);
             }
-            ChartServiceHc.createChart(lArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))));
-            AreaChartService.createChart(jArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), kArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), hArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), iArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), leMember1, leMember2, true, targetIncome);
+            ChartServiceHc.createChart(totalSuperBalanceArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))));
+            AreaChartService.createChart(member1APArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), member2APArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), member1PensionArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), member2PensionArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), leMember1, leMember2, true, targetIncome);
 
         }
 
