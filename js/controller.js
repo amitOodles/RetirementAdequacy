@@ -1892,6 +1892,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             var employerContributionLevel = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
 
             var salarySacrifice = Number($scope.salarySacrificeSpouse.replaceAll('$', '').replaceAll(',', ''));
+            
             // var salarySacrifice = 5000;
 
             var fixedFee = Number($scope.fixedFeeSpouse.replaceAll('$', '').replaceAll(',', ''));
@@ -2004,17 +2005,17 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         console.log(biArray);
 
         console.log({
-            count: count - 2,
-            biArray: biArray.slice(0, count - 1),
-            penArray: penArray.slice(0, count - 1),
-            ageArray: ageArray.slice(0, count - 1)
+            count: count - 1,
+            biArray: biArray,
+            penArray: penArray,
+            ageArray: ageArray
         });
 
         return {
-            count: count - 2,
-            biArray: biArray.slice(0, count - 1),
-            penArray: penArray.slice(0, count - 1),
-            ageArray: ageArray.slice(0, count - 1)
+            count: count - 1,
+            biArray: biArray,
+            penArray: penArray,
+            ageArray: ageArray
         }
 
     }
@@ -2206,21 +2207,21 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 if (object2.ageArray[i] < 65) {
                     member2EPArray.push(0);
                 } else {
-                    if(i > object2.count){
-                        member2EPArray.push(0);
-                    }else{
+                    // if(i > object2.count){
+                    //     member2EPArray.push(0);
+                    // }else{
                     member2EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object2.ageArray[i]));
-                }
+                // }
                 }
 
                 if (object1.ageArray[i] < 65) {
                     member1EPArray.push(0);
                 } else {
-                    if(i > object1.count){
-                        member1EPArray.push(0);
-                    }else{
+                    // if(i > object1.count){
+                        // member1EPArray.push(0);
+                    // }else{
                     member1EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object2.ageArray[i]));
-                }
+                // }
                 }
                 member2APArray.push(member2EPArray[i] * 26);
                 member1APArray.push(member1EPArray[i] * 26);
