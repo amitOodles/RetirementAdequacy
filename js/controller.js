@@ -2113,15 +2113,37 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var ctm;
         var object1 = biCount(false);
         var object2;
+
         if (isCouple) {
             object2 = biCount(true);
             ctm = Math.max(object1.count, object2.count);
-            fillArray();
         } else {
             ctm = object1.count;
         }
 
+        var last = Math.max(object1.penArray[object1.count] + object1.biArray[object1.count] , 0); 
+            
+        object1.penArray.pop();
 
+        object1.penArray.push(last);
+
+        console.log("array",object1.penArray);
+
+        if($scope.spouseOption){
+
+        var last = Math.max(object2.penArray[object2.count] + object2.biArray[object2.count] , 0); 
+            
+        object2.penArray.pop();
+
+        object2.penArray.push(last);
+
+        console.log("array2",object2.penArray);
+
+        } 
+
+        if(isCouple){
+        fillArray(); 
+        }      
 
         function fillArray() {
             if (object1.count < object2.count) {
@@ -2191,25 +2213,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         var member2PensionArray = $scope.spouseOption ? object2.penArray : [];
 
-        var last = Math.max(member1PensionArray[object1.count] + object1.biArray[object1.count] , 0); 
-            
-        member1PensionArray.pop();
 
-        member1PensionArray.push(last);
-
-        console.log("array",member1PensionArray);
-
-        if($scope.spouseOption){
-
-        var last = Math.max(member2PensionArray[object1.count] + object2.biArray[object2.count] , 0); 
-            
-        member2PensionArray.pop();
-
-        member2PensionArray.push(last);
-
-        console.log("array",member2PensionArray);
-
-        }
 
         var member1EPArray = [];
 
