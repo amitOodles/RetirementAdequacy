@@ -2035,6 +2035,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
 
+        console.log("super" , superFunds);
+
         if(ageMember1 >= Number($scope.retirementAge)){
             employmentIncome = 0;
         }
@@ -2189,6 +2191,26 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         var member2PensionArray = $scope.spouseOption ? object2.penArray : [];
 
+        var last = Math.max(member1PensionArray[object1.count] + object1.biArray[object1.count] , 0); 
+            
+        member1PensionArray.pop();
+
+        member1PensionArray.push(last);
+
+        console.log("array",member1PensionArray);
+
+        if($scope.spouseOption){
+
+        var last = Math.max(member2PensionArray[object1.count] + object2.biArray[object2.count] , 0); 
+            
+        member2PensionArray.pop();
+
+        member2PensionArray.push(last);
+
+        console.log("array",member2PensionArray);
+
+        }
+
         var member1EPArray = [];
 
         var member2EPArray = [];
@@ -2203,7 +2225,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         for (i = 0; i <= ctm; i++) {
             if ($scope.spouseOption) {
-                superFund = object1.biArray[i] + object2.biArray[i];
+                superFund = object1.biArray[i] > 0 ? object1.biArray[i] : 0 + object2.biArray[i] > 0 ? object2.biArray[i] : 0;
                 if (object2.ageArray[i] < 65) {
                     member2EPArray.push(0);
                 } else {
@@ -2228,7 +2250,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 totalSuperBalanceArray.push(member1BalanceArray[i] + member2BalanceArray[i]);
                 totalAnnualIncomeArray.push(member1APArray[i] + member2APArray[i] + member1PensionArray[i] + member2PensionArray[i]);
             } else {
-                superFund = object1.biArray[i];
+                superFund = object1.biArray[i] > 0 ? object1.biArray[i] : 0;
                 if (object1.ageArray[i] < 65) {
                     member1EPArray.push(0);
                 } else {
