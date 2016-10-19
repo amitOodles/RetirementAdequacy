@@ -1865,16 +1865,16 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
             var insurancePremium = Number($scope.insurancePremium.replaceAll('$', '').replaceAll(',', ''));
 
-            var retirementAge = $scope.retirementAge;
+            var retirementAge = Number($scope.retirementAge);
 
-            var pensionStart = $scope.pensionStart;
+            var pensionStart = Number($scope.pensionStart);
 
             var minPension = !$scope.showPensionOption;
 
 
             var ddBase = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
 
-            var ageL = $scope.age;
+            var ageL = Number($scope.age);
 
         } else {
             var annualSalary = Number($scope.annualSalarySpouse.replaceAll('$', '').replaceAll(',', ''));
@@ -1899,16 +1899,16 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
             var insurancePremium = Number($scope.insurancePremiumSpouse.replaceAll('$', '').replaceAll(',', ''));
 
-            var retirementAge = $scope.retirementAgeSpouse;
+            var retirementAge = Number($scope.retirementAgeSpouse);
 
 
-            var pensionStart = $scope.pensionStartSpouse;
+            var pensionStart = Number($scope.pensionStartSpouse);
 
             var minPension = !$scope.showPensionOptionSpouse;
 
             var ddBase = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
 
-            var ageL = $scope.ageSpouse;
+            var ageL = Number($scope.ageSpouse);
         }
 
 
