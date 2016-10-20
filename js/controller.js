@@ -1938,8 +1938,9 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 concessionalCo = 0;
             } else {
                 if (ageL < retirementAge) {
-                    var temp = adjustedSalary * (employerContributionLevel / 100) + salarySacrifice;
-                    concessionalCo = temp <= 25000 ? temp : 25000;
+                    var concessionalCap = ageL >= 49 ? 35000 : 30000;
+                    // console.log("cCap",concessionalCap);
+                    concessionalCo = Math.min(Math.min(adjustedSalary * (employerContributionLevel / 100),19615.60) + salarySacrifice,concessionalCap);
                 } else {
                     concessionalCo = 0;
                 }
@@ -2002,14 +2003,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         }
 
-        console.log(biArray);
+        // console.log(biArray);
 
-        console.log({
-            count: count - 1,
-            biArray: biArray,
-            penArray: penArray,
-            ageArray: ageArray
-        });
+        // console.log({
+        //     count: count - 1,
+        //     biArray: biArray,
+        //     penArray: penArray,
+        //     ageArray: ageArray
+        // });
 
         return {
             count: count - 1,
@@ -2035,7 +2036,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
 
-        console.log("super" , superFunds);
+        // console.log("super" , superFunds);
 
         if(ageMember1 >= Number($scope.retirementAge)){
             employmentIncome = 0;
@@ -2127,7 +2128,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         object1.penArray.push(last);
 
-        console.log("array",object1.penArray);
+        // console.log("array",object1.penArray);
 
         if($scope.spouseOption){
 
@@ -2137,7 +2138,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         object2.penArray.push(last);
 
-        console.log("array2",object2.penArray);
+        // console.log("array2",object2.penArray);
 
         } 
 
@@ -2161,8 +2162,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             }
         }
 
-        console.log("obj1",object1);
-        console.log("obj2",object2);
+        // console.log("obj1",object1);
+        // console.log("obj2",object2);
 
 
         var assetCalculationObj = {};
@@ -2271,12 +2272,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         }
 
-        console.log('j', member1APArray);
-        console.log('k', member2APArray);
-        console.log('l',totalSuperBalanceArray);
-        console.log('m', totalAnnualIncomeArray);
+        // console.log('j', member1APArray);
+        // console.log('k', member2APArray);
+        // console.log('l',totalSuperBalanceArray);
+        // console.log('m', totalAnnualIncomeArray);
 
-        console.log(assetCalculationObj);
+        // console.log(assetCalculationObj);
 
 
 
@@ -2311,7 +2312,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
     }
 
-    calculateFinal();
+    // calculateFinal();
 
     document.getElementById("download").addEventListener("click", function() {
 
@@ -2382,7 +2383,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             targetIncome: targetIncome
         }
 
-        console.log('personalDetails', personalDetails);
+        // console.log('personalDetails', personalDetails);
 
         var personalDetailsSpouse = {
             dob: $scope.dobSpouse,
@@ -2394,7 +2395,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             salarySacrifice: salarySacrifice1Spouse,
             pensionAge: pensionStart1Spouse
         }
-        console.log('personalDetailsSpouse', personalDetailsSpouse);
+        // console.log('personalDetailsSpouse', personalDetailsSpouse);
 
         var assumptions = {
             insurancePremium: insurancePremium1,
@@ -2406,7 +2407,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             wageIncrease: wageIncrease1,
             pensionDrawdownBase: drawdownValue
         }
-        console.log('assumptions', assumptions);
+        // console.log('assumptions', assumptions);
 
         var assumptionsSpouse = {
             insurancePremium: insurancePremium1Spouse,
@@ -2419,7 +2420,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             pensionDrawdownBase: drawdownValueSpouse
         }
 
-        console.log('assumptionsSpouse', assumptionsSpouse);
+        // console.log('assumptionsSpouse', assumptionsSpouse);
 
 
         var otherAssets = {
@@ -2437,7 +2438,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         }
 
 
-        console.log('otherAssets', otherAssets);
+        // console.log('otherAssets', otherAssets);
         PdfMaker.createChart(personalDetails, personalDetailsSpouse, assumptions, assumptionsSpouse, otherAssets);
     });
 
