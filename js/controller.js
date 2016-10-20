@@ -2442,5 +2442,35 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         PdfMaker.createChart(personalDetails, personalDetailsSpouse, assumptions, assumptionsSpouse, otherAssets);
     });
 
+    document.getElementById("bar-chart").addEventListener("click",function(){
+        $scope.chartOneOpen = true;
+        document.getElementById("containerA").style.display = "none";
+        document.getElementById("container").style.display = "block";
+    });
+
+    document.getElementById("area-chart").addEventListener("click",function(){
+        $scope.chartOneOpen = false;
+        document.getElementById("container").style.display = "none";
+        document.getElementById("containerA").style.display = "block";
+    });
+
+    $(".print-doc").on("click",printBothCharts);
+
+    function printBothCharts(){
+            if($scope.chartOneOpen){
+        document.getElementById("containerA").style.display = "block";
+           window.print();
+           setTimeout(function(){
+            document.getElementById("containerA").style.display = "none";
+         },100);
+       }else{
+        document.getElementById("container").style.display = "block";
+           window.print();
+           setTimeout(function(){
+            document.getElementById("container").style.display = "none";
+         },100);
+       }    
+   };
+
 
 }]);
