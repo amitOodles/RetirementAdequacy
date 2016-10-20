@@ -119,7 +119,7 @@ app.service('AreaChartService', function() {
                         }
                     }
                 },
-                data: [target+10000]
+                data: [target]
             }];
             plOptions = [plotLineOptions, plotLineOptions1];
             plOptions1 = [plotLineOptions2];
@@ -164,7 +164,7 @@ app.service('AreaChartService', function() {
                         }
                     }
                 },
-                data: [target+10000]
+                data: [target]
             }];
             plOptions = [plotLineOptions];
             plOptions1 = [plotLineOptions2];

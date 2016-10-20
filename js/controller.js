@@ -50,14 +50,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     });
 
     var initDate = new Date();
-    initDate.setYear(1961);
+    initDate.setYear(1959);
     initDate.setMonth(6);
-    initDate.setDate(1);
+    initDate.setDate(3);
 
     var initDate2 = new Date();
-    initDate2.setYear(1961);
+    initDate2.setYear(1965);
     initDate2.setMonth(6);
-    initDate2.setDate(1);
+    initDate2.setDate(4);
 
     $scope.dob = initDate;
     $scope.dobSpouse = initDate2;
@@ -165,11 +165,11 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     $scope.genderOptionSpouse = false;
     $scope.spouseOption = false;
     $scope.houseOption = false;
-    $scope.retirementAgeSpouse = 65;
+    $scope.retirementAgeSpouse = 70;
     $scope.annualSalarySpouse = 90000;
     $scope.superBalanceSpouse = 200000;
     $scope.salarySacrificeSpouse = 5000;
-    $scope.pensionStartSpouse = 60;
+    $scope.pensionStartSpouse = 65;
     $scope.insurancePremiumSpouse = 0;
     $scope.investmentReturnSpouse = 5.30;
     $scope.variableFeeSpouse = 1.11;
@@ -206,7 +206,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     $scope.preservationAge = 55;
     $scope.preservationAgeSpouse = 55;
 
-    $scope.annualSalary = 300000;
+    $scope.annualSalary = 260000;
 
     $scope.employerContributionLevel = 9.50;
     $scope.employerContributionLevelSpouse = 9.50;
@@ -223,7 +223,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
     $scope.salarySacrifice = 20000;
 
-    $scope.pensionStart = 60;
+    $scope.pensionStart = 57;
 
     $scope.investmentReturn = 5.30;
 
@@ -1859,20 +1859,22 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
             var salarySacrifice = Number($scope.salarySacrifice.replaceAll('$', '').replaceAll(',', ''));
 
+            // var salarySacrifice = 20000;
+
             var fixedFee = Number($scope.fixedFee.replaceAll('$', '').replaceAll(',', ''));
 
             var insurancePremium = Number($scope.insurancePremium.replaceAll('$', '').replaceAll(',', ''));
 
-            var retirementAge = $scope.retirementAge;
+            var retirementAge = Number($scope.retirementAge);
 
-            var pensionStart = $scope.pensionStart;
+            var pensionStart = Number($scope.pensionStart);
 
             var minPension = !$scope.showPensionOption;
 
 
             var ddBase = Number($scope.pensionDrawdownBase.replaceAll('$', '').replaceAll(',', ''));
 
-            var ageL = $scope.age;
+            var ageL = Number($scope.age);
 
         } else {
             var annualSalary = Number($scope.annualSalarySpouse.replaceAll('$', '').replaceAll(',', ''));
@@ -1890,21 +1892,23 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             var employerContributionLevel = Number($scope.employerContributionLevelSpouse.replaceAll('%', ''));
 
             var salarySacrifice = Number($scope.salarySacrificeSpouse.replaceAll('$', '').replaceAll(',', ''));
+            
+            // var salarySacrifice = 5000;
 
             var fixedFee = Number($scope.fixedFeeSpouse.replaceAll('$', '').replaceAll(',', ''));
 
             var insurancePremium = Number($scope.insurancePremiumSpouse.replaceAll('$', '').replaceAll(',', ''));
 
-            var retirementAge = $scope.retirementAgeSpouse;
+            var retirementAge = Number($scope.retirementAgeSpouse);
 
 
-            var pensionStart = $scope.pensionStartSpouse;
+            var pensionStart = Number($scope.pensionStartSpouse);
 
             var minPension = !$scope.showPensionOptionSpouse;
 
             var ddBase = Number($scope.pensionDrawdownBaseSpouse.replaceAll('$', '').replaceAll(',', ''));
 
-            var ageL = $scope.ageSpouse;
+            var ageL = Number($scope.ageSpouse);
         }
 
 
@@ -1934,14 +1938,15 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 concessionalCo = 0;
             } else {
                 if (ageL < retirementAge) {
-                    var temp = adjustedSalary * (employerContributionLevel / 100) + salarySacrifice;
-                    concessionalCo = temp <= 25000 ? temp : 25000;
+                    var concessionalCap = ageL >= 49 ? 35000 : 30000;
+                    // console.log("cCap",concessionalCap);
+                    concessionalCo = Math.min(Math.min(adjustedSalary * (employerContributionLevel / 100),19615.60) + salarySacrifice,concessionalCap);
                 } else {
                     concessionalCo = 0;
                 }
             }
             balanceCpi = 1 / cpi;
-            var temp1 = 0;
+            // var temp1 = 0;
             if (year === 0) {
                 earnings = taxation = drawdown = fAndI = 0;
                 balance = superBalance;
@@ -2000,16 +2005,23 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         // console.log(biArray);
 
+        // console.log({
+        //     count: count - 1,
+        //     biArray: biArray,
+        //     penArray: penArray,
+        //     ageArray: ageArray
+        // });
+
         return {
-            count: count - 2,
-            biArray: biArray.slice(0, count - 1),
-            penArray: penArray.slice(0, count - 1),
-            ageArray: ageArray.slice(0, count - 1)
+            count: count - 1,
+            biArray: biArray,
+            penArray: penArray,
+            ageArray: ageArray
         }
 
     }
 
-    function entitledAgedPension(superFunds, assetCalculationObj) {
+    function entitledAgedPension(superFunds, assetCalculationObj,ageMember1,ageMember2) {
         var homeContents = Number($scope.homeContents.replaceAll('$', '').replaceAll(',', ''));
         var vehicleCost = Number($scope.vehicleCost.replaceAll('$', '').replaceAll(',', ''));
         var investmentProperty = Number($scope.investmentProperty.replaceAll('$', '').replaceAll(',', ''));
@@ -2023,6 +2035,16 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var netRentalIncome = Number($scope.netRentalIncome.replaceAll('$', '').replaceAll(',', ''));
         var otherIncome = Number($scope.otherIncome.replaceAll('$', '').replaceAll(',', ''));
         var pensionIncome = Number($scope.pensionIncome.replaceAll('$', '').replaceAll(',', ''));
+
+        // console.log("super" , superFunds);
+
+        if(ageMember1 >= Number($scope.retirementAge)){
+            employmentIncome = 0;
+        }
+
+        if(ageMember2 >= Number($scope.retirementAgeSpouse)){
+            employmentIncomePartner = 0;
+        }
 
 
 
@@ -2039,6 +2061,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var totalInvestment = bankAssets + listedInvestment + marginLoans + allocatedPension + superFunds + otherInvestment;
         var totalIncome = employmentIncome + employmentIncomePartner + netRentalIncome + otherIncome + pensionIncome;
 
+        // console.log("tip", totalIncome , memberN);
 
         if (totalInvestment <= deemingRate) {
             temp = totalInvestment * (1.75 / 100);
@@ -2090,15 +2113,38 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var isCouple = $scope.spouseOption;
         var ctm;
         var object1 = biCount(false);
+        var object2;
+
         if (isCouple) {
-            var object2 = biCount(true);
+            object2 = biCount(true);
             ctm = Math.max(object1.count, object2.count);
-            fillArray();
         } else {
             ctm = object1.count;
         }
 
+        var last = Math.max(object1.penArray[object1.count] + object1.biArray[object1.count] , 0); 
+            
+        object1.penArray.pop();
 
+        object1.penArray.push(last);
+
+        // console.log("array",object1.penArray);
+
+        if($scope.spouseOption){
+
+        var last = Math.max(object2.penArray[object2.count] + object2.biArray[object2.count] , 0); 
+            
+        object2.penArray.pop();
+
+        object2.penArray.push(last);
+
+        // console.log("array2",object2.penArray);
+
+        } 
+
+        if(isCouple){
+        fillArray(); 
+        }      
 
         function fillArray() {
             if (object1.count < object2.count) {
@@ -2115,6 +2161,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
                 }
             }
         }
+
+        // console.log("obj1",object1);
+        // console.log("obj2",object2);
+
 
         var assetCalculationObj = {};
 
@@ -2152,101 +2202,117 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         var superFund;
 
-        var cArray = object1.biArray;
+        var member1BalanceArray = object1.biArray;
 
-        var eArray = $scope.spouseOption ? object2.biArray : [];
+        // console.log(cArray);
 
-        var hArray = object1.penArray;
+        var member2BalanceArray = $scope.spouseOption ? object2.biArray : [];
 
-        var iArray = $scope.spouseOption ? object2.penArray : [];
+        // console.log(eArray);
 
-        var fArray = [];
+        var member1PensionArray = object1.penArray;
 
-        var gArray = [];
+        var member2PensionArray = $scope.spouseOption ? object2.penArray : [];
 
-        var jArray = [];
 
-        var kArray = [];
 
-        var lArray = [];
+        var member1EPArray = [];
 
-        var mArray = [];
+        var member2EPArray = [];
+
+        var member1APArray = [];
+
+        var member2APArray = [];
+
+        var totalSuperBalanceArray = [];
+
+        var totalAnnualIncomeArray = [];
 
         for (i = 0; i <= ctm; i++) {
             if ($scope.spouseOption) {
-                superFund = object1.biArray[i] + object2.biArray[i];
+                superFund = object1.biArray[i] > 0 ? object1.biArray[i] : 0 + object2.biArray[i] > 0 ? object2.biArray[i] : 0;
                 if (object2.ageArray[i] < 65) {
-                    gArray.push(0);
+                    member2EPArray.push(0);
                 } else {
-                    gArray.push(entitledAgedPension(superFund, assetCalculationObj));
+                    // if(i > object2.count){
+                    //     member2EPArray.push(0);
+                    // }else{
+                    member2EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object2.ageArray[i]));
+                // }
                 }
 
                 if (object1.ageArray[i] < 65) {
-                    fArray.push(0);
+                    member1EPArray.push(0);
                 } else {
-                    fArray.push(entitledAgedPension(superFund, assetCalculationObj));
+                    // if(i > object1.count){
+                        // member1EPArray.push(0);
+                    // }else{
+                    member1EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object2.ageArray[i]));
+                // }
                 }
-                kArray.push(gArray[i] * 26);
-                jArray.push(fArray[i] * 26);
-                lArray.push(cArray[i] + eArray[i]);
-                mArray.push(jArray[i] + kArray[i] + hArray[i] + iArray[i]);
+                member2APArray.push(member2EPArray[i] * 26);
+                member1APArray.push(member1EPArray[i] * 26);
+                totalSuperBalanceArray.push(member1BalanceArray[i] + member2BalanceArray[i]);
+                totalAnnualIncomeArray.push(member1APArray[i] + member2APArray[i] + member1PensionArray[i] + member2PensionArray[i]);
             } else {
-                superFund = object1.biArray[i];
+                superFund = object1.biArray[i] > 0 ? object1.biArray[i] : 0;
                 if (object1.ageArray[i] < 65) {
-                    fArray.push(0);
+                    member1EPArray.push(0);
                 } else {
-                    fArray.push(entitledAgedPension(superFund, assetCalculationObj));
+                    member1EPArray.push(entitledAgedPension(superFund, assetCalculationObj,object1.ageArray[i],object1.ageArray[i]));
                 }
-                gArray.push(0);
-                kArray.push(gArray[i] * 26);
-                jArray.push(fArray[i] * 26);
-                lArray.push(cArray[i]);
-                mArray.push(jArray[i] + kArray[i] + hArray[i]);
+                member2EPArray.push(0);
+                member2APArray.push(member2EPArray[i] * 26);
+                member1APArray.push(member1EPArray[i] * 26);
+                totalSuperBalanceArray.push(member1BalanceArray[i]);
+                totalAnnualIncomeArray.push(member1APArray[i] + member1PensionArray[i]);
             }
 
 
 
         }
 
-        // console.log('j', jArray);
-        // console.log('k', kArray);
-        // console.log('l', lArray);
-        // console.log('m', mArray);
+        // console.log('j', member1APArray);
+        // console.log('k', member2APArray);
+        // console.log('l',totalSuperBalanceArray);
+        // console.log('m', totalAnnualIncomeArray);
+
+        // console.log(assetCalculationObj);
 
 
 
 
         if (!$scope.spouseOption) {
-            while (jArray.length <= Math.ceil(leMember1)) {
-                jArray.push(0);
+            while (member1APArray.length <= Math.ceil(leMember1)) {
+                member1APArray.push(0);
             }
-            while (hArray.length <= Math.ceil(leMember1)) {
-                hArray.push(0);
+            while (member1PensionArray.length <= Math.ceil(leMember1)) {
+                member1PensionArray.push(0);
             }
-            ChartServiceHc.createChart(lArray.slice(0, 5 + Math.ceil(leMember1)));
-            AreaChartService.createChart(jArray.slice(0, 5 + Math.ceil(leMember1)), [], hArray.slice(0, 5 + Math.ceil(leMember1)), [], leMember1, leMember2, false, targetIncome);
+            ChartServiceHc.createChart(totalSuperBalanceArray.slice(0, 5 + Math.ceil(leMember1)));
+            AreaChartService.createChart(member1APArray.slice(0, 5 + Math.ceil(leMember1)), [], member1PensionArray.slice(0, 5 + Math.ceil(leMember1)), [], leMember1, leMember2, false, targetIncome);
         } else {
-            while (jArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                jArray.push(0);
+            while (member1APArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member1APArray.push(0);
             }
-            while (hArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                hArray.push(0);
+            while (member1PensionArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member1PensionArray.push(0);
             }
-            while (iArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                iArray.push(0);
+            while (member2PensionArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member2PensionArray.push(0);
             }
-            while (kArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
-                kArray.push(0);
+            while (member2APArray.length <= Math.max(Math.ceil(leMember1), Math.ceil(leMember2))) {
+                member2APArray.push(0);
             }
-            ChartServiceHc.createChart(lArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))));
-            AreaChartService.createChart(jArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), kArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), hArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), iArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), leMember1, leMember2, true, targetIncome);
+            ChartServiceHc.createChart(totalSuperBalanceArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))));
+            AreaChartService.createChart(member1APArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), member2APArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), member1PensionArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), member2PensionArray.slice(0, 5 + Math.max(Math.ceil(leMember1), Math.ceil(leMember2))), leMember1, leMember2, true, targetIncome);
 
         }
 
 
     }
 
-    calculateFinal();
+    // calculateFinal();
 
     document.getElementById("download").addEventListener("click", function() {
 
@@ -2317,7 +2383,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             targetIncome: targetIncome
         }
 
-        console.log('personalDetails', personalDetails);
+        // console.log('personalDetails', personalDetails);
 
         var personalDetailsSpouse = {
             dob: $scope.dobSpouse,
@@ -2329,7 +2395,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             salarySacrifice: salarySacrifice1Spouse,
             pensionAge: pensionStart1Spouse
         }
-        console.log('personalDetailsSpouse', personalDetailsSpouse);
+        // console.log('personalDetailsSpouse', personalDetailsSpouse);
 
         var assumptions = {
             insurancePremium: insurancePremium1,
@@ -2341,7 +2407,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             wageIncrease: wageIncrease1,
             pensionDrawdownBase: drawdownValue
         }
-        console.log('assumptions', assumptions);
+        // console.log('assumptions', assumptions);
 
         var assumptionsSpouse = {
             insurancePremium: insurancePremium1Spouse,
@@ -2354,7 +2420,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             pensionDrawdownBase: drawdownValueSpouse
         }
 
-        console.log('assumptionsSpouse', assumptionsSpouse);
+        // console.log('assumptionsSpouse', assumptionsSpouse);
 
 
         var otherAssets = {
@@ -2372,9 +2438,39 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         }
 
 
-        console.log('otherAssets', otherAssets);
+        // console.log('otherAssets', otherAssets);
         PdfMaker.createChart(personalDetails, personalDetailsSpouse, assumptions, assumptionsSpouse, otherAssets);
     });
+
+    document.getElementById("bar-chart").addEventListener("click",function(){
+        $scope.chartOneOpen = true;
+        document.getElementById("containerA").style.display = "none";
+        document.getElementById("container").style.display = "block";
+    });
+
+    document.getElementById("area-chart").addEventListener("click",function(){
+        $scope.chartOneOpen = false;
+        document.getElementById("container").style.display = "none";
+        document.getElementById("containerA").style.display = "block";
+    });
+
+    $(".print-doc").on("click",printBothCharts);
+
+    function printBothCharts(){
+            if($scope.chartOneOpen){
+        document.getElementById("containerA").style.display = "block";
+           window.print();
+           setTimeout(function(){
+            document.getElementById("containerA").style.display = "none";
+         },100);
+       }else{
+        document.getElementById("container").style.display = "block";
+           window.print();
+           setTimeout(function(){
+            document.getElementById("container").style.display = "none";
+         },100);
+       }    
+   };
 
 
 }]);
