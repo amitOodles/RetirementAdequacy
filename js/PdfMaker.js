@@ -1,19 +1,30 @@
 app.service('PdfMaker', [function() {
 
-    this.createChart = function(personalDetails, personalDetailsSpouse, assumptions, assumptionsSpouse, otherAssets) {
+    this.createChart = function(extraDetails, personalDetails, personalDetailsSpouse, assumptions, assumptionsSpouse, otherAssets) {
+
+        function reduceToCapitalize(nameArr) {
+            if (nameArr.length < 2) {
+                var name = nameArr[0];
+                return name[0].toUpperCase() + name.slice(1);
+            }
+            return nameArr.reduce(function(first, second) {
+                return first[0].toUpperCase() + first.slice(1) + " " + second[0].toUpperCase() + second.slice(1)
+            })
+        }
+
 
         if (personalDetails.spouseOption) {
             topDetail = 530;
             topAssum = 430;
             topHead = 70;
-            nameDetail="General Information (Member 1)";
-            nameAssump="Assumptions (Member 1)";
+            nameDetail = "General Information (Member 1)";
+            nameAssump = "Assumptions (Member 1)";
         } else {
             topDetail = 370;
             topAssum = 240;
             topHead = 90;
-            nameDetail="General Information";            
-            nameAssump="Assumptions";            
+            nameDetail = "General Information";
+            nameAssump = "Assumptions";
         }
 
         var cdob = personalDetails.dob.toString().split(" ")[1] + " " + personalDetails.dob.toString().split(" ")[2] + " " + personalDetails.dob.toString().split(" ")[3];
@@ -58,18 +69,42 @@ app.service('PdfMaker', [function() {
             { title: "Values", dataKey: "value" },
         ];
         var rows1 = [
+            { "info1": "Full Name", "value": reduceToCapitalize((extraDetails.firstName.trim() + " " + extraDetails.lastName.trim()).split(' ')) },
             { "info1": "Gender", "value": personalDetails.gender },
             { "info1": "Date Of Birth", "value": cdob },
             { "info1": "Age", "value": personalDetails.age },
+            { "info1": "E-Mail", "value": extraDetails.email.trim() },
+            { "info1": "Mobile Number", "value": "0" + extraDetails.mobile },
             { "info1": "Annual Salary", "value": moneyFormat.to(personalDetails.annualSalary) },
             { "info1": "Super Balance", "value": moneyFormat.to(personalDetails.superBalance) },
             { "info1": "Retirement Age", "value": personalDetails.retirementAge },
             { "info1": "Salary Sacrifice", "value": moneyFormat.to(personalDetails.salarySacrifice) },
             { "info1": "Pension Start Age", "value": personalDetails.pensionAge },
-            { "info1": "Do you have a spouse?", "value": personalDetails.spouseOption?"Yes":"No" },
-            { "info1": "Do you own a house?", "value": personalDetails.houseOption?"Yes":"No" },
+            { "info1": "Do you have a spouse?", "value": personalDetails.spouseOption ? "Yes" : "No" },
+            { "info1": "Do you own a house?", "value": personalDetails.houseOption ? "Yes" : "No" },
             { "info1": "Target Income", "value": moneyFormat.to(personalDetails.targetIncome) }
         ];
+
+        if(personalDetails.houseOption){    
+        if (extraDetails.address !== undefined && extraDetails.address.length !== 0) {
+            rows1.push({ "info1": "Address", "value": reduceToCapitalize(extraDetails.address.trim().replaceAll('\n', ' ').replace(/\s+/g, " ").split(" ")) });
+        }
+
+        if (extraDetails.postalCode != undefined) {
+            var postCode = extraDetails.postalCode;
+            if (extraDetails.postalCode < 10) {
+                postCode = "000" + extraDetails.postalCode
+            }
+            if (extraDetails.postalCode >= 10 && extraDetails.postalCode < 100) {
+                postCode = "00" + extraDetails.postalCode
+            }
+            if (extraDetails.postalCode >= 100 && extraDetails.postalCode < 1000) {
+                postCode = "0" + extraDetails.postalCode
+            }
+            rows1.push({ "info1": "Postal Code", "value": postCode });
+        }
+    }
+
         var columns5 = [
             { title: "General Information (Member 2)", dataKey: "info2" },
             { title: "Values", dataKey: "value" },
@@ -94,9 +129,9 @@ app.service('PdfMaker', [function() {
             { "assume1": "Investment Return", "value": pcFormat.to(assumptions.investmentReturn) },
             { "assume1": "Variable Fee", "value": pcFormat.to(assumptions.variableFee) },
             { "assume1": "Fixed Fee", "value": moneyFormat.to(assumptions.fixedFee) },
-            { "assume1": "Employer Contribution Level", "value": moneyFormat.to(assumptions.employerContributionLevel) },
-            { "assume1": "Inflation", "value": moneyFormat.to(assumptions.inflation) },
-            { "assume1": "Wage Increase", "value": moneyFormat.to(assumptions.wageIncrease) },
+            { "assume1": "Employer Contribution Level", "value": pcFormat.to(assumptions.employerContributionLevel) },
+            { "assume1": "Inflation", "value": pcFormat.to(assumptions.inflation) },
+            { "assume1": "Wage Increase", "value": pcFormat.to(assumptions.wageIncrease) },
             { "assume1": "Pension Drawdown Base", "value": moneyFormat.to(assumptions.pensionDrawdownBase) }
         ];
 
@@ -109,9 +144,9 @@ app.service('PdfMaker', [function() {
             { "assume2": "Investment Return", "value": pcFormat.to(assumptionsSpouse.investmentReturn) },
             { "assume2": "Variable Fee", "value": pcFormat.to(assumptionsSpouse.variableFee) },
             { "assume2": "Fixed Fee", "value": moneyFormat.to(assumptionsSpouse.fixedFee) },
-            { "assume2": "Employer Contribution Level", "value": moneyFormat.to(assumptionsSpouse.employerContributionLevel) },
-            { "assume2": "Inflation", "value": moneyFormat.to(assumptionsSpouse.inflation) },
-            { "assume2": "Wage Increase", "value": moneyFormat.to(assumptionsSpouse.wageIncrease) },
+            { "assume2": "Employer Contribution Level", "value": pcFormat.to(assumptionsSpouse.employerContributionLevel) },
+            { "assume2": "Inflation", "value": pcFormat.to(assumptionsSpouse.inflation) },
+            { "assume2": "Wage Increase", "value": pcFormat.to(assumptionsSpouse.wageIncrease) },
             { "assume2": "Pension Drawdown Base", "value": moneyFormat.to(assumptionsSpouse.pensionDrawdownBase) }
         ];
 
@@ -150,46 +185,48 @@ app.service('PdfMaker', [function() {
             }
         });
 
+        var top = doc.autoTableEndPosY();
+
         doc.autoTable(columns1, rows1, {
-            margin: { top: topHead },
+            margin: { top: top + 40 },
             styles: {
                 halign: "left",
+                overflow: 'linebreak'
             },
             columnStyles: {
-                info: { columnWidth: 420 },
-                value: { columnWidth: 97 }
+                info: { columnWidth: 370 },
+                value: { columnWidth: 147 }
             },
         });
+
         if (personalDetails.spouseOption) {
+            top = doc.autoTableEndPosY();
             doc.autoTable(columns5, rows5, {
-                margin: { top: 330 },
+                margin: { top: top + 40 },
                 styles: {
                     halign: "left",
+                    overflow: 'linebreak'
                 },
                 columnStyles: {
-                    info: { columnWidth: 420 },
-                    value: { columnWidth: 97 }
+                    info: { columnWidth: 370 },
+                    value: { columnWidth: 147 }
                 },
             });
         }
 
-
-
-        doc.autoTable(columns8, rows8, {
-            margin: { top: topDetail },
-            styles: {
-                halign: "left",
-            },
-            columnStyles: {
-                info: { columnWidth: 420 },
-                value: { columnWidth: 97 }
-            },
-        });
-
-
-
-
-
+        if (!personalDetails.spouseOption) {
+            top = doc.autoTableEndPosY();
+            doc.autoTable(columns8, rows8, {
+                margin: { top: top + 40 },
+                styles: {
+                    halign: "left",
+                },
+                columnStyles: {
+                    info: { columnWidth: 370 },
+                    value: { columnWidth: 147 }
+                },
+            });
+        }
 
         doc.addImage(imgData2, 'PNG', 40, 780);
         doc.setFontSize(10);
@@ -237,8 +274,9 @@ app.service('PdfMaker', [function() {
             },
         });
         if (personalDetails.spouseOption) {
+            top = doc.autoTableEndPosY();
             doc.autoTable(columns6, rows6, {
-                margin: { top: 220 },
+                margin: { top: top + 40 },
                 columnStyles: {
                     info: { columnWidth: 420 },
                     value: { columnWidth: 97 }
@@ -247,18 +285,53 @@ app.service('PdfMaker', [function() {
 
         }
 
-        doc.autoTable(columnsP3, rowsP3, {
-            margin: { top: topAssum },
-            styles: {
-                overflow: 'linebreak',
-                fontSize: 10
-            }
-        });
+        if (personalDetails.spouseOption) {
+            top = doc.autoTableEndPosY();
+            doc.autoTable(columns8, rows8, {
+                margin: { top: top + 40 },
+                styles: {
+                    halign: "left",
+                },
+                columnStyles: {
+                    info: { columnWidth: 420 },
+                    value: { columnWidth: 97 }
+                },
+            });
+        }
+
+        if (!personalDetails.spouseOption) {
+            top = doc.autoTableEndPosY();
+            doc.autoTable(columnsP3, rowsP3, {
+                margin: { top: top + 40 },
+                styles: {
+                    overflow: 'linebreak',
+                    fontSize: 10
+                }
+            });
+        }
 
         doc.addImage(imgData2, 'PNG', 40, 780);
         doc.setFontSize(10);
         doc.text(510, 810, 'PAGE ' + 3);
 
+        if (personalDetails.spouseOption) {
+
+            doc.addPage();
+
+
+            doc.autoTable(columnsP3, rowsP3, {
+                margin: { top: 20 },
+                styles: {
+                    overflow: 'linebreak',
+                    fontSize: 10
+                }
+            });
+
+            doc.addImage(imgData2, 'PNG', 40, 780);
+            doc.setFontSize(10);
+            doc.text(510, 810, 'PAGE ' + 4);
+
+        }
         doc.save('RetirementAdequacy.pdf');
 
     }
