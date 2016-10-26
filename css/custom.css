@@ -821,9 +821,6 @@ float:right;
   margin-top: 25px !important;
 }
 
-.form-control{
-  width:114% !important;
-}
 .dob-input{
   width:100% !important;
 }
@@ -929,19 +926,6 @@ float:right;
     padding: 0;
     max-height: 232px !important;
 }
-/*li:hover {
-    background-color: #4389c8!important;
-    background: none;
-    color: #fff!important;
-    border-right: none;
-    cursor: pointer;
-}
-li {
-    border-bottom: 1px solid #dbdbdb;
-    padding: 0;
-    font-size: 13px;
-    color: black;
-}*/
 ul.dropdown-menu {
     padding: 0 !important;
 }
@@ -973,4 +957,46 @@ a:focus {
 .spouse-head{
       font-size: 16px;
       padding-top: 0!important;
+}
+.form-group label{
+  font-weight:normal;
+}
+p.err-msg{
+  margin:5px 0 0;
+  color:darkolivegreen;
+}
+.calculate-btn,.calculate-btn:hover,.calculate-btn:focus{
+  background-color: #91B6BE !important;
+  border:none !important;
+  outline: none !important;
+  border-radius:0px; 
+}
+ul.modal-list{
+  list-style-type: upper-latin !important;
+  /*padding-left:20px !important;*/
+}
+ul.modal-list li{
+font-size:15px;
+}
+.modal-content .modal-header{
+  padding-top:10px;
+  padding-bottom:10px;
+}
+.modal-content{
+  color:darkolivegreen;
+}
+.modal-footer h5{
+  margin-top:0px;
+  margin-bottom: 0px;
+}
+.modal-content .modal-footer{
+  padding:18px 25px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0px 9999px #f6f8f9 !important;
+}
+
+.form-control{
+      background-color: #f6f8f9;
 }
