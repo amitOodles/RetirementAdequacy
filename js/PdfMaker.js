@@ -3,10 +3,6 @@ app.service('PdfMaker', [function() {
     this.createChart = function(extraDetails, personalDetails, personalDetailsSpouse, assumptions, assumptionsSpouse, otherAssets) {
 
         function reduceToCapitalize(nameArr) {
-            if (nameArr.length < 2) {
-                var name = nameArr[0];
-                return name[0].toUpperCase() + name.slice(1);
-            }
             return nameArr.reduce(function(first, second) {
                 return first[0].toUpperCase() + first.slice(1) + " " + second[0].toUpperCase() + second.slice(1)
             })
@@ -84,11 +80,10 @@ app.service('PdfMaker', [function() {
             { "info1": "Do you own a house?", "value": personalDetails.houseOption ? "Yes" : "No" },
             { "info1": "Target Income", "value": moneyFormat.to(personalDetails.targetIncome) }
         ];
-
-        if(personalDetails.houseOption){    
-        if (extraDetails.address !== undefined && extraDetails.address.length !== 0) {
-            rows1.push({ "info1": "Address", "value": reduceToCapitalize(extraDetails.address.trim().replaceAll('\n', ' ').replace(/\s+/g, " ").split(" ")) });
-        }
+   
+        // if (extraDetails.address !== undefined && extraDetails.address.length !== 0) {
+        //     rows1.push({ "info1": "Address", "value": reduceToCapitalize(extraDetails.address.trim().replaceAll('\n', ' ').replace(/\s+/g, " ").split(" ")) });
+        // }
 
         if (extraDetails.postalCode != undefined) {
             var postCode = extraDetails.postalCode;
@@ -103,7 +98,6 @@ app.service('PdfMaker', [function() {
             }
             rows1.push({ "info1": "Postal Code", "value": postCode });
         }
-    }
 
         var columns5 = [
             { title: "General Information (Member 2)", dataKey: "info2" },
