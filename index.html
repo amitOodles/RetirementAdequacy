@@ -82,7 +82,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="postal-code">Postal Code</label>
+                                        <input type="number" name="postalCode" ng-model="personalDetails.postalCode" class="form-control postal-code" id="postal-code" ng-minlength="4" ng-maxlength="4" onClick="this.select();">
+                                        <p class="err-msg" ng-show="!forms.ttrForm.postalCode.$pristine &&forms.ttrForm.postalCode.$invalid">Enter a valid 4-Digit postal code</p>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- <div class="row"> -->
+                                <!-- <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <textarea class="form-control" name="address" ng-model="personalDetails.address" id="address"></textarea>
+                                    </div>
+                                </div> -->
+                            <!-- </div> -->
                             <div class="row second-row-mobile">
                                 <div class="col-xs-8 col-sm-4 form-heading">
                                     Date Of Birth
@@ -209,21 +224,6 @@
                                             <button class="option-l-btn btn btn-primary " ng-click="houseOptionChange(true)" ng-disabled="houseOption">Yes</button>
                                             <button class="option-r-btn btn btn-primary " ng-click="houseOptionChange(false)" ng-disabled="!houseOption">No</button>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" ng-show="houseOption">
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                        <label for="address">Address</label>
-                                        <textarea class="form-control" name="address" ng-model="personalDetails.address" id="address"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                        <label for="postal-code">Postal Code</label>
-                                        <input type="number" name="postalCode" ng-model="personalDetails.postalCode" class="form-control postal-code" id="postal-code" ng-minlength="4" ng-maxlength="4" onClick="this.select();">
-                                        <p class="err-msg" ng-show="!forms.ttrForm.postalCode.$pristine &&forms.ttrForm.postalCode.$invalid">Enter a valid 4-Digit postal code</p>
                                     </div>
                                 </div>
                             </div>
@@ -879,7 +879,7 @@
                                     <li ng-show="(!forms.ttrForm.lastName.$pristine && forms.ttrForm.lastName.$invalid)">Please provide a valid last name.</li>
                                     <li ng-show="(forms.ttrForm.email.$pristine || forms.ttrForm.email.$invalid)">Please provide a valid email address.</li>
                                     <li ng-show="(forms.ttrForm.mobile.$pristine || forms.ttrForm.mobile.$invalid)">Please provide a valid mobile number.</li>
-                                    <li ng-show="houseOption && forms.ttrForm.postalCode.$invalid">Please provide a valid 4-Digit postal code.</li>
+                                    <li ng-show="forms.ttrForm.postalCode.$invalid">Please provide a valid 4-Digit postal code.</li>
                                 </ul>
                             </div>
                             <div class="modal-footer">
