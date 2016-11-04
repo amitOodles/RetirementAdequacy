@@ -8,7 +8,7 @@ app.service('AreaChartService', function() {
 
         var plotLineId = 'Life Expectancy Member 1'; // To identify for removal
         var plotLineId1 = 'Life Expectancy Member 2'; // To identify for removal
-         var plotLineId2 = 'Target'; // To identify for removal
+        var plotLineId2 = 'Target'; // To identify for removal
 
 
         // Plot line options for adding
@@ -21,8 +21,8 @@ app.service('AreaChartService', function() {
             label: {
                 text: le1 + " years",
                 style: {
-                        fontWeight: 'bold'
-                    }
+                    fontWeight: 'bold'
+                }
             }
         };
         plotLineOptions1 = {
@@ -34,8 +34,8 @@ app.service('AreaChartService', function() {
             label: {
                 text: le2 + " years",
                 style: {
-                        fontWeight: 'bold'
-                    }
+                    fontWeight: 'bold'
+                }
             }
         };
         plotLineOptions2 = {
@@ -47,8 +47,8 @@ app.service('AreaChartService', function() {
                 text: "$" + target,
                 align: "right",
                 style: {
-                        fontWeight: 'bold'
-                    }
+                    fontWeight: 'bold'
+                }
             }
         };
 
@@ -173,7 +173,19 @@ app.service('AreaChartService', function() {
 
         $('#containerA').highcharts({
             chart: {
-                type: 'area'
+                type: 'area',
+                height: 400,
+                events: {
+                    beforePrint: function() {
+                        this.oldhasUserSize = this.hasUserSize;
+                        this.resetParams = [this.chartWidth, this.chartHeight, false];
+                        this.setSize(600, 400, false);
+                    },
+                    afterPrint: function() {
+                        this.setSize.apply(this, this.resetParams);
+                        this.hasUserSize = this.oldhasUserSize;
+                    }
+                }
             },
             title: {
                 text: 'Income Stream Analysis'
