@@ -10,8 +10,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     ];
 
     $scope.forms = {};
+    $scope.personalDetails = {
+        firstName: "Amit",
+        lastName: "Kumar",
+        email: "iamitkrs@gmail.com",
+        mobile: 412121212,
+        postalCode: 1234
+    };
 
-    $scope.personalDetails = {};
 
     var maleExpectancy = [80.3, 79.6, 78.6, 77.6, 76.6, 75.6, 74.6, 73.6, 72.7, 71.7, 70.7, 69.7, 68.7, 67.7, 66.7, 65.7, 64.7, 63.7, 62.8, 61.8, 60.8, 59.9, 58.9, 57.9, 57, 56, 55, 54.1, 53.1, 52.2, 51.2, 50.2, 49.3, 48.3, 47.3, 46.4, 45.4, 44.5, 43.5, 42.6, 41.6, 40.7, 39.8, 38.8, 37.9, 37, 36, 35.1, 34.2, 33.3, 32.4, 31.4, 30.5, 29.6, 28.8, 27.9, 27, 26.1, 25.3, 24.4, 23.5, 22.7, 21.9, 21, 20.2, 19.4, 18.6, 17.8, 17, 16.3, 15.5, 14.8, 14, 13.3, 12.6, 11.9, 11.2, 10.6, 9.9, 9.3, 8.7, 8.2, 7.6, 7.1, 6.6, 6.1, 5.7, 5.3, 4.9, 4.5, 4.2, 3.9, 3.6, 3.4, 3.2, 3, 2.8, 2.6, 2.5, 2.4, 2.3];
 
@@ -54,14 +60,14 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     });
 
     var initDate = new Date();
-    initDate.setYear(1959);
-    initDate.setMonth(6);
-    initDate.setDate(3);
+    initDate.setYear(1988);
+    initDate.setMonth(0);
+    initDate.setDate(1);
 
     var initDate2 = new Date();
-    initDate2.setYear(1965);
-    initDate2.setMonth(6);
-    initDate2.setDate(4);
+    initDate2.setYear(1984);
+    initDate2.setMonth(0);
+    initDate2.setDate(1);
 
     $scope.dob = initDate;
     $scope.dobSpouse = initDate2;
@@ -210,30 +216,33 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
     $scope.preservationAge = 55;
     $scope.preservationAgeSpouse = 55;
 
-    $scope.annualSalary = 260000;
+    $scope.annualSalary = 90000;
+    $scope.annualSalaryNew = 90000;
+
 
     $scope.employerContributionLevel = 9.50;
     $scope.employerContributionLevelSpouse = 9.50;
 
-    $scope.inflation = 3.50;
+    $scope.inflation = 3;
     $scope.inflationSpouse = 3.50;
 
-    $scope.superBalance = 500000;
+    $scope.superBalance = 35000;
+    $scope.superBalanceNew = 35000;
 
-    $scope.wageIncrease = 4.00;
+    $scope.wageIncrease = 1;
     $scope.wageIncreaseSpouse = 4.00;
 
     $scope.insurancePremium = 0;
 
-    $scope.salarySacrifice = 20000;
+    $scope.salarySacrifice = 0;
 
-    $scope.pensionStart = 57;
+    $scope.pensionStart = 65;
 
     $scope.investmentReturn = 5.30;
 
-    $scope.variableFee = 1.11;
+    $scope.variableFee = 0.75;
 
-    $scope.fixedFee = 300;
+    $scope.fixedFee = 0;
 
     $scope.homeContents = 50000;
     $scope.vehicleCost = 0;
@@ -1935,7 +1944,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         var count = 0;
 
-        while (balanceIndexed >= 0) {
+        while (balanceIndexed >= 0 && (leMember1>count || leMember2>count)) {
             cpi = Math.pow(1 + (inflation / 100), year);
             adjustedSalary = ageL < retirementAge ? annualSalary * Math.pow(1 + (wageIncrease / 100), year) : 0;
             if (year === 0) {
@@ -2055,11 +2064,18 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
         var temp, temp2, temp3, deemingRate;
 
         if ($scope.spouseOption) {
-            deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40300 : 80600;
+            //new deeming rate changes
+            // deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40300 : 80600;
+            deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40800 : 81600;
         } else {
-            deemingRate = 48600;
+            // deemingRate = 48600;
+            deemingRate = 49200;
         }
 
+        //Change in superfund for negative value
+        if(superFunds < 0){
+          superFunds = 0;
+        }
 
         var totalAsset = homeContents + vehicleCost + investmentProperty;
         var totalInvestment = bankAssets + listedInvestment + marginLoans + allocatedPension + superFunds + otherInvestment;
@@ -2099,7 +2115,10 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             }
         }
 
-        var maxAgedPensionAsset = temp3;
+        //latest change
+        // var maxAgedPensionAsset = temp3;
+
+        var maxAgedPensionAsset = temp3 > 0 ? temp3 : 0;
 
 
         var entitledAgedPension = maxAgedPensionIncome > maxAgedPensionAsset ? maxAgedPensionAsset : maxAgedPensionIncome;
@@ -2176,33 +2195,46 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
             var assetCalculationObj = {};
 
             if ($scope.spouseOption && $scope.houseOption) {
-                assetCalculationObj.high = 1163000;
-                assetCalculationObj.low = 291500;
-                assetCalculationObj.default = 653.5;
+                // assetCalculationObj.high = 1163000;
+                assetCalculationObj.high = 816000;
+                // assetCalculationObj.low = 291500;
+                assetCalculationObj.low = 375000;
+                // assetCalculationObj.default = 653.5;
+                assetCalculationObj.default = 661.2;
+                // assetCalculationObj.itCheck = 288;
                 assetCalculationObj.itCheck = 288;
                 assetCalculationObj.percent = 0.25;
             }
 
             if ($scope.spouseOption && !$scope.houseOption) {
-                assetCalculationObj.high = 1312000;
-                assetCalculationObj.low = 440500;
-                assetCalculationObj.default = 653.5;
+                // assetCalculationObj.high = 1312000;
+                // assetCalculationObj.low = 440500;
+                // assetCalculationObj.default = 653.5;
+                assetCalculationObj.high = 1016000;
+                assetCalculationObj.low = 575000;
+                assetCalculationObj.default = 661.2;
                 assetCalculationObj.itCheck = 288;
                 assetCalculationObj.percent = 0.25;
             }
 
             if (!$scope.spouseOption && $scope.houseOption) {
-                assetCalculationObj.high = 783500;
-                assetCalculationObj.low = 205500;
-                assetCalculationObj.default = 867;
+                // assetCalculationObj.high = 783500;
+                // assetCalculationObj.low = 205500;
+                // assetCalculationObj.default = 867;
+                assetCalculationObj.high = 542500;
+                assetCalculationObj.low = 25000;
+                assetCalculationObj.default = 877.1;
                 assetCalculationObj.itCheck = 162;
                 assetCalculationObj.percent = 0.5;
             }
 
             if (!$scope.spouseOption && !$scope.houseOption) {
-                assetCalculationObj.high = 932500;
-                assetCalculationObj.low = 354500;
-                assetCalculationObj.default = 867;
+                // assetCalculationObj.high = 932500;
+                // assetCalculationObj.low = 354500;
+                // assetCalculationObj.default = 867;
+                assetCalculationObj.high = 742500;
+                assetCalculationObj.low = 375000;
+                assetCalculationObj.default = 877.1;
                 assetCalculationObj.itCheck = 162;
                 assetCalculationObj.percent = 0.5;
             }
