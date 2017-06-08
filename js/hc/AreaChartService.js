@@ -59,16 +59,20 @@ app.service('AreaChartService', function() {
         if (spouseOption) {
             series = [{
                 name: 'Member 1 Benefit',
-                data: benefitArr1
+                data: benefitArr1,
+
             }, {
                 name: 'Member 2 Benefit',
-                data: benefitArr2
+                data: benefitArr2,
+                  
             }, {
                 name: 'Pension Member 1',
-                data: penArr1
+                data: penArr1,
+
             }, {
                 name: 'Pension Member 2',
-                data: penArr2
+                data: penArr2,
+
             }, {
                 color: '#2443af',
                 name: 'Life Expectancy Member 1',
@@ -224,7 +228,8 @@ app.service('AreaChartService', function() {
             plotOptions: {
                 area: {
                     stacking: 'normal',
-                    lineColor: '#666666',
+                    //fillColor: 'green',
+                    //lineColor: '#666666',
                     lineWidth: 1,
                     marker: {
                         enabled: false,

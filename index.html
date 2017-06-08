@@ -24,21 +24,22 @@
                 <h1>Retirement Adequacy Calculator</h1>
             </div>
             <div print-hide class=" button-wrapper col-xs-4 col-sm-3 col-md-3">
-                <button type="button" class="buttons button print-icon print-doc"></button>
-                <button type="button" class="buttons button save-button" id="download" title="Save as PDF" role="button" aria-controls="email-overlay"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-                <button type="button" class="buttons button info-icon" ng-click="infoShow(true)" title="Information"></button>
+              <button type="button" title="print" class="new-btn btn-prnt print-doc"></button>
+<button type="button" class="new-btn btn-sav " id="download" title="Save as PDF" role="button" aria-controls="email-overlay"></button>
+<button type="button" class="new-btn btn-info " ng-click="infoShow(true)" title="Information"></button>
             </div>
         </div>
+
         <div class="row content">
             <div class="col-xs-12 col-sm-12 col-lg-12">
                 <div class="row input-div">
                     <div class="col-xs-12 col-sm-12 col-lg-12">
                         <div class="row title-div">
-                            <span class="number-wrapper">1</span>
+                            <span class="number-wrapper">01</span>
                             <span class="title-wrapper">Your Details</span>
                             <div class="otrp-clear"></div>
                         </div>
-                        <form name="forms.ttrForm" class="ttr-form" novalidate 
+                        <form name="forms.ttrForm" class="ttr-form" novalidate
                         ng-submit="calculateFinal(forms.ttrForm.$valid)">
                         <div class="row">
                                 <div class="col-xs-6">
@@ -366,7 +367,7 @@
                                 </div>
                             </div>
                         <div class="row title-div">
-                            <span class="number-wrapper">2</span>
+                            <span class="number-wrapper">02</span>
                             <span class="title-wrapper">Assumptions</span>
                             <div class="otrp-clear"></div>
                         </div>
@@ -649,7 +650,7 @@
                                 </div>
                             </div>
                         <div class="row title-div">
-                            <span class="number-wrapper">3</span>
+                            <span class="number-wrapper">03</span>
                             <span class="title-wrapper">Other Assets</span>
                             <div class="otrp-clear"></div>
                         </div>
@@ -832,14 +833,19 @@
                             </div>
                              <div class="row">
                                 <div class="col-xs-12">
-                                    <button print-remove class="btn btn-block btn-primary calculate-btn" type="submit" style="width:initial ; margin:0 auto; margin-bottom:10px;">Calculate Result</button>
+                                    <button print-remove class="btn btn-block btn-primary calculate-btn btn-calculate" type="submit">Calculate Result</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="row result-head">
+                <div class="row result-head clearfix">
                     <h3 class="results-title">Your Results</h3>
+                    <button class="btn btn-primary print-dup print-doc btn-newPrint" style="float:right; background-color:#0d2f47 !important;" print-remove>
+
+                      <i class="fa fa-print" aria-hidden="true"></i>
+                        Print Result
+                    </button>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
@@ -847,9 +853,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <button class="btn btn-primary" id="bar-chart" ng-click="chartOneOpen = true" title="bar chart description" ng-disabled="chartOneOpen"><i class="fa fa-bar-chart"></i></button>
                                 <button class="btn btn-primary" id="area-chart" ng-click="chartOneOpen = false" title="pie chart description" ng-disabled="!chartOneOpen"><i class="fa fa-area-chart" ></i></button>
-                                <button class="btn btn-primary print-dup print-doc" print-remove style="float:right">
-                                    Print Result
-                                </button>
+
                             </div>
                         </div>
                         <div id="container" style="margin-top:15px; margin-left:-10px" ></div>
@@ -960,6 +964,7 @@
     <script src="js/wNumb.js" type="text/javascript"></script>
     <script src="bower_components/angularPrint/angularPrint.js" type="text/javascript"></script>
     <script src="js/hc/highcharts.js" type="text/javascript"></script>
+    <script src="js/hc/highcharts-3d.js" type="text/javascript"></script>
     <script src="js/hc/data.js" type="text/javascript"></script>
     <script src="js/hc/exporting.js" type="text/javascript"></script>
     <script src="js/hc/sand-signika.js" type="text/javascript"></script>

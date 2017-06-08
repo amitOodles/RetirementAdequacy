@@ -1,5 +1,5 @@
 app.service('ChartServiceHc', function() {
-    this.createChart = function(balanceArray) {
+    this.createChart = function(balanceArray, spouseOption) {
 
         Highcharts.setOptions({
             lang: {
@@ -28,15 +28,31 @@ app.service('ChartServiceHc', function() {
         }
 
 
-
+        if (spouseOption) {
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                },
+                colors: ["#013035", "#07d6ed", "#039aaa", "#02606b"]
+            });
+        } else {
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                },
+                colors: ["#013035", "#039aaa", "#07d6ed", "#02606b"]
+            });
+        }
 
         // Create the chart
         $('#container').highcharts({
             chart: {
                 type: 'column',
+
                 height: 400,
+                colors: ['#0d2f47', '#989898'],
                 events: {
-                    beforePrint: function() {
+                        beforePrint: function() {
                         this.oldhasUserSize = this.hasUserSize;
                         this.resetParams = [this.chartWidth, this.chartHeight, false];
                         this.setSize(600, 400, false);
@@ -82,6 +98,7 @@ app.service('ChartServiceHc', function() {
             plotOptions: {
                 series: {
                     borderWidth: 0,
+
                 }
             },
             tooltip: {
