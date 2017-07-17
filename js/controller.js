@@ -1944,7 +1944,8 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSe
 
         var count = 0;
 
-        while (balanceIndexed >= 0 && (leMember1>count || leMember2>count)) {
+        while (balanceIndexed >= 0) {
+        //while (balanceIndexed >= 0 && (leMember1>count || leMember2>count)) {
             cpi = Math.pow(1 + (inflation / 100), year);
             adjustedSalary = ageL < retirementAge ? annualSalary * Math.pow(1 + (wageIncrease / 100), year) : 0;
             if (year === 0) {
